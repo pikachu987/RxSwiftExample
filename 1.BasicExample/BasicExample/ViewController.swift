@@ -1,9 +1,9 @@
 //
 //  ViewController.swift
-//  SearchExample
+//  BasicExample
 //
-//  Created by Gwanho Kim on 21/11/2018.
-//  Copyright © 2018 Gwanho Kim. All rights reserved.
+//  Created by APPLE on 22/11/2018.
+//  Copyright © 2018 pikachu987. All rights reserved.
 //
 
 import UIKit
