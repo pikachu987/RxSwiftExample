@@ -1,14 +1,14 @@
 # BasicExample
 
-[Observable 생성](#Observable)
+* [Observable 생성](#1.Observable)
+<br>
+* [Subject](#2.Subject)
+<br>
+* [Observable 합성](#3.Observable)
+<br>
+* [Error 처리](#4.Error)
 
-[Subject](#Subject)
-
-[Observable 합성](#Observable)
-
-[Error 처리](#Error)
-
-## Observable 생성
+## 1.Observable 생성
 
 > Observable는 안전한 형변환이 가능한 이벤트로 다른 종류의 데이터를 넣고 뺄 수 있다.
 
@@ -143,7 +143,7 @@ Observable.range(start: 10, count: 20)
 ```
 
 
-## Subject
+## 2.Subject
 
 > Subject는 Imperative eventing로 어떤 이벤트를 발생 하고 싶을때. 얼마나 많은 객체에게 그 이벤트를 구독하는지 중요하지 않다. 원하는 이벤트를 subscription(observer) 존재 여부와 관계없이 이벤트를 발행 할 수 있다.
 
@@ -240,7 +240,7 @@ replaySubject.onNext("replay 6")
 replaySubject.onNext("replay 7")
 ```
 
-## Observable 합성
+## 3.Observable 합성
 
 > Observable의 결합은 연결고리가 있느 몇가지 이벤트들을 같이 처리해야 할때 사용할수 있다.
 
@@ -463,7 +463,7 @@ next(5)
 completed
 ```
 
-## Error 처리
+## 4.Error 처리
 
 > Error이 났을때 감지하는 catchError 메서드와 다시 시도하는 retry, 일정 시간동안 이벤트가 오지 않으면 timerout을 할수있다.
 
