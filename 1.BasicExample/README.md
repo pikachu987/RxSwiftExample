@@ -1,14 +1,14 @@
 # BasicExample
 
-* [Observable 생성](#1.Observable)
-<br>
-* [Subject](#2.Subject)
-<br>
-* [Observable 합성](#3.Observable)
-<br>
-* [Error 처리](#4.Error)
+* [Observable 생성](#1.ObservableCreate)
 
-## 1.Observable 생성
+* [Subject](#2.Subject)
+
+* [Observable 합성](#3.ObservableSynthesis)
+
+* [Error 처리](#4.ErrorHandling)
+
+## 1.ObservableCreate
 
 > Observable는 안전한 형변환이 가능한 이벤트로 다른 종류의 데이터를 넣고 뺄 수 있다.
 
@@ -240,7 +240,7 @@ replaySubject.onNext("replay 6")
 replaySubject.onNext("replay 7")
 ```
 
-## 3.Observable 합성
+## 3.ObservableSynthesis
 
 > Observable의 결합은 연결고리가 있느 몇가지 이벤트들을 같이 처리해야 할때 사용할수 있다.
 
@@ -463,7 +463,7 @@ next(5)
 completed
 ```
 
-## 4.Error 처리
+## 4.ErrorHandling
 
 > Error이 났을때 감지하는 catchError 메서드와 다시 시도하는 retry, 일정 시간동안 이벤트가 오지 않으면 timerout을 할수있다.
 
