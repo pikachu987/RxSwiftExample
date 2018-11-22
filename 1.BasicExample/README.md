@@ -25,6 +25,8 @@ createJust(element: "Observable를 만들어 봅니다.")
 
 just는 단일 이벤트를 발생하는 Observable를 생성한다.
 
+![img](./image/just.png)
+
 ```swift
 Observable.just("RxSwift 빡세다 😭")
     .subscribe { (event: Event<String>) in print(event) }
@@ -105,6 +107,8 @@ Observable.of("가", "나", "다", "라")
 
 lazy initialze Observable 생성자. subscribe가 발생할때 Observable이 생성된다.
 
+![img](./image/deferred.png)
+
 ```swift
 Observable.deferred({ Observable.just("RxSwift deferred 테스트") })
     .subscribe { (event) in print(event) }
@@ -140,6 +144,12 @@ Observable.range(start: 10, count: 20)
 
 Complete 될때까지 이벤트는 발생되지 않으며, complete가 되면 마지막 이벤트를 발생하고 종료된다.
 
+![img](./image/asyncSubject.png)
+
+에러로 종료되면 마지막 이벤트 전달 없이 에러만 발생한다.
+
+![img](./image/asyncSubjectError.png)
+
 ```swift
 let asyncSubject = AsyncSubject<Int>()
 asyncSubject
@@ -155,6 +165,12 @@ asyncSubject.on(.completed)
 ```
 
 #### PublishSubject
+
+![img](./image/publishSubject.png)
+
+소스 Observable이 오류 때문에 종료되면 아무런 항목도 배출하지 않고 소스 Observable에서 발생한 오류를 그대로 전달한다.
+
+![img](./image/publishSubjectError.png)
 
 subscribe 된 시점 이후부터 발생한 이벤트를 전달한다. subscribe 되기 이전의 이번트는 전달하지 않는다.
 
@@ -177,6 +193,12 @@ publishSubject.onNext("publish 5")
 
 초기값을 지닌 subject이다. subscribe가 발생하면 현재 저장된 값을 이벤트로 전달하고 마지막 이벤트값을 저장하고 있다.
 
+![img](./image/behaviorSubject.png)
+
+오류 때문에 종료되면 BehaviorSubject는 아무런 항목도 배출하지 않고 소스 Observable에서 발생한 오류를 그대로 전달한다.
+
+![img](./image/behaviorSubjectError.png)
+
 ```swift
 let behaviorSubject = BehaviorSubject<String>(value: "behavior init")
 behaviorSubject
@@ -194,6 +216,8 @@ behaviorSubject.onNext("behavior 4")
 #### ReplaySubject
 
 n개의 이벤트를 저장하고 subscribe되는 시점과 상관없이 저장된 모든 이벤트를 전달한다.
+
+![img](./image/replaySubject.png)
 
 ```swift
 let replaySubject = ReplaySubject<String>.create(bufferSize: 3) // createUnbounded() 모든 이벤트가 전달된다.
@@ -303,6 +327,8 @@ completed
 switchLatest는 observable을 switch 할 수 있는 observable이다.
 이벤트를 수신하고 싶은 observable로 바꾸면 해당 이벤트가 발생하는 것을 수신할 수 있다.
 
+![img](./image/switchLatest.png)
+
 ```swift
 let first = PublishSubject<String>()
 let second = PublishSubject<String>()
@@ -335,24 +361,100 @@ next(B5)
 
 zip으로 두개의 Observable를 합친다.
 
-```swift
-let observable1 = Observable.range(start: 0, count: 50000)
-    .reduce(0, accumulator: { (value1, value2) -> Int in
-        return value1 + value2
-    })
+![img](./image/zip.png)
 
-Observable.zip(observable1, Observable.just("Sum")) { (sum, text) -> String in return "\(text): \(sum)" }
-    .subscribeOn(SerialDispatchQueueScheduler(qos: .background)) // 백그라운드에서 연산한다.
-    .observeOn(MainScheduler.instance) // UI등을 변화시킬때는 메인에서 처리할수 있게 쓰레드를 변경한다.
-    .subscribe(onNext: { (value) in
-        print("Observable zip Complete")
-        self.textField.text = value
-    })
+```swift
+Observable.zip(Observable.from([1, 2, 3, 4]), Observable.of("A", "B", "C")) { (first, second) in
+    return "\(first)\(second)"
+    }.subscribe({ print($0) })
     .disposed(by: self.disposeBag)
 ```
 
+```swift
+next(1A)
+next(2B)
+next(3C)
+completed
+```
 
+### concat
 
+두개 이상의 Observable를 직렬로 연결한다. 하나의 Observable가 이벤트를 전달 완료 후 그 다음 Observable의 이벤트를 전달한다.
+
+![img](./image/concat.png)
+
+```swift
+Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+    .map{ "first: \($0)" }
+    .take(3)
+    .concat(Observable<Int>.interval(0.5, scheduler: MainScheduler.instance).map{ "second: \($0)" }.take(4))
+    .subscribe({ print($0) })
+    .disposed(by: self.disposeBag)
+```
+
+```swift
+next(first: 0)
+next(first: 1)
+next(first: 2)
+next(second: 0)
+next(second: 1)
+next(second: 2)
+next(second: 3)
+completed
+```
+
+### amb
+
+맨 먼저발생한 Observable의 이벤트만을 사용한다.
+
+![img](./image/amb.png)
+
+```swift
+let first = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+    .map{ "first: \($0)" }
+    .take(3)
+let second = Observable<Int>.interval(0.5, scheduler: MainScheduler.instance)
+    .map{ "second: \($0)" }
+    .take(3)
+let third = Observable<Int>.interval(1.1, scheduler: MainScheduler.instance)
+    .map{ "third: \($0)" }
+    .take(3)
+first.amb(second).amb(third)
+    .subscribe({ print($0) })
+    .disposed(by: self.disposeBag)
+```
+
+```swift
+next(second: 0)
+next(second: 1)
+next(second: 2)
+completed
+```
+
+### startWith
+
+처음 이벤트를 넣어줄 수 있다.
+
+![img](./image/startWith.png)
+
+```swift
+Observable.from([1, 2, 3, 4, 5])
+    .startWith(9, 8, 7)
+    .subscribe({ print($0) })
+    .disposed(by: self.disposeBag)
+```
+
+```swift
+next(9)
+next(8)
+next(7)
+next(1)
+next(2)
+next(3)
+next(4)
+next(5)
+completed
+```
 
 
 참고 블로그<br/>

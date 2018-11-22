@@ -13,25 +13,23 @@ class ViewController: UIViewController {
     let ex1 = Ex1Observable()
     let ex2 = Ex2Subject()
     let ex3 = Ex3ObservableSynthesis()
+    let ex4 = Ex4Error()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+//        Observable.zip(observable1, Observable.just("Sum")) { (sum, text) -> String in return "\(text): \(sum)" }
+//            .subscribeOn(SerialDispatchQueueScheduler(qos: .background)) // 백그라운드에서 연산한다.
+//            .observeOn(MainScheduler.instance) // UI등을 변화시킬때는 메인에서 처리할수 있게 쓰레드를 변경한다.
+//            .subscribe(onNext: { (value) in
+//                print("Observable zip Complete")
+//                let label = UILabel(frame: CGRect(x: 0, y: 100, width: UIScreen.main.bounds.width, height: 100))
+//                label.text = value
+//                // self.view.addSubview(label)
+//            })
+//            .disposed(by: self.disposeBag)
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
 //    func setup1() {

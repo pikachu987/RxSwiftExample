@@ -12,8 +12,10 @@ class Ex3ObservableSynthesis: NSObject {
 //        self.withLatestFrom()
 //        self.merge()
 //        self.switchLatest()
-        self.zip()
-        
+//        self.zip()
+//        self.concat()
+//        self.amb()
+        self.startWith()
     }
     
     // combineLatest는 두 Observable 의 각각의 이벤트가 발생할 때 두 Observable의 마지막 이벤트들을 묶어서 전달한다. 두 이벤트의 타입은 달라도 된다.
@@ -102,28 +104,93 @@ class Ex3ObservableSynthesis: NSObject {
         first.onNext("A4")
         second.onNext("B4")
         second.onNext("B5")
+        /*
+         next(A1)
+         next(B2)
+         next(B3)
+         next(B4)
+         next(B5)
+         */
     }
     
-    //
+    // zip으로 두개의 Observable를 합친다.
     func zip() {
-        let observable1 = Observable.range(start: 0, count: 50000)
-            .reduce(0, accumulator: { (value1, value2) -> Int in
-                return value1 + value2
-            })
-        
-        // zip으로 두개의 Observable를 합친다.
-        Observable.zip(observable1, Observable.just("Sum")) { (sum, text) -> String in return "\(text): \(sum)" }
-            .subscribeOn(SerialDispatchQueueScheduler(qos: .background)) // 백그라운드에서 연산한다.
-            .observeOn(MainScheduler.instance) // UI등을 변화시킬때는 메인에서 처리할수 있게 쓰레드를 변경한다.
-            .subscribe(onNext: { (value) in
-                print("Observable zip Complete")
-                let label = UILabel(frame: CGRect(x: 0, y: 100, width: UIScreen.main.bounds.width, height: 100))
-                label.text = value
-               // self.view.addSubview(label)
-            })
+        Observable.zip(Observable.from([1, 2, 3, 4]), Observable.of("A", "B", "C")) { (first, second) in
+            return "\(first)\(second)"
+        }.subscribe({ print($0) })
+        .disposed(by: self.disposeBag)
+        /*
+         next(1A)
+         next(2B)
+         next(3C)
+         completed
+         */
+    }
+    
+    // concat은 두개 이상의 Observable를 직렬로 연결한다. 하나의 Observable가 이벤트를 전달 완료 후 그 다음 Observable의 이벤트를 전달한다.
+    func concat() {
+        Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+            .map{ "first: \($0)" }
+            .take(3)
+            .concat(Observable<Int>.interval(0.5, scheduler: MainScheduler.instance).map{ "second: \($0)" }.take(4))
+            .subscribe({ print($0) })
             .disposed(by: self.disposeBag)
-        print("zip?")
+        /*
+         next(first: 0)
+         next(first: 1)
+         next(first: 2)
+         next(second: 0)
+         next(second: 1)
+         next(second: 2)
+         next(second: 3)
+         completed
+         */
+    }
+    
+    // 맨 먼저발생한 Observable의 이벤트만을 사용한다.
+    func amb() {
+        let first = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+            .map{ "first: \($0)" }
+            .take(3)
+        let second = Observable<Int>.interval(0.5, scheduler: MainScheduler.instance)
+            .map{ "second: \($0)" }
+            .take(3)
+        let third = Observable<Int>.interval(1.1, scheduler: MainScheduler.instance)
+            .map{ "third: \($0)" }
+            .take(3)
+        first.amb(second).amb(third)
+            .subscribe({ print($0) })
+            .disposed(by: self.disposeBag)
+        /*
+         next(second: 0)
+         next(second: 1)
+         next(second: 2)
+         completed
+         */
+    }
+    
+    // 처음 이벤트를 넣어줄 수 있다.
+    func startWith() {
+        Observable.from([1, 2, 3, 4, 5])
+            .startWith(9, 8, 7)
+            .subscribe({ print($0) })
+            .disposed(by: self.disposeBag)
+        /*
+         next(9)
+         next(8)
+         next(7)
+         next(1)
+         next(2)
+         next(3)
+         next(4)
+         next(5)
+         completed
+         */
     }
 }
+
+
+
+
 
 
