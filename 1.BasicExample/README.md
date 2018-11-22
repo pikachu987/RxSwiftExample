@@ -1,12 +1,12 @@
 # BasicExample
 
-* [Observable 생성](#1.ObservableCreate)
+* [Observable 생성](##1.ObservableCreate)
 
-* [Subject](#2.Subject)
+* [Subject](## 2.Subject)
 
 * [Observable 합성](#3.ObservableSynthesis)
 
-* [Error 처리](#4.ErrorHandling)
+* [Error 처리](# 4.ErrorHandling)
 
 ## 1.ObservableCreate
 
