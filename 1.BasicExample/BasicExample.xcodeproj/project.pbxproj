@@ -12,6 +12,10 @@
 		18FE32E921A6451400F70B5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18FE32E721A6451400F70B5A /* Main.storyboard */; };
 		18FE32EB21A6451500F70B5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18FE32EA21A6451500F70B5A /* Assets.xcassets */; };
 		18FE32EE21A6451500F70B5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18FE32EC21A6451500F70B5A /* LaunchScreen.storyboard */; };
+		18FE32F621A66CC000F70B5A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 18FE32F521A66CC000F70B5A /* README.md */; };
+		18FE32F821A6A92A00F70B5A /* Ex1Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FE32F721A6A92A00F70B5A /* Ex1Observable.swift */; };
+		18FE32FB21A6AA6300F70B5A /* Ex2Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FE32FA21A6AA6300F70B5A /* Ex2Subject.swift */; };
+		18FE32FD21A6AAFE00F70B5A /* Ex3ObservableSynthesis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FE32FC21A6AAFE00F70B5A /* Ex3ObservableSynthesis.swift */; };
 		FE86FC90E485DFC9F7AB311E /* Pods_BasicExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 628796C23D29D2A5FE52A0A7 /* Pods_BasicExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +27,10 @@
 		18FE32EA21A6451500F70B5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18FE32ED21A6451500F70B5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18FE32EF21A6451600F70B5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18FE32F521A66CC000F70B5A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		18FE32F721A6A92A00F70B5A /* Ex1Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ex1Observable.swift; sourceTree = "<group>"; };
+		18FE32FA21A6AA6300F70B5A /* Ex2Subject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ex2Subject.swift; sourceTree = "<group>"; };
+		18FE32FC21A6AAFE00F70B5A /* Ex3ObservableSynthesis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ex3ObservableSynthesis.swift; sourceTree = "<group>"; };
 		39FC5F645FA808BD071DB82D /* Pods-BasicExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasicExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-BasicExample/Pods-BasicExample.release.xcconfig"; sourceTree = "<group>"; };
 		45BB573D1F17DF34B965FC49 /* Pods-BasicExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasicExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BasicExample/Pods-BasicExample.debug.xcconfig"; sourceTree = "<group>"; };
 		628796C23D29D2A5FE52A0A7 /* Pods_BasicExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BasicExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,8 +75,20 @@
 				18FE32EA21A6451500F70B5A /* Assets.xcassets */,
 				18FE32EC21A6451500F70B5A /* LaunchScreen.storyboard */,
 				18FE32EF21A6451600F70B5A /* Info.plist */,
+				18FE32F521A66CC000F70B5A /* README.md */,
+				18FE32F921A6A93000F70B5A /* Example */,
 			);
 			path = BasicExample;
+			sourceTree = "<group>";
+		};
+		18FE32F921A6A93000F70B5A /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				18FE32F721A6A92A00F70B5A /* Ex1Observable.swift */,
+				18FE32FA21A6AA6300F70B5A /* Ex2Subject.swift */,
+				18FE32FC21A6AAFE00F70B5A /* Ex3ObservableSynthesis.swift */,
+			);
+			path = Example;
 			sourceTree = "<group>";
 		};
 		33D3302FFA5FC8125522C50D /* Pods */ = {
@@ -150,6 +170,7 @@
 			files = (
 				18FE32EE21A6451500F70B5A /* LaunchScreen.storyboard in Resources */,
 				18FE32EB21A6451500F70B5A /* Assets.xcassets in Resources */,
+				18FE32F621A66CC000F70B5A /* README.md in Resources */,
 				18FE32E921A6451400F70B5A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -206,6 +227,9 @@
 			files = (
 				18FE32E621A6451400F70B5A /* ViewController.swift in Sources */,
 				18FE32E421A6451400F70B5A /* AppDelegate.swift in Sources */,
+				18FE32FB21A6AA6300F70B5A /* Ex2Subject.swift in Sources */,
+				18FE32FD21A6AAFE00F70B5A /* Ex3ObservableSynthesis.swift in Sources */,
+				18FE32F821A6A92A00F70B5A /* Ex1Observable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
