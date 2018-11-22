@@ -15,7 +15,7 @@ class Ex3ObservableSynthesis: NSObject {
 //        self.zip()
 //        self.concat()
 //        self.amb()
-        self.startWith()
+//        self.startWith()
     }
     
     // combineLatest는 두 Observable 의 각각의 이벤트가 발생할 때 두 Observable의 마지막 이벤트들을 묶어서 전달한다. 두 이벤트의 타입은 달라도 된다.
