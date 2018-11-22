@@ -1,12 +1,12 @@
 # BasicExample
 
-[Observable 생성](#Observable 생성)
+[Observable 생성](#Observable)
 
 [Subject](#Subject)
 
-[Observable의 합성](#Observable의 합성)
+[Observable 합성](#Observable)
 
-[Error 처리](#Error 처리)
+[Error 처리](#Error)
 
 ## Observable 생성
 
@@ -240,7 +240,7 @@ replaySubject.onNext("replay 6")
 replaySubject.onNext("replay 7")
 ```
 
-## Observable의 합성
+## Observable 합성
 
 > Observable의 결합은 연결고리가 있느 몇가지 이벤트들을 같이 처리해야 할때 사용할수 있다.
 
