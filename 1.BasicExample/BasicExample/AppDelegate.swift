@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  BasicExample
-//
-//  Created by APPLE on 22/11/2018.
-//  Copyright © 2018 pikachu987. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain

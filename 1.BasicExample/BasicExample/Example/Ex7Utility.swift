@@ -52,13 +52,24 @@ class Ex7Utility: NSObject {
                 print(eventText)
                 return eventText
             }
-            .observeOn(MainScheduler.instance)
+            .asDriver(onErrorJustReturn: "-1")
+            .asObservable()
             .do(onNext: { value in
                 print("do: \(Thread.isMainThread)")
             })
             .subscribe {  (value) in
                 print("subscribe: \(Thread.isMainThread)")
             }.disposed(by: self.disposeBag)
+        
+        /*
+        .asDriver(onErrorJustReturn: "-1")
+        .asObservable()
+         는
+         .observeOn(MainScheduler.instance)
+         .catchErrorJustReturn("-1")
+         .shareReplayLatesWhileConnected()
+         와 동일하다.
+         */
     }
     
     // materialize: 이벤트가 전달될때 어떤 이벤트인지도 같이 전달된다.

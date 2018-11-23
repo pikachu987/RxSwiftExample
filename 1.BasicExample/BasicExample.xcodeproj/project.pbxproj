@@ -10,6 +10,9 @@
 		18C5C05221A78ACB00A9EA60 /* Ex5Transforming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5C05121A78ACB00A9EA60 /* Ex5Transforming.swift */; };
 		18C5C05421A79B1E00A9EA60 /* Ex6Filtering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5C05321A79B1E00A9EA60 /* Ex6Filtering.swift */; };
 		18C5C05621A7BAD200A9EA60 /* Ex7Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5C05521A7BAD200A9EA60 /* Ex7Utility.swift */; };
+		18C5C05821A7CD4800A9EA60 /* Ex8Subscriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5C05721A7CD4800A9EA60 /* Ex8Subscriptions.swift */; };
+		18C5C05B21A7DDC800A9EA60 /* MemberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5C05A21A7DDC800A9EA60 /* MemberModel.swift */; };
+		18C5C05D21A7DE3500A9EA60 /* Member.json in Resources */ = {isa = PBXBuildFile; fileRef = 18C5C05C21A7DE3500A9EA60 /* Member.json */; };
 		18FE32E421A6451400F70B5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FE32E321A6451400F70B5A /* AppDelegate.swift */; };
 		18FE32E621A6451400F70B5A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FE32E521A6451400F70B5A /* ViewController.swift */; };
 		18FE32E921A6451400F70B5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18FE32E721A6451400F70B5A /* Main.storyboard */; };
@@ -27,6 +30,9 @@
 		18C5C05121A78ACB00A9EA60 /* Ex5Transforming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ex5Transforming.swift; sourceTree = "<group>"; };
 		18C5C05321A79B1E00A9EA60 /* Ex6Filtering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ex6Filtering.swift; sourceTree = "<group>"; };
 		18C5C05521A7BAD200A9EA60 /* Ex7Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ex7Utility.swift; sourceTree = "<group>"; };
+		18C5C05721A7CD4800A9EA60 /* Ex8Subscriptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ex8Subscriptions.swift; sourceTree = "<group>"; };
+		18C5C05A21A7DDC800A9EA60 /* MemberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberModel.swift; sourceTree = "<group>"; };
+		18C5C05C21A7DE3500A9EA60 /* Member.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Member.json; sourceTree = "<group>"; };
 		18FE32E021A6451400F70B5A /* BasicExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18FE32E321A6451400F70B5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18FE32E521A6451400F70B5A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +62,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18C5C05921A7DDA200A9EA60 /* ExTableView */ = {
+			isa = PBXGroup;
+			children = (
+				18C5C05C21A7DE3500A9EA60 /* Member.json */,
+				18C5C05A21A7DDC800A9EA60 /* MemberModel.swift */,
+			);
+			path = ExTableView;
+			sourceTree = "<group>";
+		};
 		18FE32D721A6451400F70B5A = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +100,7 @@
 				18FE32EF21A6451600F70B5A /* Info.plist */,
 				18FE32F521A66CC000F70B5A /* README.md */,
 				18FE32F921A6A93000F70B5A /* Example */,
+				18C5C05921A7DDA200A9EA60 /* ExTableView */,
 			);
 			path = BasicExample;
 			sourceTree = "<group>";
@@ -99,6 +115,7 @@
 				18C5C05121A78ACB00A9EA60 /* Ex5Transforming.swift */,
 				18C5C05321A79B1E00A9EA60 /* Ex6Filtering.swift */,
 				18C5C05521A7BAD200A9EA60 /* Ex7Utility.swift */,
+				18C5C05721A7CD4800A9EA60 /* Ex8Subscriptions.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -184,6 +201,7 @@
 				18FE32EB21A6451500F70B5A /* Assets.xcassets in Resources */,
 				18FE32F621A66CC000F70B5A /* README.md in Resources */,
 				18FE32E921A6451400F70B5A /* Main.storyboard in Resources */,
+				18C5C05D21A7DE3500A9EA60 /* Member.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,14 +215,18 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-BasicExample/Pods-BasicExample-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -246,6 +268,8 @@
 				18C5C05221A78ACB00A9EA60 /* Ex5Transforming.swift in Sources */,
 				18FE32FD21A6AAFE00F70B5A /* Ex3Synthesis.swift in Sources */,
 				18FE32F821A6A92A00F70B5A /* Ex1Observable.swift in Sources */,
+				18C5C05821A7CD4800A9EA60 /* Ex8Subscriptions.swift in Sources */,
+				18C5C05B21A7DDC800A9EA60 /* MemberModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
