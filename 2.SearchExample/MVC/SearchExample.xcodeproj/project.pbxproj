@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18C5C06A21A7F34000A9EA60 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5C06921A7F34000A9EA60 /* DetailViewController.swift */; };
+		18C5C06E21A7F58400A9EA60 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5C06D21A7F58400A9EA60 /* SearchService.swift */; };
+		18C5C07021A7F5AE00A9EA60 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5C06F21A7F5AE00A9EA60 /* Provider.swift */; };
+		18C5C07221A7F80B00A9EA60 /* RepositoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5C07121A7F80B00A9EA60 /* RepositoryModel.swift */; };
 		85E3ED4B769D0EC4203885B5 /* Pods_SearchExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A94218953EE160E2BC3E7BA5 /* Pods_SearchExample.framework */; };
 		E0E52BC021A5A27D00508A77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E52BBF21A5A27D00508A77 /* AppDelegate.swift */; };
-		E0E52BC221A5A27D00508A77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E52BC121A5A27D00508A77 /* ViewController.swift */; };
+		E0E52BC221A5A27D00508A77 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E52BC121A5A27D00508A77 /* SearchViewController.swift */; };
 		E0E52BC521A5A27D00508A77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0E52BC321A5A27D00508A77 /* Main.storyboard */; };
 		E0E52BC721A5A27E00508A77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0E52BC621A5A27E00508A77 /* Assets.xcassets */; };
 		E0E52BCA21A5A27E00508A77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0E52BC821A5A27E00508A77 /* LaunchScreen.storyboard */; };
@@ -17,11 +21,15 @@
 
 /* Begin PBXFileReference section */
 		07F217194BCE026F261A48C5 /* Pods-SearchExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-SearchExample/Pods-SearchExample.release.xcconfig"; sourceTree = "<group>"; };
+		18C5C06921A7F34000A9EA60 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		18C5C06D21A7F58400A9EA60 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchService.swift; path = ../../../../../../Documents/SearchService.swift; sourceTree = "<group>"; };
+		18C5C06F21A7F5AE00A9EA60 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Provider.swift; path = ../../../../../../Documents/Provider.swift; sourceTree = "<group>"; };
+		18C5C07121A7F80B00A9EA60 /* RepositoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RepositoryModel.swift; path = ../../../../../../Documents/RepositoryModel.swift; sourceTree = "<group>"; };
 		87373664667A42F0BDFDA3FC /* Pods-SearchExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SearchExample/Pods-SearchExample.debug.xcconfig"; sourceTree = "<group>"; };
 		A94218953EE160E2BC3E7BA5 /* Pods_SearchExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SearchExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0E52BBC21A5A27D00508A77 /* SearchExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SearchExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0E52BBF21A5A27D00508A77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E0E52BC121A5A27D00508A77 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E0E52BC121A5A27D00508A77 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		E0E52BC421A5A27D00508A77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E0E52BC621A5A27E00508A77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E0E52BC921A5A27E00508A77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -40,6 +48,78 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18C5C06021A7EF2900A9EA60 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E0E52BC621A5A27E00508A77 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		18C5C06121A7EF3300A9EA60 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E0E52BCB21A5A27E00508A77 /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		18C5C06321A7EF9100A9EA60 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				18C5C07121A7F80B00A9EA60 /* RepositoryModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		18C5C06421A7EFBE00A9EA60 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		18C5C06621A7EFC200A9EA60 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				18C5C06721A7F2FC00A9EA60 /* Search */,
+				18C5C06821A7F33100A9EA60 /* Detail */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		18C5C06721A7F2FC00A9EA60 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				E0E52BC121A5A27D00508A77 /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		18C5C06821A7F33100A9EA60 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				18C5C06921A7F34000A9EA60 /* DetailViewController.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		18C5C06B21A7F4AB00A9EA60 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		18C5C06C21A7F4B900A9EA60 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				18C5C06D21A7F58400A9EA60 /* SearchService.swift */,
+				18C5C06F21A7F5AE00A9EA60 /* Provider.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		3D9BD2CE18668A83ABBA9E8B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,11 +159,15 @@
 			isa = PBXGroup;
 			children = (
 				E0E52BBF21A5A27D00508A77 /* AppDelegate.swift */,
-				E0E52BC121A5A27D00508A77 /* ViewController.swift */,
-				E0E52BC321A5A27D00508A77 /* Main.storyboard */,
-				E0E52BC621A5A27E00508A77 /* Assets.xcassets */,
 				E0E52BC821A5A27E00508A77 /* LaunchScreen.storyboard */,
-				E0E52BCB21A5A27E00508A77 /* Info.plist */,
+				E0E52BC321A5A27D00508A77 /* Main.storyboard */,
+				18C5C06321A7EF9100A9EA60 /* Models */,
+				18C5C06B21A7F4AB00A9EA60 /* Views */,
+				18C5C06421A7EFBE00A9EA60 /* Extension */,
+				18C5C06C21A7F4B900A9EA60 /* Networking */,
+				18C5C06621A7EFC200A9EA60 /* ViewControllers */,
+				18C5C06021A7EF2900A9EA60 /* Resources */,
+				18C5C06121A7EF3300A9EA60 /* Supporting Files */,
 			);
 			path = SearchExample;
 			sourceTree = "<group>";
@@ -165,24 +249,16 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SearchExample/Pods-SearchExample-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
-				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -214,7 +290,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E0E52BC221A5A27D00508A77 /* ViewController.swift in Sources */,
+				18C5C06A21A7F34000A9EA60 /* DetailViewController.swift in Sources */,
+				18C5C06E21A7F58400A9EA60 /* SearchService.swift in Sources */,
+				E0E52BC221A5A27D00508A77 /* SearchViewController.swift in Sources */,
+				18C5C07221A7F80B00A9EA60 /* RepositoryModel.swift in Sources */,
+				18C5C07021A7F5AE00A9EA60 /* Provider.swift in Sources */,
 				E0E52BC021A5A27D00508A77 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,7 +444,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 95YHHS8BGP;
-				INFOPLIST_FILE = SearchExample/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/SearchExample/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -383,7 +463,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 95YHHS8BGP;
-				INFOPLIST_FILE = SearchExample/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/SearchExample/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
