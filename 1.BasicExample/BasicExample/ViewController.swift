@@ -36,14 +36,12 @@ final class ViewController: UIViewController {
 //        self.buttonExample()
 //        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
 //        self.tableViewExample()
-        
         self.rx.viewWillAppear
             .subscribe({ event in
                 print("viewWillAppear!!")
             })
             .disposed(by: self.disposeBag)
     }
-    
     
     func buttonExample() {
         self.button.rx.tap
@@ -77,11 +75,6 @@ final class ViewController: UIViewController {
         self.sectionViewModels
             .drive(self.tableView.rx.items(dataSource: createDataSource()))
             .disposed(by: self.disposeBag)
-    }
-    
-    
-    func uiControlExample() {
-        
     }
 }
 

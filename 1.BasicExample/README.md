@@ -10,6 +10,13 @@
 
 - [Observable 변형](5observabletransforming)
 
+- [Observable Filter](6observablefiltering)
+
+- [Observable Utility](7utility)
+
+- [Observable Subscriptions](8subscriptions)
+
+
 ## 1.ObservableCreate
 
 > Observable는 안전한 형변환이 가능한 이벤트로 다른 종류의 데이터를 넣고 뺄 수 있다.
@@ -783,31 +790,316 @@ completed
 
 
 
+## 6.ObservableFiltering
+
+> Observable이 특정조건을 충족할때 발생하는 메서드
+
+
+#### debounce
+
+지정한 시간간격 내에 하나의 이벤트만 발생했을때 이벤트를 전달한다.
+이벤트가 발생한후 debounce 시간동안 다른 이벤트가 발생하지 않으면 debounce된 Observable 에 이벤트가 발생한다.
+이벤트가 발생한후 debounce 시간동안 다른 이벤트가 발생하면 debounce된 Observable 에 이벤트가 발생하지 않는다.
+
+![img](./image/debounce.png)
+
+```swift
+Observable<Int>.interval(0.6, scheduler: MainScheduler.instance).take(3, scheduler: MainScheduler.instance)
+    .debounce(0.5, scheduler: MainScheduler.instance)
+    .subscribe { print($0) }
+    .disposed(by: self.disposeBag)
+```
+
+#### throttle
+
+지정한 시간 내에 발생한 최초 이벤트 및 가장 최신의 이벤트를 발생시킨다.
+
+
+```swift
+Observable<Int>.interval(0.1, scheduler: MainScheduler.instance).take(20)
+    .throttle(1, scheduler: MainScheduler.instance)
+    .subscribe { print($0) }
+    .disposed(by: self.disposeBag)
+```
+
+
+#### distinct
+
+이전 이벤트와 비교해서 값이 다를 경우에만 이벤트를 방출한다.
+
+![img](./image/distinct.png)
+
+```swift
+let array = ["가", "나", "가", "가", "가", "바", "나", "나", "나", "다", "나", "나"]
+Observable<Int>.interval(0.1, scheduler: MainScheduler.instance).take(array.count)
+    .enumerated().map({ array[$0.index] })
+    .throttle(0.2, scheduler: MainScheduler.instance)
+    .distinctUntilChanged()
+    .subscribe { print($0) }
+    .disposed(by: self.disposeBag)
+```
+
+
+#### elementAt
+
+지정한 index의 이벤트만 발생시킨다.
+
+![img](./image/elementAt.png)
+
+```swift
+Observable.of(1, 2, 3, 3, 7, 10, 1).elementAt(4)
+    .subscribe { print($0) }
+    .disposed(by: self.disposeBag)
+```
 
 
 
+#### single
+
+첫번째 이벤트만 발생시킨다.
+
+![img](./image/single.png)
+
+```swift
+Observable.of(1, 2, 3, 3, 7, 10, 1).single()
+    .subscribe { print($0) }
+    .disposed(by: self.disposeBag)
+```
+
+#### sample
+
+sampler observable의 이벤트에 따라 본래 observable의 이벤트가 전달된다. 전달할 이벤트가 없을때는 무시한다.
+
+![img](./image/sample.png)
+
+```swift
+Observable<Int>.interval(0.1, scheduler: MainScheduler.instance).take(10)
+    .sample(Observable<Int>.interval(0.5, scheduler: MainScheduler.instance))
+    .subscribe { print($0) }
+    .disposed(by: self.disposeBag)
+```
+
+
+#### skip
+
+이벤트를 스킵한다.
+
+![img](./image/skip.png)
+
+```swift
+Observable.of(1,2,3,4,5,6)
+    .skip(5)
+    .subscribe { print($0) }
+    .disposed(by: self.disposeBag)
+
+Observable.of(1,2,3,4,5,6)
+    .skipWhile { $0 != 5 }
+    .subscribe { print($0) }
+    .disposed(by: self.disposeBag)
+```
+
+#### ignoreElements
+
+모든 이벤트를 무시한다
+
+![img](./image/ignoreElements.png)
+
+```swift
+Observable.of(1,2,3,4,5)
+    .ignoreElements()
+    .subscribe()
+    .disposed(by: self.disposeBag)
+```
 
 
 
+## 7.Utility
+
+> 여러 이벤트 메서드 관련 utility 함수
 
 
+#### doOn
+
+Observable의 이벤트가 발생할때 이벤트 핸들러
+subscribe시점이 아닌 이벤트 발생시점
+
+![img](./image/doOn.png)
+
+```swift
+Observable<Int>.interval(0.1, scheduler: MainScheduler.instance)
+    .take(10)
+    .do(onNext: {event in
+        print("do: \(event)")
+        })
+    .subscribe({ print($0) })
+    .disposed(by: self.disposeBag)
+```
+
+#### observeOn
+
+ObserveOn 이 호출된 다음 메서드가 수행될 스케쥴러를 지정할수 있다.
+
+![img](./image/observeOn.png)
+
+```swift
+Observable<Int>.interval(0.1, scheduler: MainScheduler.instance)
+    .take(10)
+    .observeOn(MainScheduler.instance)
+    .do(onNext: { print("do: \(Thread.isMainThread), \($0)") })
+    .observeOn(ConcurrentDispatchQueueScheduler.init(qos: .background))
+    .subscribe { print("subscribe: \(Thread.isMainThread), \($0)") }
+    .disposed(by: self.disposeBag)
+```
+
+#### subscribeOn
+
+Observable이 수행될 스케쥴러를 지정한다. create 블럭 안에서의 스케쥴러를 지정할수 있다.
+
+![img](./image/observeOn.png)
+
+```swift
+Observable<String>.create { observer in
+    let eventText = "create: \(Thread.isMainThread)"
+    print(eventText)
+    observer.onNext(eventText)
+    return Disposables.create()
+}.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+    .map { value -> String in
+        let eventText = "map: \(Thread.isMainThread)"
+        print(eventText)
+        return eventText
+    }
+    .asDriver(onErrorJustReturn: "-1")
+    .asObservable()
+    .do(onNext: { value in
+        print("do: \(Thread.isMainThread)")
+    })
+    .subscribe {  (value) in
+        print("subscribe: \(Thread.isMainThread)")
+    }.disposed(by: self.disposeBag)
+    
+/*
+    .asDriver(onErrorJustReturn: "-1")
+    .asObservable()
+    는
+    .observeOn(MainScheduler.instance)
+    .catchErrorJustReturn("-1")
+    .shareReplayLatesWhileConnected()
+    와 동일하다.
+*/
+```
 
 
+#### materialize
+
+materialize: 이벤트가 전달될때 어떤 이벤트인지도 같이 전달된다.
+dematerialize: materialize된 이벤트를 다시 일반 이벤트발생형태로 변경한다.
+
+![img](./image/materialize.png)
+![img](./image/dematerialize.png)
+
+```swift
+Observable<Int>.interval(1, scheduler: MainScheduler.instance).take(4)
+    .materialize()
+    .dematerialize()
+    .subscribe { print($0) }
+    .disposed(by: self.disposeBag)
+```
+
+#### using
+
+Observable과 동일한 수명을 가진 일회용 리소스를 만듭니다.
+
+![img](./image/using.png)
+
+```swift
+class ResourceDisposable: Disposable {
+    func dispose() {
+        print("dispose!")
+    }
+}
+Observable.using({ () -> ResourceDisposable in
+    return ResourceDisposable()
+}) { disposable in
+    return Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+}.take(3)
+.subscribe { print($0) }
+.disposed(by: self.disposeBag)
+```
 
 
+## 8.Subscriptions
+
+> Cold Observable는 subscribe부터 Observable 이 이벤트를 발생시키기 시작을 한다. 두번 subscribe가 일어나면 두개의 이벤트 스트림이 발생한다.
+> 하나의 이벤트 스트림을 두개의 subscribe에 공유할때 메서드이다.
 
 
+#### multicast
 
+Observable의 시컨스를 하나의 subject를 통해 multicast로 이벤트를 전달하게 된다.
+connect 하기 전에는 시컨스가 시작되지 않는다.
 
+![img](./image/multicast.png)
 
+```swift
+let timer = Observable<Int>.interval(1, scheduler: MainScheduler.instance).take(4)
+let subject = PublishSubject<Int>()
+let multicast = timer.multicast(subject)
+_ = multicast.connect()
+multicast.subscribe { event in
+    print("first scription: \(event)")
+}.disposed(by: self.disposeBag)
 
+multicast.delaySubscription(2, scheduler: MainScheduler.instance)
+    .subscribe { event in
+        print("second scription: \(event)")
+    }.disposed(by: self.disposeBag)
+    
+// multicase + publish subject 합쳐서 publish로 할수 있다.
+let publish = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+    .take(4)
+    .publish()
+_ = publish.connect()
+publish.subscribe { print("first: \($0)") }
+    .disposed(by: self.disposeBag)
+publish.delaySubscription(1, scheduler: MainScheduler.instance)
+    .subscribe{ print("second: \($0)") }
+    .disposed(by: self.disposeBag)
+```
 
+#### replay
 
+subscriptions을 공유시 지정한 버퍼 크기만큼 이벤트를 저장하고 전달해준다.
+replayAll은 모든 이벤트를 저장한다.
 
+![img](./image/replay.png)
 
+```swift
+let timer = Observable<Int>.interval(1, scheduler: MainScheduler.instance).take(5)
+let replay = timer.replay(2)
+_ = replay.connect()
+replay.subscribe { print("first: \($0)") }
+    .disposed(by: self.disposeBag)
+replay.delaySubscription(4, scheduler: MainScheduler.instance)
+    .subscribe { print("second: \($0)") }
+    .disposed(by: self.disposeBag)
+```
 
+#### share
 
+간단하게 공유를 만들수 있다. subscribe가 더 이상 없을때까지 지속되고 계속적으로 subscription을 공유할 수 있다.
 
+![img](./image/share.png)
+
+```swift
+let timer = Observable<Int>.interval(1, scheduler: MainScheduler.instance).take(5)
+let share = timer.share()
+share.subscribe { print("first: \($0)") }
+    .disposed(by: self.disposeBag)
+share.delaySubscription(4, scheduler: MainScheduler.instance)
+    .subscribe { print("second: \($0)") }
+    .disposed(by: self.disposeBag)
+```
 
 
 참고 블로그<br/>
