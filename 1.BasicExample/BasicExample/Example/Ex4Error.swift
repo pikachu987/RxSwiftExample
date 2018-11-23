@@ -126,6 +126,11 @@ class Ex4Error: NSObject {
             timer.resume()
             return cancel
         }.timeout(2, scheduler: MainScheduler.instance)
+            .do(onNext: { value in
+                print("onNext: \(value)")
+            }, onError: { (error) in
+                print("error: \(error)")
+            })
             .subscribe({ print($0) })
             .disposed(by: self.disposeBag)
         /*

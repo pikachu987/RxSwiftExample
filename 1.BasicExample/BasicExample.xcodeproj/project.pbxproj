@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		18C5C05221A78ACB00A9EA60 /* Ex5Transforming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5C05121A78ACB00A9EA60 /* Ex5Transforming.swift */; };
 		18C5C05421A79B1E00A9EA60 /* Ex6Filtering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5C05321A79B1E00A9EA60 /* Ex6Filtering.swift */; };
+		18C5C05621A7BAD200A9EA60 /* Ex7Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5C05521A7BAD200A9EA60 /* Ex7Utility.swift */; };
 		18FE32E421A6451400F70B5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FE32E321A6451400F70B5A /* AppDelegate.swift */; };
 		18FE32E621A6451400F70B5A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FE32E521A6451400F70B5A /* ViewController.swift */; };
 		18FE32E921A6451400F70B5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18FE32E721A6451400F70B5A /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		18C5C05121A78ACB00A9EA60 /* Ex5Transforming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ex5Transforming.swift; sourceTree = "<group>"; };
 		18C5C05321A79B1E00A9EA60 /* Ex6Filtering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ex6Filtering.swift; sourceTree = "<group>"; };
+		18C5C05521A7BAD200A9EA60 /* Ex7Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ex7Utility.swift; sourceTree = "<group>"; };
 		18FE32E021A6451400F70B5A /* BasicExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18FE32E321A6451400F70B5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18FE32E521A6451400F70B5A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				E038882B21A6DBA600231699 /* Ex4Error.swift */,
 				18C5C05121A78ACB00A9EA60 /* Ex5Transforming.swift */,
 				18C5C05321A79B1E00A9EA60 /* Ex6Filtering.swift */,
+				18C5C05521A7BAD200A9EA60 /* Ex7Utility.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E038882C21A6DBA600231699 /* Ex4Error.swift in Sources */,
+				18C5C05621A7BAD200A9EA60 /* Ex7Utility.swift in Sources */,
 				18FE32E621A6451400F70B5A /* ViewController.swift in Sources */,
 				18FE32E421A6451400F70B5A /* AppDelegate.swift in Sources */,
 				18FE32FB21A6AA6300F70B5A /* Ex2Subject.swift in Sources */,

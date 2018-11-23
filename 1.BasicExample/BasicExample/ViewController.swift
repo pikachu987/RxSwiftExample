@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     let ex4 = Ex4Error()
     let ex5 = Ex5Transforming()
     let ex6 = Ex6Filtering()
+    let ex7 = Ex7Utility()
     
     override func viewDidLoad() {
         super.viewDidLoad()
