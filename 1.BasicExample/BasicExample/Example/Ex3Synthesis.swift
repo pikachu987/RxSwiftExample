@@ -2,7 +2,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-class Ex3ObservableSynthesis: NSObject {
+class Ex3Synthesis: NSObject {
     var disposeBag = DisposeBag()
     
     override init() {

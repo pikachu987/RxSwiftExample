@@ -12,8 +12,10 @@ import UIKit
 class ViewController: UIViewController {
     let ex1 = Ex1Observable()
     let ex2 = Ex2Subject()
-    let ex3 = Ex3ObservableSynthesis()
+    let ex3 = Ex3Synthesis()
     let ex4 = Ex4Error()
+    let ex5 = Ex5Transforming()
+    let ex6 = Ex6Filtering()
     
     override func viewDidLoad() {
         super.viewDidLoad()
