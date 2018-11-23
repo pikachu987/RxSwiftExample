@@ -955,8 +955,6 @@ Observable<Int>.interval(0.1, scheduler: MainScheduler.instance)
 
 Observable이 수행될 스케쥴러를 지정한다. create 블럭 안에서의 스케쥴러를 지정할수 있다.
 
-![img](./image/observeOn.png)
-
 ```swift
 Observable<String>.create { observer in
     let eventText = "create: \(Thread.isMainThread)"
