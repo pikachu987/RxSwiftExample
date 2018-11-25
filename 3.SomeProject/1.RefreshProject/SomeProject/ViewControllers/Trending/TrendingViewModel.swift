@@ -29,8 +29,9 @@ final class TrendingViewModel: TrendingViewModelInputs, TrendingViewModelOutputs
     private let disposeBag = DisposeBag()
     private var language = ""
     
-    var items: BehaviorRelay<[Repository]>
     var loadPageTrigger: PublishSubject<Void>
+    
+    var items: BehaviorRelay<[Repository]>
     
     init() {
         self.items = BehaviorRelay<[Repository]>(value: [])
