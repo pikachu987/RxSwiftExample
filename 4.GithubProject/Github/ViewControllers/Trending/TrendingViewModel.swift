@@ -6,19 +6,23 @@
 //  Copyright © 2018 Gwanho Kim. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
+import RxOptional
 
 protocol TrendingViewModelInputs {
     var loadPageTrigger: PublishSubject<Void> { get }
+    var loadNextPageTrigger: PublishSubject<Void> { get }
     func refresh()
     func language(_ language: String)
+    func repositoryTap(_ indexPath: IndexPath)
 }
 
 protocol TrendingViewModelOutputs {
     var items: BehaviorRelay<[Repository]> { get }
     var isLoading: Driver<Bool> { get }
+    var error: PublishSubject<Swift.Error> { get }
+    var repositoryViewModel: Driver<RepositoryViewModel> { get }
 }
 
 protocol TrendingViewModelType {
@@ -31,61 +35,66 @@ final class TrendingViewModel: TrendingViewModelInputs, TrendingViewModelOutputs
     private var language = ""
     private var page = 1
     
-    // MARK: Input property
-    
-    var loadPageTrigger: PublishSubject<Void>
-    
-    // MARK: Output property
+    private let selectItem = BehaviorRelay<Repository?>(value: nil)
     
     var items: BehaviorRelay<[Repository]>
     var isLoading: Driver<Bool>
+    var error: PublishSubject<Error>
+    var repositoryViewModel: Driver<RepositoryViewModel>
     
-    // MARK: Init
+    var loadPageTrigger: PublishSubject<Void>
+    var loadNextPageTrigger: PublishSubject<Void>
     
     init() {
         self.items = BehaviorRelay<[Repository]>(value: [])
-        
-        let activityIndicator = ActivityIndicator()
-        self.isLoading = activityIndicator.asDriver()
+        let loading = ActivityIndicator()
+        self.isLoading = loading.asDriver()
+        self.error = PublishSubject<Swift.Error>()
+        self.repositoryViewModel = Driver.empty()
         
         self.loadPageTrigger = PublishSubject<Void>()
+        self.loadNextPageTrigger = PublishSubject<Void>()
         
         let loadRequest = self.isLoading.asObservable()
             .sample(self.loadPageTrigger)
             .flatMap { isLoading -> Observable<[Repository]> in
-                if isLoading {
-                    return Observable.empty()
-                } else {
-                    self.page = 1
-                    self.items.accept([])
-                    return API.trendingRepositories(self.language, page: self.page)
-                        .trackActivity(activityIndicator)
-                }
-            }
-        let request = Observable.of(loadRequest)
+                if isLoading { return Observable.empty() }
+                self.page = 1
+                return API.trendingRepositories(self.language, page: self.page)
+                    .trackActivity(loading)
+        }
+        
+        let loadNextRequest = self.isLoading.asObservable()
+            .sample(self.loadNextPageTrigger)
+            .flatMap { isLoading -> Observable<[Repository]>  in
+                if isLoading { return Observable.empty() }
+                self.page += 1
+                return API.trendingRepositories(self.language, page: self.page)
+                    .trackActivity(loading)
+        }
+        
+        let request = Observable.of(loadRequest, loadNextRequest)
             .merge()
+            .do(onError: { (error) in
+                self.error.onNext(error)
+            }).catchError({ (error) -> Observable<[Repository]> in
+                Observable.empty()
+            })
             .share(replay: 1)
-
-        let response = request.flatMap { (repositories) -> Observable<[Repository]> in
-            request
-                .do(onError: { (error) in
-
-                }).catchError({ (error) -> Observable<[Repository]> in
-                    Observable.empty()
-                })
-            }.share(replay: 1)
-
-        Observable
-            .combineLatest(loadRequest, response, self.items.asObservable()) { request, response, items in
-                return self.page == 1 ? response : items + response
-            }
-            .sample(response)
+        
+        Observable.combineLatest(request, self.items.asObservable()) { request, items in
+            return self.page == 1 ? request : items + request
+            }.sample(request)
             .bind(to: self.items)
             .disposed(by: self.disposeBag)
+        
+        self.repositoryViewModel = self.selectItem
+            .asDriver()
+            .filterNil()
+            .flatMapLatest { repository -> Driver<RepositoryViewModel> in
+                return Driver.just(RepositoryViewModel(repository: repository))
+        }
     }
-    
-    
-    // MARK: Input Methods
     
     func refresh() {
         self.loadPageTrigger
@@ -95,9 +104,12 @@ final class TrendingViewModel: TrendingViewModelInputs, TrendingViewModelOutputs
     func language(_ language: String) {
         self.language = language
     }
+    
+    func repositoryTap(_ indexPath: IndexPath) {
+        self.selectItem.accept(self.items.value[indexPath.row])
+    }
 }
 
-// MARK: TrendingViewModelType
 extension TrendingViewModel: TrendingViewModelType {
     var inputs: TrendingViewModelInputs { return self }
     var outpust: TrendingViewModelOutputs { return self }

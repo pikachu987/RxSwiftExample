@@ -10,7 +10,7 @@ import Moya
 import RxSwift
 import RxCocoa
 
-var GithubProvider = MoyaProvider<GitHub>(
+var GithubProvider = MoyaProvider<GitHub> (
     plugins: [NetworkLoggerPlugin(verbose: true, responseDataFormatter: JSONResponseDataFormatter)]
 )
 
@@ -31,11 +31,13 @@ protocol GitHubAPI {
 final class API: GitHubAPI {
     static func trendingRepositories(_ language: String, page: Int) -> Single<[Repository]> {
         return GithubProvider.rx.request(GitHub.trendingRepositories(language: language, page: page))
-            .map(Repositories.self)
             .observeOn(MainScheduler.instance)
-            .flatMap ({ repositories -> Single<[Repository]> in
-                guard let items = repositories.items else { return Single.just([]) }
-                return Single.just(items)
+            .flatMap ({ response -> Single<[Repository]> in
+                guard let repositories = try? JSONDecoder().decode(Repositories.self, from: response.data) else {
+                    let error = try? JSONDecoder().decode(GitHubError.self, from: response.data)
+                    return Single.error(NSError(domain: error?.message ?? "An unknown error has occurred.", code: 400, userInfo: nil))
+                }
+                return Single.just(repositories.items)
             })
     }
 }

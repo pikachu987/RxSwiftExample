@@ -6,10 +6,16 @@
 //  Copyright © 2018 Gwanho Kim. All rights reserved.
 //
 
-import UIKit
+import RxSwift
 
-extension UIScrollView {
-    public var isBottomLoadNextPage: Bool {
-        return (self.contentSize.height - self.frame.size.height) - self.contentOffset.y <= 0
+extension Reactive where Base: UIScrollView {
+    var loadNextBottom: Observable<Void> {
+        let scrollView = self.base as UIScrollView
+        return self.contentOffset.flatMap{ [weak scrollView] (contentOffset) -> Observable<Void> in
+            guard let scrollView = scrollView else { return Observable.empty() }
+            let isLoadNext = (scrollView.contentSize.height - scrollView.frame.size.height) - contentOffset.y <= 0
+            return isLoadNext ? Observable.just(()) : Observable.empty()
+        }
     }
 }
+

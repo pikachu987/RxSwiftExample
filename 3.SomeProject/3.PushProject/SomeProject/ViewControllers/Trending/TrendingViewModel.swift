@@ -6,7 +6,6 @@
 //  Copyright © 2018 Gwanho Kim. All rights reserved.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 import RxOptional

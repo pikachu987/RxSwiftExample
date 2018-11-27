@@ -15,6 +15,9 @@ PODS:
     - Differentiator (~> 3.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
+  - RxOptional (3.6.2):
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
   - RxSwift (4.4.0):
     - RxAtomic (~> 4.4)
   - SnapKit (4.2.0)
@@ -23,6 +26,7 @@ DEPENDENCIES:
   - Moya/RxSwift (= 12.0.1)
   - RxCocoa (= 4.4.0)
   - RxDataSources (= 3.1.0)
+  - RxOptional (= 3.6.2)
   - RxSwift (= 4.4.0)
   - SnapKit (= 4.2.0)
 
@@ -35,6 +39,7 @@ SPEC REPOS:
     - RxAtomic
     - RxCocoa
     - RxDataSources
+    - RxOptional
     - RxSwift
     - SnapKit
 
@@ -46,9 +51,10 @@ SPEC CHECKSUMS:
   RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
   RxCocoa: df63ebf7b9a70d6b4eeea407ed5dd4efc8979749
   RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
+  RxOptional: 80426a0ddbd092573e4c482d8cc13302078c4d5e
   RxSwift: 5976ecd04fc2fefd648827c23de5e11157faa973
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
-PODFILE CHECKSUM: e9f4fcbcdc9954ac88e41e2acba185805e0dbb66
+PODFILE CHECKSUM: 1f7ab5db68c45093bf30293b276897cc3d27ce48
 
 COCOAPODS: 1.5.3

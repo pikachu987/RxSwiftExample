@@ -10,39 +10,33 @@ import RxSwift
 import RxCocoa
 
 private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
-    private let _source: Observable<E>
-    private let _dispose: Cancelable
+    private let source: Observable<E>
+    private let cancelable: Cancelable
     
     init(source: Observable<E>, disposeAction: @escaping () -> ()) {
-        _source = source
-        _dispose = Disposables.create(with: disposeAction)
+        self.source = source
+        self.cancelable = Disposables.create(with: disposeAction)
     }
     
     func dispose() {
-        _dispose.dispose()
+        self.cancelable.dispose()
     }
     
     func asObservable() -> Observable<E> {
-        return _source
+        return self.source
     }
 }
 
-/**
- Enables monitoring of sequence computation.
- 
- If there is at least one sequence computation in progress, `true` will be sent.
- When all activities complete `false` will be sent.
- */
-public class ActivityIndicator : SharedSequenceConvertibleType {
+class ActivityIndicator : SharedSequenceConvertibleType {
     public typealias E = Bool
     public typealias SharingStrategy = DriverSharingStrategy
     
-    private let _lock = NSRecursiveLock()
-    private let _variable = Variable(0)
-    private let _loading: SharedSequence<SharingStrategy, Bool>
+    private let lock = NSRecursiveLock()
+    private let variable = Variable(0)
+    private let loading: SharedSequence<SharingStrategy, Bool>
     
     public init() {
-        _loading = _variable.asDriver()
+        self.loading = self.variable.asDriver()
             .map { $0 > 0 }
             .distinctUntilChanged()
     }
@@ -57,24 +51,24 @@ public class ActivityIndicator : SharedSequenceConvertibleType {
     }
     
     private func increment() {
-        _lock.lock()
-        _variable.value = _variable.value + 1
-        _lock.unlock()
+        self.lock.lock()
+        self.variable.value += 1
+        self.lock.unlock()
     }
     
     private func decrement() {
-        _lock.lock()
-        _variable.value = _variable.value - 1
-        _lock.unlock()
+        self.lock.lock()
+        self.variable.value -= 1
+        self.lock.unlock()
     }
     
-    public func asSharedSequence() -> SharedSequence<SharingStrategy, E> {
-        return _loading
+    func asSharedSequence() -> SharedSequence<SharingStrategy, E> {
+        return self.loading
     }
 }
 
 extension ObservableConvertibleType {
-    public func trackActivity(_ activityIndicator: ActivityIndicator) -> Observable<E> {
+    func trackActivity(_ activityIndicator: ActivityIndicator) -> Observable<E> {
         return activityIndicator.trackActivityOfObservable(self)
     }
 }
