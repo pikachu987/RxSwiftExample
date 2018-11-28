@@ -10,6 +10,7 @@ import Moya
 
 enum GitHub {
     case trendingRepositories(language: String, page: Int)
+    case languages
 }
 
 extension GitHub: TargetType {
@@ -20,16 +21,15 @@ extension GitHub: TargetType {
     }
     
     var method: Moya.Method {
-        switch self {
-        case .trendingRepositories:
-            return .get
-        }
+        return .get
     }
     
     var path: String {
         switch self {
         case .trendingRepositories:
             return "/search/repositories"
+        case .languages:
+            return ""
         }
     }
     
@@ -50,6 +50,8 @@ extension GitHub: TargetType {
                 "page": page
                 ] as [String : Any]
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+        case .languages:
+            return .requestPlain
         }
     }
     

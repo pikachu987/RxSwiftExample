@@ -111,8 +111,14 @@ final class TrendingViewController: BaseViewController {
         
         self.languageBarButtonItem.rx.tap
             .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
                 let viewController = LanguageListViewController()
-                self?.present(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
+                viewController.rx_delegate.languageSubject
+                    .subscribe(onNext: { [weak self] (language) in
+                        self?.viewModel.inputs.language(language)
+                        self?.viewModel.inputs.refresh()
+                    }).disposed(by: self.disposeBag)
+                self.present(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
             }).disposed(by: self.disposeBag)
     }
 }

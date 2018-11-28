@@ -26,6 +26,7 @@ func JSONResponseDataFormatter(_ data: Data) -> Data {
 
 protocol GitHubAPI {
     static func trendingRepositories(_ language: String, page: Int) -> Single<[Repository]>
+    static func languages() -> Single<[String]>
 }
 
 final class API: GitHubAPI {
@@ -39,5 +40,20 @@ final class API: GitHubAPI {
                 }
                 return Single.just(repositories.items)
             })
+    }
+    
+    static func languages() -> Single<[String]> {
+        return Single.just(["Swift", "Objective-C", "Java", "C", "C++", "C#"])
+            .delay(0.5, scheduler: MainScheduler.instance)
+        
+//        return GithubProvider.rx.request(GitHub.languages)
+//            .observeOn(MainScheduler.instance)
+//            .flatMap ({ response -> Single<[String]> in
+//                if let json = (try? response.mapJSON()) as? [String] {
+//                    return Single.just(json)
+//                } else {
+//                    return Single.just(["Swift", "Objective-C", "Java", "C", "C++", "C#"])
+//                }
+//            })
     }
 }
