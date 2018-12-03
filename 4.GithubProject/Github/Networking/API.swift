@@ -43,17 +43,7 @@ final class API: GitHubAPI {
     }
     
     static func languages() -> Single<[String]> {
-        return Single.just(["Swift", "Objective-C", "Java", "C", "C++", "C#"])
-            .delay(0.5, scheduler: MainScheduler.instance)
-        
-//        return GithubProvider.rx.request(GitHub.languages)
-//            .observeOn(MainScheduler.instance)
-//            .flatMap ({ response -> Single<[String]> in
-//                if let json = (try? response.mapJSON()) as? [String] {
-//                    return Single.just(json)
-//                } else {
-//                    return Single.just(["Swift", "Objective-C", "Java", "C", "C++", "C#"])
-//                }
-//            })
+        return Single.just(["Swift", "Objective-C", "Java", "C", "C++", "C#", "Go", "JavaScript", "Python", "CSS", "PHP", "Ruby", "Haskell", "Scala", "Go", "Perl", "R", "VimL", "Shell" ])
+            .delay(TimeInterval.random(in: 0.5...1), scheduler: MainScheduler.instance)
     }
 }

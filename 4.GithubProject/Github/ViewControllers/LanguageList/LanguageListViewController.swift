@@ -9,11 +9,14 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import RxDataSources
 
+// LanguageList Delegate
 protocol LanguageListDelegate: class {
     func selectLanguage(_ language: String)
 }
 
+// LanguageList Delegate Proxy
 class RxLanguageListDelegateProxy: DelegateProxy<LanguageListViewController, LanguageListDelegate>, DelegateProxyType, LanguageListDelegate  {
     let languageSubject = PublishSubject<String>()
     
@@ -34,6 +37,7 @@ class RxLanguageListDelegateProxy: DelegateProxy<LanguageListViewController, Lan
     }
 }
 
+// LanguageListViewController
 class LanguageListViewController: BaseViewController {
     private let viewModel = LanguageListViewModel()
     
@@ -53,11 +57,6 @@ class LanguageListViewController: BaseViewController {
         return barButtonItem
     }()
     
-    private var sendBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "임시", style: UIBarButtonItem.Style.done, target: nil, action: nil)
-        return barButtonItem
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -67,30 +66,42 @@ class LanguageListViewController: BaseViewController {
     
     private func setupUI() {
         self.navigationItem.leftBarButtonItem = self.closeBarButtonItem
-        self.navigationItem.rightBarButtonItem = self.sendBarButtonItem
         
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
     }
     
     private func setupBindings() {
+        self.viewModel.refresh()
         
         self.closeBarButtonItem.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.dismiss(animated: true, completion: nil)
             }).disposed(by: self.disposeBag)
         
-        self.sendBarButtonItem.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.delegate?.selectLanguage("Java")
+        self.tableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                self?.tableView.deselectRow(at: indexPath, animated: true)
+                self?.viewModel.languageTap(indexPath)
+            }).disposed(by: self.disposeBag)
+        
+        self.viewModel.outpust.language
+            .drive(onNext: { [weak self] language in
+                self?.delegate?.selectLanguage(language)
                 self?.dismiss(animated: true, completion: nil)
             }).disposed(by: self.disposeBag)
         
-        Observable.just(API.languages())
-            .subscribe(onNext: { request in
-                request.subscribe(onSuccess: { (array) in
-                    print(array)
-                }).disposed(by: self.disposeBag)
-            }).disposed(by: self.disposeBag)
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, String>>(
+            configureCell: { dataSource, tableView, indexPath, item in
+                let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+                cell.textLabel?.text = item
+                return cell
+        })
+        
+        self.viewModel.outpust.items
+            .asDriver()
+            .map { [SectionModel(model: "Languages", items: $0)] }
+            .drive(self.tableView.rx.items(dataSource: dataSource))
+            .disposed(by: self.disposeBag)
     }
 }
 

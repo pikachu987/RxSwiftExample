@@ -63,11 +63,6 @@ final class TrendingViewController: BaseViewController {
             .disposed(by: self.disposeBag)
         
         self.tableView.rx.itemSelected
-            .map { (at: $0, animated: true) }
-            .subscribe(onNext: tableView.deselectRow)
-            .disposed(by: self.disposeBag)
-        
-        self.tableView.rx.itemSelected
             .subscribe(onNext: { [weak self] indexPath in
                 self?.tableView.deselectRow(at: indexPath, animated: true)
                 self?.viewModel.inputs.repositoryTap(indexPath)
@@ -95,6 +90,8 @@ final class TrendingViewController: BaseViewController {
                 }
                 cell.item = item
                 return cell
+        }, titleForHeaderInSection: { (dataSource, section) -> String? in
+            return self.viewModel.outpust.languageRelay.value
         })
         
         self.viewModel.outpust.items

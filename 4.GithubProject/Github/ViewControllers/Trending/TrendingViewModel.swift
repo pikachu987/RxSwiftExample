@@ -21,6 +21,7 @@ protocol TrendingViewModelInputs {
 protocol TrendingViewModelOutputs {
     var items: BehaviorRelay<[Repository]> { get }
     var isLoading: Driver<Bool> { get }
+    var languageRelay: BehaviorRelay<String> { get }
     var error: PublishSubject<Swift.Error> { get }
     var repositoryViewModel: Driver<RepositoryViewModel> { get }
 }
@@ -39,6 +40,7 @@ final class TrendingViewModel: TrendingViewModelInputs, TrendingViewModelOutputs
     
     var items: BehaviorRelay<[Repository]>
     var isLoading: Driver<Bool>
+    var languageRelay: BehaviorRelay<String>
     var error: PublishSubject<Error>
     var repositoryViewModel: Driver<RepositoryViewModel>
     
@@ -49,6 +51,7 @@ final class TrendingViewModel: TrendingViewModelInputs, TrendingViewModelOutputs
         self.items = BehaviorRelay<[Repository]>(value: [])
         let loading = ActivityIndicator()
         self.isLoading = loading.asDriver()
+        self.languageRelay = BehaviorRelay<String>(value: "")
         self.error = PublishSubject<Swift.Error>()
         self.repositoryViewModel = Driver.empty()
         
@@ -60,6 +63,7 @@ final class TrendingViewModel: TrendingViewModelInputs, TrendingViewModelOutputs
             .flatMap { isLoading -> Observable<[Repository]> in
                 if isLoading { return Observable.empty() }
                 self.page = 1
+                self.items.accept([])
                 return API.trendingRepositories(self.language, page: self.page)
                     .trackActivity(loading)
         }
@@ -103,6 +107,7 @@ final class TrendingViewModel: TrendingViewModelInputs, TrendingViewModelOutputs
     
     func language(_ language: String) {
         self.language = language
+        self.languageRelay.accept(language)
     }
     
     func repositoryTap(_ indexPath: IndexPath) {
