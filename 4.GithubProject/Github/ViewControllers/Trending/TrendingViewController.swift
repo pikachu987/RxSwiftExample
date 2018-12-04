@@ -29,8 +29,24 @@ final class TrendingViewController: BaseViewController {
         return refreshControl
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
+        activityIndicator.color = .black
+        activityIndicator.hidesWhenStopped = true
+        self.view.addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints({ (make) in
+            make.center.equalToSuperview()
+        })
+        return activityIndicator
+    }()
+    
     private var languageBarButtonItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(title: "Language", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        return barButtonItem
+    }()
+    
+    private var logInOutBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "LogIn", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         return barButtonItem
     }()
     
@@ -48,6 +64,7 @@ final class TrendingViewController: BaseViewController {
         self.tableView.register(TrendingCell.self, forCellReuseIdentifier: TrendingCell.identifier)
         self.tableView.addSubview(self.refreshControl)
         self.navigationItem.leftBarButtonItem = self.languageBarButtonItem
+        self.navigationItem.rightBarButtonItem = self.logInOutBarButtonItem
     }
     
     private func setupBindings() {
@@ -70,9 +87,14 @@ final class TrendingViewController: BaseViewController {
         
         self.viewModel.outpust.isLoading
             .asObservable()
-            .filter { !$0 }
-            .subscribe({ [weak self] _ in
-                self?.refreshControl.endRefreshing()
+            .subscribe(onNext: { [weak self] isLoading in
+                guard let self = self else { return }
+                if !isLoading {
+                    self.refreshControl.endRefreshing()
+                }
+                if !self.refreshControl.isRefreshing {
+                    isLoading ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+                }
             }).disposed(by: self.disposeBag)
         
         self.viewModel.outpust.error
@@ -116,6 +138,12 @@ final class TrendingViewController: BaseViewController {
                         self?.viewModel.inputs.refresh()
                     }).disposed(by: self.disposeBag)
                 self.present(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
+            }).disposed(by: self.disposeBag)
+        
+        self.logInOutBarButtonItem.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                let viewController = LoginViewController()
+                self?.present(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
             }).disposed(by: self.disposeBag)
     }
 }

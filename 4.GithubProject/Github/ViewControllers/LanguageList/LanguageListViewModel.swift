@@ -17,6 +17,7 @@ protocol LanguageListViewModelInputs {
 protocol LanguageListViewModelOutputs {
     var items: BehaviorRelay<[String]> { get }
     var language: Driver<String> { get }
+    var isLoading: Driver<Bool> { get }
 }
 
 protocol LanguageListViewModelType {
@@ -31,17 +32,23 @@ final class LanguageListViewModel: LanguageListViewModelInputs, LanguageListView
     
     var items: BehaviorRelay<[String]>
     var language: Driver<String>
+    var isLoading: Driver<Bool>
     
     var loadPageTrigger: PublishSubject<Void>
     
     init() {
         self.items = BehaviorRelay<[String]>(value: [])
         
+        let loading = ActivityIndicator()
+        self.isLoading = loading.asDriver()
+        
         self.loadPageTrigger = PublishSubject<Void>()
         
-        self.loadPageTrigger
-            .flatMap { _ -> Single<[String]> in
+        self.isLoading.asObservable()
+            .sample(self.loadPageTrigger)
+            .flatMap { _ -> Observable<[String]> in
                 return API.languages()
+                    .trackActivity(loading)
             }.bind(to: self.items)
             .disposed(by: self.disposeBag)
         

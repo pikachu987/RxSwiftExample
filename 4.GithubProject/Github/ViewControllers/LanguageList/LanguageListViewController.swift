@@ -38,7 +38,7 @@ class RxLanguageListDelegateProxy: DelegateProxy<LanguageListViewController, Lan
 }
 
 // LanguageListViewController
-class LanguageListViewController: BaseViewController {
+final class LanguageListViewController: BaseViewController {
     private let viewModel = LanguageListViewModel()
     
     weak var delegate: LanguageListDelegate?
@@ -50,6 +50,17 @@ class LanguageListViewController: BaseViewController {
             make.edges.equalToSuperview()
         })
         return tableView
+    }()
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
+        activityIndicator.color = .black
+        activityIndicator.hidesWhenStopped = true
+        self.view.addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints({ (make) in
+            make.center.equalToSuperview()
+        })
+        return activityIndicator
     }()
     
     private var closeBarButtonItem: UIBarButtonItem = {
@@ -66,7 +77,6 @@ class LanguageListViewController: BaseViewController {
     
     private func setupUI() {
         self.navigationItem.leftBarButtonItem = self.closeBarButtonItem
-        
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
     }
     
@@ -102,6 +112,12 @@ class LanguageListViewController: BaseViewController {
             .map { [SectionModel(model: "Languages", items: $0)] }
             .drive(self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
+        
+        self.viewModel.outpust.isLoading
+            .asObservable()
+            .subscribe(onNext: { [weak self] isLoading in
+                isLoading ? self?.activityIndicator.startAnimating() : self?.activityIndicator.stopAnimating()
+            }).disposed(by: self.disposeBag)
     }
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RepositoryViewController: BaseViewController {
+final class RepositoryViewController: BaseViewController {
     let viewModel: RepositoryViewModel
     
     init(viewModel: RepositoryViewModel) {
