@@ -7,6 +7,7 @@
 //
 
 import RxSwift
+import SnapKit
 
 extension Reactive where Base: UIScrollView {
     var loadNextBottom: Observable<Void> {
@@ -19,3 +20,15 @@ extension Reactive where Base: UIScrollView {
     }
 }
 
+extension UIView {
+    var safeArea: ConstraintBasicAttributesDSL {
+        #if swift(>=3.2)
+        if #available(iOS 11.0, *) {
+            return self.safeAreaLayoutGuide.snp
+        }
+        return self.snp
+        #else
+        return self.snp
+        #endif
+    }
+}

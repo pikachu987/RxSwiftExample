@@ -18,6 +18,8 @@
 		E0BD970C21AD87E200EA899B /* LanguageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BD970B21AD87E200EA899B /* LanguageListViewController.swift */; };
 		E0BD970E21AD87FD00EA899B /* LanguageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BD970D21AD87FD00EA899B /* LanguageListViewModel.swift */; };
 		E0BD971321AD889C00EA899B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BD971221AD889C00EA899B /* BaseViewController.swift */; };
+		E0D51D0C21BBF69B002DBACC /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D51D0B21BBF69B002DBACC /* TextFieldView.swift */; };
+		E0D51D0E21BBFF08002DBACC /* TouchesScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D51D0D21BBFF08002DBACC /* TouchesScrollView.swift */; };
 		E0F49CFF21A9AE1600E72AC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F49CFE21A9AE1600E72AC2 /* AppDelegate.swift */; };
 		E0F49D0621A9AE1600E72AC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0F49D0521A9AE1600E72AC2 /* Assets.xcassets */; };
 		E0F49D0921A9AE1600E72AC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0F49D0721A9AE1600E72AC2 /* LaunchScreen.storyboard */; };
@@ -71,6 +73,8 @@
 		E0BD970B21AD87E200EA899B /* LanguageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageListViewController.swift; sourceTree = "<group>"; };
 		E0BD970D21AD87FD00EA899B /* LanguageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageListViewModel.swift; sourceTree = "<group>"; };
 		E0BD971221AD889C00EA899B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		E0D51D0B21BBF69B002DBACC /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
+		E0D51D0D21BBFF08002DBACC /* TouchesScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchesScrollView.swift; sourceTree = "<group>"; };
 		E0F49CFB21A9AE1600E72AC2 /* Github.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Github.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F49CFE21A9AE1600E72AC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0F49D0521A9AE1600E72AC2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -183,6 +187,15 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		E0D51D0A21BBF68D002DBACC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E0D51D0B21BBF69B002DBACC /* TextFieldView.swift */,
+				E0D51D0D21BBFF08002DBACC /* TouchesScrollView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		E0F49CF221A9AE1600E72AC2 = {
 			isa = PBXGroup;
 			children = (
@@ -282,6 +295,7 @@
 		E0F49D3021A9AE8500E72AC2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E0D51D0A21BBF68D002DBACC /* Views */,
 				E0F49D3921A9AF2500E72AC2 /* Cells */,
 			);
 			path = Views;
@@ -493,6 +507,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
+				"${BUILT_PRODUCTS_DIR}/RxKeyboard/RxKeyboard.framework",
 				"${BUILT_PRODUCTS_DIR}/RxOptional/RxOptional.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
@@ -506,6 +521,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxKeyboard.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxOptional.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
@@ -565,6 +581,7 @@
 				E0F49D3321A9AEAA00E72AC2 /* AppCoordinator.swift in Sources */,
 				E0F49D4921A9AF8A00E72AC2 /* TrendingViewController.swift in Sources */,
 				E0F49D4D21A9AFC600E72AC2 /* ActivityIndicator.swift in Sources */,
+				E0D51D0E21BBFF08002DBACC /* TouchesScrollView.swift in Sources */,
 				E0F49D4421A9AF6600E72AC2 /* BaseCoordinator.swift in Sources */,
 				E032302221B6CB7100DEF337 /* LoginViewController.swift in Sources */,
 				E0F49CFF21A9AE1600E72AC2 /* AppDelegate.swift in Sources */,
@@ -572,6 +589,7 @@
 				E0BD970921AD83F300EA899B /* GitHubError.swift in Sources */,
 				E0BD970C21AD87E200EA899B /* LanguageListViewController.swift in Sources */,
 				E0F49D3D21A9AF3B00E72AC2 /* Extensions+.swift in Sources */,
+				E0D51D0C21BBF69B002DBACC /* TextFieldView.swift in Sources */,
 				E0BD970E21AD87FD00EA899B /* LanguageListViewModel.swift in Sources */,
 				E0F49D3621A9AF0F00E72AC2 /* Repositories.swift in Sources */,
 				E0BD970521AD82F200EA899B /* RepositoryViewController.swift in Sources */,
