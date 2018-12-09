@@ -11,6 +11,7 @@ import Moya
 enum GitHub {
     case trendingRepositories(language: String, page: Int)
     case languages
+    case login(id: String, password: String)
 }
 
 extension GitHub: TargetType {
@@ -21,7 +22,12 @@ extension GitHub: TargetType {
     }
     
     var method: Moya.Method {
-        return .get
+        switch self {
+        case .login(id: _, password: _):
+            return .post
+        default:
+            return .get
+        }
     }
     
     var path: String {
@@ -30,6 +36,8 @@ extension GitHub: TargetType {
             return "/search/repositories"
         case .languages:
             return ""
+        case .login(id: _, password: _):
+            return "/authorizations"
         }
     }
     
@@ -52,6 +60,12 @@ extension GitHub: TargetType {
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         case .languages:
             return .requestPlain
+        case .login(_, _):
+            let parameters = [
+                "scopes": ["public_repo", "user"],
+                "note": "(\(NSDate()))"
+                ] as [String : Any]
+            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
         }
     }
     

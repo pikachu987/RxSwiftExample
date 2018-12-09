@@ -46,4 +46,18 @@ final class API: GitHubAPI {
         return Single.just(["Swift", "Objective-C", "Java", "C", "C++", "C#", "Go", "JavaScript", "Python", "CSS", "PHP", "Ruby", "Haskell", "Scala", "Go", "Perl", "R", "VimL", "Shell" ])
             .delay(TimeInterval.random(in: 0.5...1), scheduler: MainScheduler.instance)
     }
+    
+    static func login(_ id: String, password: String) -> Single<Bool> {
+        return GithubProvider.rx.request(GitHub.login(id: id, password: password))
+            .map(Authorizations.self)
+            .observeOn(MainScheduler.instance)
+            .flatMap({ user -> Single<Bool> in
+                if user.token == nil {
+                    return Single.just(false)
+                } else {
+                    print("Login Success")
+                    return Single.just(true)
+                }
+            })
+    }
 }

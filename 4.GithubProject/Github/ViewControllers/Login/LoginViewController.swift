@@ -38,18 +38,18 @@ final class LoginViewController: BaseViewController {
         return view
     }()
     
-    private lazy var idTextFieldView: TextFieldView = {
-       let textFieldView = TextFieldView("input id")
+    private lazy var idTextFieldView: ValidateTextFieldView = {
+       let textFieldView = ValidateTextFieldView("input id")
         self.containerView.addSubview(textFieldView)
         textFieldView.snp.makeConstraints({ (make) in
             make.leading.trailing.equalToSuperview().inset(20)
-            make.bottom.equalTo(self.pwdTextFieldView.snp.top).inset(-10)
+            make.bottom.equalTo(self.passwordTextFieldView.snp.top).inset(-10)
         })
         return textFieldView
     }()
     
-    private lazy var pwdTextFieldView: TextFieldView = {
-        let textFieldView = TextFieldView("input password")
+    private lazy var passwordTextFieldView: ValidateTextFieldView = {
+        let textFieldView = ValidateTextFieldView("input password")
         self.containerView.addSubview(textFieldView)
         textFieldView.snp.makeConstraints({ (make) in
             make.leading.trailing.equalToSuperview().inset(20)
@@ -87,15 +87,15 @@ final class LoginViewController: BaseViewController {
         super.touchesBegan(touches, with: event)
         
         self.idTextFieldView.resignFirstResponder()
-        self.pwdTextFieldView.resignFirstResponder()
+        self.passwordTextFieldView.resignFirstResponder()
     }
     
     private func setupUI() {
         self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem
         self.idTextFieldView.textField.returnKeyType = .next
-        self.pwdTextFieldView.textField.returnKeyType = .done
-        self.pwdTextFieldView.textField.isSecureTextEntry = true
-        self.loginButton.backgroundColor = .black
+        self.passwordTextFieldView.textField.returnKeyType = .done
+        self.passwordTextFieldView.textField.isSecureTextEntry = true
+        self.loginButton.backgroundColor = UIColor(white: 188/255, alpha: 1)
         self.loginButton.setTitle("Login", for: .normal)
         self.loginButton.setTitleColor(.white, for: .normal)
     }
@@ -117,7 +117,36 @@ final class LoginViewController: BaseViewController {
         
         self.idTextFieldView.textField.rx.controlEvent(.editingDidEndOnExit)
             .subscribe(onNext: { [weak self] in
-                self?.pwdTextFieldView.becomeFirstResponder()
+                self?.passwordTextFieldView.becomeFirstResponder()
             }).disposed(by: self.disposeBag)
+        
+        self.idTextFieldView.textField.rx.text
+            .bind(to: self.viewModel.inputs.id)
+            .disposed(by: self.disposeBag)
+        
+        self.passwordTextFieldView.textField.rx.text
+            .bind(to: self.viewModel.inputs.password)
+            .disposed(by: self.disposeBag)
+        
+        self.loginButton.rx.tap
+            .bind(to: self.viewModel.inputs.loginTap)
+            .disposed(by: self.disposeBag)
+        
+        self.viewModel.outpust.enabledLogin.drive(onNext: { [weak self] isEnabled in
+            self?.loginButton.isEnabled = isEnabled
+            self?.loginButton.backgroundColor = isEnabled ? .black : UIColor(white: 188/255, alpha: 1)
+        }).disposed(by: self.disposeBag)
+        
+        self.viewModel.outpust.validatedId
+            .drive(onNext: { [weak self] result in
+                self?.idTextFieldView.isValidate = result
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.viewModel.outpust.validatedPassword
+            .drive(onNext: { [weak self] result in
+                self?.passwordTextFieldView.isValidate = result
+            })
+            .disposed(by: self.disposeBag)
     }
 }

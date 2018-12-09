@@ -9,8 +9,7 @@
 import UIKit
 import RxSwift
 
-class TextFieldView: UIView {
-    let disposeBag = DisposeBag()
+class ValidateTextFieldView: UIView {
     
     private lazy var _textField: UITextField = {
         let textField = UITextField()
@@ -37,17 +36,25 @@ class TextFieldView: UIView {
         return self._textField
     }
     
+    var isValidate: ValidationResult = .empty {
+        willSet {
+            if newValue == .empty {
+                self.bottomLine.backgroundColor = UIColor(white: 224/255, alpha: 1)
+            } else if newValue == .success(message: "") {
+                self.bottomLine.backgroundColor = .black
+            } else if newValue == .failed(message: "") {
+                self.bottomLine.backgroundColor = UIColor(red: 255/255, green: 94/255, blue: 94/255, alpha: 1)
+            } else if newValue == .validateFailed {
+                self.bottomLine.backgroundColor = UIColor(red: 255/255, green: 94/255, blue: 94/255, alpha: 1)
+            }
+        }
+    }
+    
     init(_ placeholder: String) {
         super.init(frame: .zero)
         
         self.textField.placeholder = placeholder
         self.bottomLine.backgroundColor = UIColor(white: 224/255, alpha: 1)
-        
-        self.textField.rx.text
-            .filterNil()
-            .subscribe(onNext: { [weak self] (text) in
-                self?.bottomLine.backgroundColor = text.isEmpty ? UIColor(white: 224/255, alpha: 1) : .black
-            }).disposed(by: self.disposeBag)
     }
     
     required init?(coder aDecoder: NSCoder) {
