@@ -13,7 +13,7 @@ import RxDataSources
 import SnapKit
 
 final class TrendingViewController: BaseViewController {
-    private let viewModel = TrendingViewModel()
+    private var viewModel: TrendingViewModel
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), style: UITableView.Style.plain)
@@ -29,17 +29,6 @@ final class TrendingViewController: BaseViewController {
         return refreshControl
     }()
     
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
-        activityIndicator.color = .black
-        activityIndicator.hidesWhenStopped = true
-        self.view.addSubview(activityIndicator)
-        activityIndicator.snp.makeConstraints({ (make) in
-            make.center.equalToSuperview()
-        })
-        return activityIndicator
-    }()
-    
     private var languageBarButtonItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(title: "Language", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         return barButtonItem
@@ -49,6 +38,16 @@ final class TrendingViewController: BaseViewController {
         let barButtonItem = UIBarButtonItem(title: "LogIn", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         return barButtonItem
     }()
+    
+    init(viewModel: TrendingViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        self.viewModel = TrendingViewModel()
+        super.init(coder: aDecoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +92,7 @@ final class TrendingViewController: BaseViewController {
                     self.refreshControl.endRefreshing()
                 }
                 if !self.refreshControl.isRefreshing {
-                    isLoading ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+                    self.view.loading(isLoading: isLoading, style: .whiteLarge, color: .black)
                 }
             }).disposed(by: self.disposeBag)
         
@@ -141,9 +140,7 @@ final class TrendingViewController: BaseViewController {
             }).disposed(by: self.disposeBag)
         
         self.logInOutBarButtonItem.rx.tap
-            .subscribe(onNext: { [weak self] _ in
-                let viewController = LoginViewController()
-                self?.present(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
-            }).disposed(by: self.disposeBag)
+            .bind(to: self.viewModel.inputs.loginTap)
+            .disposed(by: self.disposeBag)
     }
 }

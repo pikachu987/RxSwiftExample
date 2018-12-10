@@ -9,6 +9,64 @@
 import RxSwift
 import RxCocoa
 
+extension UIView {
+    private func addIndicator(_ style: UIActivityIndicatorView.Style, color: UIColor) {
+        var view = self.viewWithTag(987) as? UIActivityIndicatorView
+        if view == nil {
+            let activityIndicatorView = UIActivityIndicatorView()
+            activityIndicatorView.tag = 987
+            self.addSubview(activityIndicatorView)
+            activityIndicatorView.snp.makeConstraints { (make) in
+                make.center.equalToSuperview()
+            }
+            view = activityIndicatorView
+        }
+        view?.style = style
+        view?.color = color
+        view?.hidesWhenStopped = true
+        view?.startAnimating()
+    }
+    
+    private func removeIndicator() {
+        (self.viewWithTag(987) as? UIActivityIndicatorView)?.stopAnimating()
+        self.viewWithTag(987)?.removeFromSuperview()
+    }
+    
+    final func loading(_ style: UIActivityIndicatorView.Style = .gray, color: UIColor = .black) -> AnyObserver<Bool> {
+        return Binder(self, binding: { (target, isLoading) in
+            if let indicatorButton = self as? IndicatorButton {
+                if isLoading {
+                    indicatorButton.showIndicator(style, color: color)
+                } else {
+                    indicatorButton.hideIndicator()
+                }
+            } else {
+                if isLoading {
+                    self.addIndicator(style, color: color)
+                } else {
+                    self.removeIndicator()
+                }
+            }
+        }).asObserver()
+    }
+    
+    final func loading(isLoading: Bool, style: UIActivityIndicatorView.Style = .gray, color: UIColor = .black) {
+        if let indicatorButton = self as? IndicatorButton {
+            if isLoading {
+                indicatorButton.showIndicator(style, color: color)
+            } else {
+                indicatorButton.hideIndicator()
+            }
+        } else {
+            if isLoading {
+                self.addIndicator(style, color: color)
+            } else {
+                self.removeIndicator()
+            }
+        }
+    }
+}
+
 private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
     private let source: Observable<E>
     private let cancelable: Cancelable
@@ -72,3 +130,53 @@ extension ObservableConvertibleType {
         return activityIndicator.trackActivityOfObservable(self)
     }
 }
+
+
+class IndicatorButton: UIButton {
+    
+    private var text: String?
+    private var image: UIImage?
+    
+    private lazy var indicatorView: UIActivityIndicatorView = {
+        let indicatorView = UIActivityIndicatorView()
+        indicatorView.isHidden = true
+        indicatorView.stopAnimating()
+        indicatorView.color = UIColor.white
+        self.addSubview(indicatorView)
+        indicatorView.snp.makeConstraints({ (make) in
+            make.center.equalToSuperview()
+        })
+        return indicatorView
+    }()
+    
+    var isShowIndicator: Bool {
+        get {
+            return !self.indicatorView.isHidden
+        }
+    }
+    
+    func showIndicator(_ style: UIActivityIndicatorView.Style, color: UIColor) {
+        self.indicatorView.style = style
+        self.indicatorView.color = color
+        if (self.currentTitle ?? "") != "" {
+            self.image = self.currentImage
+            self.text = self.currentTitle
+            self.setImage(nil, for: .normal)
+            self.setTitle("", for: .normal)
+        }
+        self.indicatorView.isHidden = false
+        self.indicatorView.startAnimating()
+    }
+    
+    func hideIndicator() {
+        self.indicatorView.isHidden = true
+        self.indicatorView.stopAnimating()
+        if let image = self.image {
+            self.setImage(image, for: .normal)
+        }
+        if let text = self.text {
+            self.setTitle(text, for: .normal)
+        }
+    }
+}
+

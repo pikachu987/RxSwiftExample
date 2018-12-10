@@ -20,6 +20,7 @@ protocol LoginViewModelOutputs {
     var validatedPassword: Driver<ValidationResult> { get }
     var enabledLogin: Driver<Bool> { get }
     var login: Driver<Bool> { get }
+    var isLoading: Driver<Bool> { get }
 }
 
 protocol LoginViewModelType {
@@ -38,6 +39,7 @@ final class LoginViewModel: LoginViewModelInputs, LoginViewModelOutputs {
     var validatedPassword: Driver<ValidationResult>
     var enabledLogin: Driver<Bool>
     var login: Driver<Bool>
+    var isLoading: Driver<Bool>
     
     init() {
         self.id = PublishSubject<String?>()
@@ -67,11 +69,15 @@ final class LoginViewModel: LoginViewModelInputs, LoginViewModelOutputs {
             self.password.asDriver(onErrorJustReturn: nil)
         ) { ($0, $1) }
         
+        let isLoading = ActivityIndicator()
+        self.isLoading = isLoading.asDriver()
+        
         self.login = self.loginTap
             .asDriver(onErrorJustReturn: ())
             .withLatestFrom(idAndPassword)
             .flatMapLatest{ (id, password) in
                 return API.login(id ?? "", password: password ?? "")
+                    .trackActivity(isLoading)
                     .asDriver(onErrorJustReturn: false)
             }
     }

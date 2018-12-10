@@ -39,7 +39,7 @@ class ValidateTextFieldView: UIView {
     var isValidate: ValidationResult = .empty {
         willSet {
             if newValue == .empty {
-                self.bottomLine.backgroundColor = UIColor(white: 224/255, alpha: 1)
+                self.bottomLine.backgroundColor = UIColor(white: 188/255, alpha: 1)
             } else if newValue == .success(message: "") {
                 self.bottomLine.backgroundColor = .black
             } else if newValue == .failed(message: "") {
@@ -54,7 +54,7 @@ class ValidateTextFieldView: UIView {
         super.init(frame: .zero)
         
         self.textField.placeholder = placeholder
-        self.bottomLine.backgroundColor = UIColor(white: 224/255, alpha: 1)
+        self.bottomLine.backgroundColor = UIColor(white: 188/255, alpha: 1)
     }
     
     required init?(coder aDecoder: NSCoder) {

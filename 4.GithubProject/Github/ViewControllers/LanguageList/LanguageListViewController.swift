@@ -52,17 +52,6 @@ final class LanguageListViewController: BaseViewController {
         return tableView
     }()
     
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
-        activityIndicator.color = .black
-        activityIndicator.hidesWhenStopped = true
-        self.view.addSubview(activityIndicator)
-        activityIndicator.snp.makeConstraints({ (make) in
-            make.center.equalToSuperview()
-        })
-        return activityIndicator
-    }()
-    
     private var closeBarButtonItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItem.Style.done, target: nil, action: nil)
         return barButtonItem
@@ -114,10 +103,8 @@ final class LanguageListViewController: BaseViewController {
             .disposed(by: self.disposeBag)
         
         self.viewModel.outpust.isLoading
-            .asObservable()
-            .subscribe(onNext: { [weak self] isLoading in
-                isLoading ? self?.activityIndicator.startAnimating() : self?.activityIndicator.stopAnimating()
-            }).disposed(by: self.disposeBag)
+            .drive(self.view.loading(.whiteLarge, color: .black))
+            .disposed(by: self.disposeBag)
     }
 }
 

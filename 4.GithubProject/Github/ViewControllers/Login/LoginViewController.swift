@@ -11,7 +11,7 @@ import RxKeyboard
 
 // LoginViewController
 final class LoginViewController: BaseViewController {
-    private let viewModel = LoginViewModel()
+    private var viewModel: LoginViewModel
     
     private var cancelBarButtonItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
@@ -58,8 +58,8 @@ final class LoginViewController: BaseViewController {
         return textFieldView
     }()
     
-    private lazy var loginButton: UIButton = {
-        let button = UIButton(type: .system)
+    private lazy var loginButton: IndicatorButton = {
+        let button = IndicatorButton(type: .system)
         self.view.addSubview(button)
         button.snp.makeConstraints({ (make) in
             make.leading.trailing.equalToSuperview()
@@ -75,6 +75,16 @@ final class LoginViewController: BaseViewController {
     }()
     
     private var bottomConstraint: NSLayoutConstraint?
+    
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        self.viewModel = LoginViewModel()
+        super.init(coder: aDecoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,6 +105,7 @@ final class LoginViewController: BaseViewController {
         self.idTextFieldView.textField.returnKeyType = .next
         self.passwordTextFieldView.textField.returnKeyType = .done
         self.passwordTextFieldView.textField.isSecureTextEntry = true
+        self.loginButton.isEnabled = false
         self.loginButton.backgroundColor = UIColor(white: 188/255, alpha: 1)
         self.loginButton.setTitle("Login", for: .normal)
         self.loginButton.setTitleColor(.white, for: .normal)
@@ -104,21 +115,34 @@ final class LoginViewController: BaseViewController {
         
         self.cancelBarButtonItem.rx.tap
             .subscribe(onNext: { [weak self] _ in
+                self?.idTextFieldView.resignFirstResponder()
+                self?.passwordTextFieldView.resignFirstResponder()
                 self?.dismiss(animated: true, completion: nil)
             }).disposed(by: self.disposeBag)
         
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { [weak self] keyboardVisibleHeight in
-                self?.bottomConstraint?.constant = keyboardVisibleHeight
-                UIView.animate(withDuration: 0.22, animations: {
-                    self?.view.layoutIfNeeded()
-                })
+                guard let self = self,
+                 let bottomConstraint = self.bottomConstraint else { return }
+                if bottomConstraint.constant != keyboardVisibleHeight {
+                    self.bottomConstraint?.constant = keyboardVisibleHeight
+                    UIView.animate(withDuration: 0.22, animations: {
+                        self.view.layoutIfNeeded()
+                    })
+                }
             }).disposed(by: self.disposeBag)
         
         self.idTextFieldView.textField.rx.controlEvent(.editingDidEndOnExit)
             .subscribe(onNext: { [weak self] in
                 self?.passwordTextFieldView.becomeFirstResponder()
             }).disposed(by: self.disposeBag)
+        
+        self.passwordTextFieldView.textField.rx.controlEvent(.editingDidEndOnExit)
+            .filter{ [unowned self] in
+                !self.loginButton.isShowIndicator
+            }
+            .bind(to: self.viewModel.inputs.loginTap)
+            .disposed(by: self.disposeBag)
         
         self.idTextFieldView.textField.rx.text
             .bind(to: self.viewModel.inputs.id)
@@ -129,6 +153,9 @@ final class LoginViewController: BaseViewController {
             .disposed(by: self.disposeBag)
         
         self.loginButton.rx.tap
+            .filter{ [unowned self] in
+                !self.loginButton.isShowIndicator
+            }
             .bind(to: self.viewModel.inputs.loginTap)
             .disposed(by: self.disposeBag)
         
@@ -140,13 +167,15 @@ final class LoginViewController: BaseViewController {
         self.viewModel.outpust.validatedId
             .drive(onNext: { [weak self] result in
                 self?.idTextFieldView.isValidate = result
-            })
-            .disposed(by: self.disposeBag)
+            }).disposed(by: self.disposeBag)
         
         self.viewModel.outpust.validatedPassword
             .drive(onNext: { [weak self] result in
                 self?.passwordTextFieldView.isValidate = result
-            })
+            }).disposed(by: self.disposeBag)
+        
+        self.viewModel.outpust.isLoading
+            .drive(self.loginButton.loading(color: .white))
             .disposed(by: self.disposeBag)
     }
 }
