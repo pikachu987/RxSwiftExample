@@ -13,7 +13,6 @@ import RxOptional
 protocol TrendingViewModelInputs {
     var loadPageTrigger: PublishSubject<Void> { get }
     var loadNextPageTrigger: PublishSubject<Void> { get }
-    var loginTap: PublishSubject<Void> { get }
     func refresh()
     func language(_ language: String)
     func repositoryTap(_ indexPath: IndexPath)
@@ -25,7 +24,6 @@ protocol TrendingViewModelOutputs {
     var languageRelay: BehaviorRelay<String> { get }
     var error: PublishSubject<Swift.Error> { get }
     var repositoryViewModel: Driver<RepositoryViewModel> { get }
-    var login: Driver<Void> { get }
 }
 
 protocol TrendingViewModelType {
@@ -45,11 +43,9 @@ final class TrendingViewModel: TrendingViewModelInputs, TrendingViewModelOutputs
     var languageRelay: BehaviorRelay<String>
     var error: PublishSubject<Error>
     var repositoryViewModel: Driver<RepositoryViewModel>
-    var login: Driver<Void>
     
     var loadPageTrigger: PublishSubject<Void>
     var loadNextPageTrigger: PublishSubject<Void>
-    var loginTap: PublishSubject<Void>
     
     init() {
         self.items = BehaviorRelay<[Repository]>(value: [])
@@ -58,12 +54,9 @@ final class TrendingViewModel: TrendingViewModelInputs, TrendingViewModelOutputs
         self.languageRelay = BehaviorRelay<String>(value: "")
         self.error = PublishSubject<Swift.Error>()
         self.repositoryViewModel = Driver.empty()
-        self.loginTap = PublishSubject<Void>()
         
         self.loadPageTrigger = PublishSubject<Void>()
         self.loadNextPageTrigger = PublishSubject<Void>()
-        
-        self.login = self.loginTap.asDriver(onErrorJustReturn: ())
         
         let loadRequest = self.isLoading.asObservable()
             .sample(self.loadPageTrigger)

@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 
 var GithubProvider = MoyaProvider<GitHub> (
+    endpointClosure: endpointClosure,
     plugins: [NetworkLoggerPlugin(verbose: true, responseDataFormatter: JSONResponseDataFormatter)]
 )
 
@@ -22,6 +23,24 @@ func JSONResponseDataFormatter(_ data: Data) -> Data {
     } catch {
         return data
     }
+}
+
+let endpointClosure = { (target: GitHub) -> Endpoint in
+    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+    let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
+
+    switch target {
+    case .login(let id, let password):
+        let credentialData = "\(id):\(password)".data(using: String.Encoding.utf8)
+        let base64Credentials = credentialData?.base64EncodedString() ?? ""
+        return defaultEndpoint.adding(newHTTPHeaderFields: ["Authorization": "Basic \(base64Credentials)"])
+    default:
+        if let token = UserDefaults.standard.object(forKey: "AuthorizationsToken") as? String, token != "" {
+            return defaultEndpoint.adding(newHTTPHeaderFields: ["Authorization": "token \(token)"])
+        }
+        return defaultEndpoint
+    }
+
 }
 
 protocol GitHubAPI {
@@ -52,11 +71,11 @@ final class API: GitHubAPI {
             .map(Authorizations.self)
             .observeOn(MainScheduler.instance)
             .flatMap({ user -> Single<Bool> in
-                if user.token == nil {
-                    return Single.just(false)
-                } else {
-                    print("Login Success")
+                if let token = user.token {
+                    UserDefaults.standard.set(token, forKey: "AuthorizationsToken")
                     return Single.just(true)
+                } else {
+                    return Single.just(false)
                 }
             })
     }

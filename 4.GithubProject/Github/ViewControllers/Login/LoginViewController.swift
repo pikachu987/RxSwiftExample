@@ -11,7 +11,7 @@ import RxKeyboard
 
 // LoginViewController
 final class LoginViewController: BaseViewController {
-    private var viewModel: LoginViewModel
+    private var viewModel = LoginViewModel()
     
     private var cancelBarButtonItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
@@ -75,16 +75,6 @@ final class LoginViewController: BaseViewController {
     }()
     
     private var bottomConstraint: NSLayoutConstraint?
-    
-    init(viewModel: LoginViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        self.viewModel = LoginViewModel()
-        super.init(coder: aDecoder)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -177,5 +167,20 @@ final class LoginViewController: BaseViewController {
         self.viewModel.outpust.isLoading
             .drive(self.loginButton.loading(color: .white))
             .disposed(by: self.disposeBag)
+        
+        self.viewModel.outpust.login
+            .drive(onNext: { [weak self] isLogin in
+                if isLogin {
+                    let tabBarController = TabBarController()
+                    let navigationController = UINavigationController(rootViewController: tabBarController)
+                    AppDelegate.shared?.window?.rootViewController?.dismiss(animated: false, completion: nil)
+                    AppDelegate.shared?.window?.rootViewController = navigationController
+                    AppDelegate.shared?.window?.makeKeyAndVisible()
+                } else {
+                    let alertController = UIAlertController(title: "Error", message: "Login Error", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "Confirm", style: .cancel, handler: nil))
+                    self?.present(alertController, animated: true, completion: nil)
+                }
+            }).disposed(by: self.disposeBag)
     }
 }

@@ -11,20 +11,30 @@ import RxSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    static var shared: AppDelegate?
+    
     var window: UIWindow?
-    private var appCoordinator: AppCoordinator?
+    
     private let disposeBag = DisposeBag()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        AppDelegate.shared = self
+        
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
         self.window?.backgroundColor = .white
-        self.appCoordinator = AppCoordinator(window: window)
-        self.appCoordinator?.start()
-            .subscribe()
-            .disposed(by: self.disposeBag)
+        if let token = UserDefaults.standard.object(forKey: "AuthorizationsToken") as? String, token != "" {
+            let tabBarController = TabBarController()
+            let navigationController = UINavigationController(rootViewController: tabBarController)
+            self.window?.rootViewController = navigationController
+        } else {
+            let viewController = TrendingViewController()
+            let navigationController = UINavigationController(rootViewController: viewController)
+            self.window?.rootViewController = navigationController
+        }
+        self.window?.makeKeyAndVisible()
         return true
     }
 

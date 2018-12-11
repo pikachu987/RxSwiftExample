@@ -13,7 +13,7 @@ import RxDataSources
 import SnapKit
 
 final class TrendingViewController: BaseViewController {
-    private var viewModel: TrendingViewModel
+    private var viewModel = TrendingViewModel()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), style: UITableView.Style.plain)
@@ -38,16 +38,6 @@ final class TrendingViewController: BaseViewController {
         let barButtonItem = UIBarButtonItem(title: "LogIn", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         return barButtonItem
     }()
-    
-    init(viewModel: TrendingViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        self.viewModel = TrendingViewModel()
-        super.init(coder: aDecoder)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,7 +130,10 @@ final class TrendingViewController: BaseViewController {
             }).disposed(by: self.disposeBag)
         
         self.logInOutBarButtonItem.rx.tap
-            .bind(to: self.viewModel.inputs.loginTap)
-            .disposed(by: self.disposeBag)
+            .subscribe(onNext: {
+                let viewController = LoginViewController()
+                let navigationController = UINavigationController(rootViewController: viewController)
+                self.present(navigationController, animated: true, completion: nil)
+            }).disposed(by: self.disposeBag)
     }
 }
