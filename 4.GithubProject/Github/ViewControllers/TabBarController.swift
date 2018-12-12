@@ -14,7 +14,14 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         
         var viewControllers = [UIViewController]()
-        viewControllers.append(TrendingViewController())
+        
+        let trendingNavigationController = UINavigationController(rootViewController: TrendingViewController())
+        trendingNavigationController.tabBarItem.title = "Trending"
+        viewControllers.append(trendingNavigationController)
+        
+//        let searchNavigationController = UINavigationController(rootViewController: TrendingViewController())
+//        searchNavigationController.tabBarItem.title = "Search"
+//        viewControllers.append(searchNavigationController)
         
         self.setViewControllers(viewControllers, animated: true)
     }

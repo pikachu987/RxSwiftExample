@@ -35,7 +35,8 @@ final class TrendingViewController: BaseViewController {
     }()
     
     private var logInOutBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "LogIn", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        let title = UserDefaults.isAuthorizationsToken ? "Logout" : "Login"
+        let barButtonItem = UIBarButtonItem(title: title, style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         return barButtonItem
     }()
     
@@ -130,10 +131,25 @@ final class TrendingViewController: BaseViewController {
             }).disposed(by: self.disposeBag)
         
         self.logInOutBarButtonItem.rx.tap
-            .subscribe(onNext: {
-                let viewController = LoginViewController()
-                let navigationController = UINavigationController(rootViewController: viewController)
-                self.present(navigationController, animated: true, completion: nil)
+            .subscribe(onNext: { [weak self] in
+                if UserDefaults.isAuthorizationsToken {
+                    let alertController = UIAlertController(title: "Logout", message: "Do you logout?", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                    alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (_) in
+                        UserDefaults.standard.removeObject(forKey: "AuthorizationsToken")
+                        UserDefaults.standard.synchronize()
+                        let viewController = TrendingViewController()
+                        let navigationController = UINavigationController(rootViewController: viewController)
+                        AppDelegate.shared?.window?.rootViewController?.dismiss(animated: false, completion: nil)
+                        AppDelegate.shared?.window?.rootViewController = navigationController
+                        AppDelegate.shared?.window?.makeKeyAndVisible()
+                    }))
+                    self?.present(alertController, animated: true, completion: nil)
+                } else {
+                    let viewController = LoginViewController()
+                    let navigationController = UINavigationController(rootViewController: viewController)
+                    self?.present(navigationController, animated: true, completion: nil)
+                }
             }).disposed(by: self.disposeBag)
     }
 }

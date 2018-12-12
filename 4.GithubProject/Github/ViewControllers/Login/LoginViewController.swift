@@ -172,9 +172,8 @@ final class LoginViewController: BaseViewController {
             .drive(onNext: { [weak self] isLogin in
                 if isLogin {
                     let tabBarController = TabBarController()
-                    let navigationController = UINavigationController(rootViewController: tabBarController)
                     AppDelegate.shared?.window?.rootViewController?.dismiss(animated: false, completion: nil)
-                    AppDelegate.shared?.window?.rootViewController = navigationController
+                    AppDelegate.shared?.window?.rootViewController = tabBarController
                     AppDelegate.shared?.window?.makeKeyAndVisible()
                 } else {
                     let alertController = UIAlertController(title: "Error", message: "Login Error", preferredStyle: .alert)

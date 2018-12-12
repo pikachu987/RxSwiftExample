@@ -25,10 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
         self.window?.backgroundColor = .white
-        if let token = UserDefaults.standard.object(forKey: "AuthorizationsToken") as? String, token != "" {
+        if UserDefaults.isAuthorizationsToken {
             let tabBarController = TabBarController()
-            let navigationController = UINavigationController(rootViewController: tabBarController)
-            self.window?.rootViewController = navigationController
+            self.window?.rootViewController = tabBarController
         } else {
             let viewController = TrendingViewController()
             let navigationController = UINavigationController(rootViewController: viewController)

@@ -32,3 +32,19 @@ extension UIView {
         #endif
     }
 }
+
+extension UserDefaults {
+    static var isAuthorizationsToken: Bool {
+        if let token = UserDefaults.standard.object(forKey: "AuthorizationsToken") as? String, token != "" {
+            return true
+        }
+        return false
+    }
+    
+    static var token: String? {
+        if let token = UserDefaults.standard.object(forKey: "AuthorizationsToken") as? String, token != "" {
+            return token
+        }
+        return nil
+    }
+}

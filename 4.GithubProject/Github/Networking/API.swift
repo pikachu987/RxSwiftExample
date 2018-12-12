@@ -35,7 +35,7 @@ let endpointClosure = { (target: GitHub) -> Endpoint in
         let base64Credentials = credentialData?.base64EncodedString() ?? ""
         return defaultEndpoint.adding(newHTTPHeaderFields: ["Authorization": "Basic \(base64Credentials)"])
     default:
-        if let token = UserDefaults.standard.object(forKey: "AuthorizationsToken") as? String, token != "" {
+        if let token = UserDefaults.token {
             return defaultEndpoint.adding(newHTTPHeaderFields: ["Authorization": "token \(token)"])
         }
         return defaultEndpoint
