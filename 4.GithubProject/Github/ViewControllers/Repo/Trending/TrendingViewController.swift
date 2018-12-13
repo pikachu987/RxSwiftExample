@@ -12,6 +12,11 @@ import RxCocoa
 import RxDataSources
 import SnapKit
 
+/*
+ 가장 먼저 나오는 페이지 또는 탭컨트롤러의 첫번째 탭입니다.
+ The first tab of the page or tab controller that comes first.
+ */
+
 final class TrendingViewController: BaseViewController {
     private var viewModel = TrendingViewModel()
     
@@ -34,9 +39,13 @@ final class TrendingViewController: BaseViewController {
         return barButtonItem
     }()
     
-    private var logInOutBarButtonItem: UIBarButtonItem = {
-        let title = UserDefaults.isAuthorizationsToken ? "Logout" : "Login"
-        let barButtonItem = UIBarButtonItem(title: title, style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+    private var loginBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Login", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        return barButtonItem
+    }()
+    
+    private var searchBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Search", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         return barButtonItem
     }()
     
@@ -54,7 +63,11 @@ final class TrendingViewController: BaseViewController {
         self.tableView.register(TrendingCell.self, forCellReuseIdentifier: TrendingCell.identifier)
         self.tableView.addSubview(self.refreshControl)
         self.navigationItem.leftBarButtonItem = self.languageBarButtonItem
-        self.navigationItem.rightBarButtonItem = self.logInOutBarButtonItem
+        if UserDefaults.isAuthorizationsToken {
+            self.navigationItem.rightBarButtonItem = self.searchBarButtonItem
+        } else {
+            self.navigationItem.rightBarButtonItem = self.loginBarButtonItem
+        }
     }
     
     private func setupBindings() {
@@ -130,26 +143,18 @@ final class TrendingViewController: BaseViewController {
                 self.present(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
             }).disposed(by: self.disposeBag)
         
-        self.logInOutBarButtonItem.rx.tap
+        self.loginBarButtonItem.rx.tap
             .subscribe(onNext: { [weak self] in
-                if UserDefaults.isAuthorizationsToken {
-                    let alertController = UIAlertController(title: "Logout", message: "Do you logout?", preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                    alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (_) in
-                        UserDefaults.standard.removeObject(forKey: "AuthorizationsToken")
-                        UserDefaults.standard.synchronize()
-                        let viewController = TrendingViewController()
-                        let navigationController = UINavigationController(rootViewController: viewController)
-                        AppDelegate.shared?.window?.rootViewController?.dismiss(animated: false, completion: nil)
-                        AppDelegate.shared?.window?.rootViewController = navigationController
-                        AppDelegate.shared?.window?.makeKeyAndVisible()
-                    }))
-                    self?.present(alertController, animated: true, completion: nil)
-                } else {
-                    let viewController = LoginViewController()
-                    let navigationController = UINavigationController(rootViewController: viewController)
-                    self?.present(navigationController, animated: true, completion: nil)
-                }
+                let viewController = LoginViewController()
+                let navigationController = UINavigationController(rootViewController: viewController)
+                self?.present(navigationController, animated: true, completion: nil)
+            }).disposed(by: self.disposeBag)
+        
+        self.searchBarButtonItem.rx.tap
+            .subscribe(onNext: { [weak self] in
+                let viewController = SearchRepositoryViewController()
+                let navigationController = UINavigationController(rootViewController: viewController)
+                self?.present(navigationController, animated: true, completion: nil)
             }).disposed(by: self.disposeBag)
     }
 }

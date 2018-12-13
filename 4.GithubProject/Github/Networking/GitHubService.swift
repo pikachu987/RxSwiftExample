@@ -12,6 +12,7 @@ enum GitHub {
     case trendingRepositories(language: String, page: Int)
     case languages
     case login(id: String, password: String)
+    case searchRepositories(query: String, page: Int)
 }
 
 extension GitHub: TargetType {
@@ -32,11 +33,12 @@ extension GitHub: TargetType {
     
     var path: String {
         switch self {
-        case .trendingRepositories:
+        case .trendingRepositories,
+             .searchRepositories:
             return "/search/repositories"
         case .languages:
             return ""
-        case .login(id: _, password: _):
+        case .login:
             return "/authorizations"
         }
     }
@@ -66,8 +68,17 @@ extension GitHub: TargetType {
                 "note": "(\(NSDate()))"
                 ] as [String : Any]
             return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+        case .searchRepositories(let query, let page):
+            let parameters = ["q": query.encoding, "page":page] as [String : Any]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         }
     }
     
     var sampleData: Data { return "There is No smaple Data".data(using: String.Encoding.utf8) ?? Data() }
+}
+
+private extension String {
+    var encoding: String {
+        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
+    }
 }

@@ -65,6 +65,7 @@ final class LanguageListViewController: BaseViewController {
     }
     
     private func setupUI() {
+        self.title = "Languages"
         self.navigationItem.leftBarButtonItem = self.closeBarButtonItem
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
     }

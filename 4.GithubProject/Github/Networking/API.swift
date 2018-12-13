@@ -79,4 +79,16 @@ final class API: GitHubAPI {
                 }
             })
     }
+    
+    static func searchRepositories(_ query: String, page: Int) -> Single<[Repository]> {
+        return GithubProvider.rx.request(GitHub.searchRepositories(query: query, page: page))
+            .observeOn(MainScheduler.instance)
+            .flatMap ({ response -> Single<[Repository]> in
+                guard let repositories = try? JSONDecoder().decode(Repositories.self, from: response.data) else {
+                    let error = try? JSONDecoder().decode(GitHubError.self, from: response.data)
+                    return Single.error(NSError(domain: error?.message ?? "An unknown error has occurred.", code: 400, userInfo: nil))
+                }
+                return Single.just(repositories.items)
+            })
+    }
 }

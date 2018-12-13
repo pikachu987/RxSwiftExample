@@ -19,9 +19,17 @@ class TabBarController: UITabBarController {
         trendingNavigationController.tabBarItem.title = "Trending"
         viewControllers.append(trendingNavigationController)
         
-//        let searchNavigationController = UINavigationController(rootViewController: TrendingViewController())
-//        searchNavigationController.tabBarItem.title = "Search"
-//        viewControllers.append(searchNavigationController)
+        let myRepositoriesNavigationController = UINavigationController(rootViewController: MyRepositoriesViewController())
+        myRepositoriesNavigationController.tabBarItem.title = "MyRepo"
+        viewControllers.append(myRepositoriesNavigationController)
+        
+        let relationNavigationController = UINavigationController(rootViewController: RelationViewController())
+        relationNavigationController.tabBarItem.title = "Relation"
+        viewControllers.append(relationNavigationController)
+        
+        let profileNavigationController = UINavigationController(rootViewController: ProfileViewController())
+        profileNavigationController.tabBarItem.title = "Profile"
+        viewControllers.append(profileNavigationController)
         
         self.setViewControllers(viewControllers, animated: true)
     }
