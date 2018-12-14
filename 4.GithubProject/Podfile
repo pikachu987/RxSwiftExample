@@ -14,6 +14,7 @@ target 'Github' do
   pod 'RxOptional', '3.6.2'
   pod 'RxKeyboard', '0.9.0'
   pod 'SnapKit', '4.2.0'
+  pod 'Kingfisher', '4.10.1'
 
   target 'GithubTests' do
     inherit! :search_paths

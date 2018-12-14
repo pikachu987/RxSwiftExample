@@ -14,10 +14,18 @@ enum GitHub {
     case login(id: String, password: String)
     case searchRepositories(query: String, page: Int)
     case profile
+    case myRepo(urlPath: String)
 }
 
 extension GitHub: TargetType {
-    var baseURL: URL { return URL(string: "https://api.github.com")! }
+    var baseURL: URL {
+        switch self {
+        case .myRepo(let urlPath):
+            return URL(string: urlPath) ?? URL(string: "https://api.github.com")!
+        default:
+            return URL(string: "https://api.github.com")!
+        }
+    }
     
     var headers: [String: String]? {
         return ["Content-type": "application/json"]
@@ -43,6 +51,8 @@ extension GitHub: TargetType {
             return "/authorizations"
         case .profile:
             return "/user"
+        default:
+            return ""
         }
     }
     

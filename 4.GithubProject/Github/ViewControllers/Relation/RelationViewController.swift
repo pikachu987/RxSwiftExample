@@ -14,5 +14,20 @@ final class RelationViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setupUI()
+        self.setupBindings()
+    }
+    
+    private func setupUI() {
+        
+    }
+    
+    private func setupBindings() {
+        ProfileHelper.shared.profile
+            .subscribe(onNext: { [weak self] user in
+                print(user?.reposUrl)
+            }).disposed(by: self.disposeBag)
+        
+        ProfileHelper.shared.ifExistsProfileLoad()
     }
 }

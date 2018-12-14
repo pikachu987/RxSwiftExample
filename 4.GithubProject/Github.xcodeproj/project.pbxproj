@@ -11,6 +11,7 @@
 		D15C6C15CBB5F741B09F01D9 /* Pods_GithubTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 816E747482FD0829BD5E5C46 /* Pods_GithubTests.framework */; };
 		DEA6ADF73B244B2E5BCB459C /* Pods_GithubUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E28EEBFB7D2B79BE8FA7A0D /* Pods_GithubUITests.framework */; };
 		E01DE8FF21C3E32600445F19 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01DE8FE21C3E32600445F19 /* User.swift */; };
+		E01DE90121C3FC3E00445F19 /* ProfileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01DE90021C3FC3E00445F19 /* ProfileHelper.swift */; };
 		E032302221B6CB7100DEF337 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E032302121B6CB7100DEF337 /* LoginViewController.swift */; };
 		E032302421B6CB7900DEF337 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E032302321B6CB7900DEF337 /* LoginViewModel.swift */; };
 		E03D0E8A21C01A4E00A3FC0B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E03D0E8921C01A4E00A3FC0B /* TabBarController.swift */; };
@@ -75,6 +76,7 @@
 		816E747482FD0829BD5E5C46 /* Pods_GithubTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GithubTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B78B2188AA4579E0FDA8C33E /* Pods-Github.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Github.release.xcconfig"; path = "Pods/Target Support Files/Pods-Github/Pods-Github.release.xcconfig"; sourceTree = "<group>"; };
 		E01DE8FE21C3E32600445F19 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E01DE90021C3FC3E00445F19 /* ProfileHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHelper.swift; sourceTree = "<group>"; };
 		E032302121B6CB7100DEF337 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E032302321B6CB7900DEF337 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		E03D0E8921C01A4E00A3FC0B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 				E0F49D4021A9AF5100E72AC2 /* API.swift */,
 				E0F49D4C21A9AFC600E72AC2 /* ActivityIndicator.swift */,
 				E0D5430421BD621E0067DDE2 /* ValidationService.swift */,
+				E01DE90021C3FC3E00445F19 /* ProfileHelper.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Github/Pods-Github-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
@@ -583,6 +587,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
@@ -643,6 +648,7 @@
 			files = (
 				E084132721C2A37700D9D761 /* RelationViewController.swift in Sources */,
 				E0F49D4B21A9AF9900E72AC2 /* TrendingViewModel.swift in Sources */,
+				E01DE90121C3FC3E00445F19 /* ProfileHelper.swift in Sources */,
 				E0BD971321AD889C00EA899B /* BaseViewController.swift in Sources */,
 				E084132521C2A31600D9D761 /* ProfileViewModel.swift in Sources */,
 				E01DE8FF21C3E32600445F19 /* User.swift in Sources */,

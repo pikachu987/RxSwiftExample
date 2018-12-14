@@ -11,11 +11,12 @@ import RxCocoa
 import RxOptional
 
 protocol ProfileViewModelInputs {
-    
+    var loadProfileTrigger: PublishSubject<Void> { get }
 }
 
 protocol ProfileViewModelOutputs {
-    
+    var isLoading: Driver<Bool> { get }
+    var profile: BehaviorRelay<User?> { get }
 }
 
 protocol ProfileViewModelType {
@@ -26,8 +27,26 @@ protocol ProfileViewModelType {
 final class ProfileViewModel: ProfileViewModelInputs, ProfileViewModelOutputs {
     private let disposeBag = DisposeBag()
     
+    var isLoading: Driver<Bool>
+    var profile: BehaviorRelay<User?>
+    
+    var loadProfileTrigger: PublishSubject<Void>
+    
     init() {
+        self.profile = BehaviorRelay<User?>(value: nil)
+        let loading = ActivityIndicator()
+        self.isLoading = loading.asDriver()
         
+        self.loadProfileTrigger = PublishSubject<Void>()
+        
+        
+        self.isLoading.asObservable()
+            .sample(self.loadProfileTrigger)
+            .flatMap { isLoading -> Observable<User> in
+                return API.profile()
+                    .trackActivity(loading)
+        }.bind(to: self.profile)
+        .disposed(by: self.disposeBag)
     }
 }
 

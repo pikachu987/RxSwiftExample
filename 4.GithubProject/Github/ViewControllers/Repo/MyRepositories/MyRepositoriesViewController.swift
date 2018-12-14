@@ -27,6 +27,11 @@ final class MyRepositoriesViewController: BaseViewController {
     }
     
     private func setupBindings() {
+        ProfileHelper.shared.profile
+            .subscribe(onNext: { [weak self] user in
+                print(user?.reposUrl)
+            }).disposed(by: self.disposeBag)
         
+        ProfileHelper.shared.ifExistsProfileLoad()
     }
 }

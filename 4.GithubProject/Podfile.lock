@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (4.7.3)
   - Differentiator (3.1.0)
+  - Kingfisher (4.10.1)
   - Moya/Core (12.0.1):
     - Alamofire (~> 4.1)
     - Result (~> 4.0)
@@ -26,10 +27,11 @@ PODS:
   - SnapKit (4.2.0)
 
 DEPENDENCIES:
+  - Kingfisher
   - Moya/RxSwift (= 12.0.1)
   - RxCocoa (= 4.4.0)
   - RxDataSources (= 3.1.0)
-  - RxKeyboard
+  - RxKeyboard (= 0.9.0)
   - RxOptional (= 3.6.2)
   - RxSwift (= 4.4.0)
   - SnapKit (= 4.2.0)
@@ -38,6 +40,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - Differentiator
+    - Kingfisher
     - Moya
     - Result
     - RxAtomic
@@ -51,6 +54,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
+  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   Moya: cf730b3cd9e005401ef37a85143aa141a12fd38f
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
   RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
@@ -61,6 +65,6 @@ SPEC CHECKSUMS:
   RxSwift: 5976ecd04fc2fefd648827c23de5e11157faa973
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
-PODFILE CHECKSUM: 48d32dad5ef41ca29e408281622195890e7a0cc9
+PODFILE CHECKSUM: 7f9b569d92e86cb26622a67a6ffcec98cdc57837
 
 COCOAPODS: 1.5.3

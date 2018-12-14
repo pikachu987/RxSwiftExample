@@ -104,4 +104,15 @@ final class API: GitHubAPI {
                 return Single.just(user)
             })
     }
+    
+    static func myRepo(_ urlPath: String) -> Single<[Repository]> {
+        return GithubProvider.rx.request(GitHub.myRepo(urlPath: urlPath))
+            .flatMap ({ response -> Single<[Repository]> in
+                guard let repositories = try? JSONDecoder().decode(Repositories.self, from: response.data) else {
+                    let error = try? JSONDecoder().decode(GitHubError.self, from: response.data)
+                    return Single.error(NSError(domain: error?.message ?? "An unknown error has occurred.", code: 400, userInfo: nil))
+                }
+                return Single.just(repositories.items)
+            })
+    }
 }
