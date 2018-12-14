@@ -95,8 +95,6 @@ final class LoginViewController: BaseViewController {
         self.idTextFieldView.textField.returnKeyType = .next
         self.passwordTextFieldView.textField.returnKeyType = .done
         self.passwordTextFieldView.textField.isSecureTextEntry = true
-        self.loginButton.isEnabled = false
-        self.loginButton.backgroundColor = UIColor(white: 188/255, alpha: 1)
         self.loginButton.setTitle("Login", for: .normal)
         self.loginButton.setTitleColor(.white, for: .normal)
     }
@@ -153,6 +151,10 @@ final class LoginViewController: BaseViewController {
             self?.loginButton.isEnabled = isEnabled
             self?.loginButton.backgroundColor = isEnabled ? .black : UIColor(white: 188/255, alpha: 1)
         }).disposed(by: self.disposeBag)
+        
+        self.viewModel.inputs.password.onNext(self.passwordTextFieldView.textField.text)
+        self.viewModel.inputs.id.onNext(self.idTextFieldView.textField.text)
+        
         
         self.viewModel.outpust.validatedId
             .drive(onNext: { [weak self] result in

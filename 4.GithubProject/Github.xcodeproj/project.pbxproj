@@ -10,6 +10,7 @@
 		A44339F538227FB37560BC89 /* Pods_Github.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBF9157FADF0F153AACBE38C /* Pods_Github.framework */; };
 		D15C6C15CBB5F741B09F01D9 /* Pods_GithubTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 816E747482FD0829BD5E5C46 /* Pods_GithubTests.framework */; };
 		DEA6ADF73B244B2E5BCB459C /* Pods_GithubUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E28EEBFB7D2B79BE8FA7A0D /* Pods_GithubUITests.framework */; };
+		E01DE8FF21C3E32600445F19 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01DE8FE21C3E32600445F19 /* User.swift */; };
 		E032302221B6CB7100DEF337 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E032302121B6CB7100DEF337 /* LoginViewController.swift */; };
 		E032302421B6CB7900DEF337 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E032302321B6CB7900DEF337 /* LoginViewModel.swift */; };
 		E03D0E8A21C01A4E00A3FC0B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E03D0E8921C01A4E00A3FC0B /* TabBarController.swift */; };
@@ -73,6 +74,7 @@
 		5AC6764FBBDA37EEAF7803C9 /* Pods-GithubTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GithubTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GithubTests/Pods-GithubTests.release.xcconfig"; sourceTree = "<group>"; };
 		816E747482FD0829BD5E5C46 /* Pods_GithubTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GithubTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B78B2188AA4579E0FDA8C33E /* Pods-Github.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Github.release.xcconfig"; path = "Pods/Target Support Files/Pods-Github/Pods-Github.release.xcconfig"; sourceTree = "<group>"; };
+		E01DE8FE21C3E32600445F19 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E032302121B6CB7100DEF337 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E032302321B6CB7900DEF337 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		E03D0E8921C01A4E00A3FC0B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -376,10 +378,11 @@
 		E0F49D3121A9AE8700E72AC2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E0BD970821AD83F300EA899B /* GitHubError.swift */,
 				E0F49D3521A9AF0F00E72AC2 /* Repositories.swift */,
 				E0F49D3721A9AF1C00E72AC2 /* Repository.swift */,
-				E0BD970821AD83F300EA899B /* GitHubError.swift */,
 				E0D5430621BD72F70067DDE2 /* Authorizations.swift */,
+				E01DE8FE21C3E32600445F19 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -642,6 +645,7 @@
 				E0F49D4B21A9AF9900E72AC2 /* TrendingViewModel.swift in Sources */,
 				E0BD971321AD889C00EA899B /* BaseViewController.swift in Sources */,
 				E084132521C2A31600D9D761 /* ProfileViewModel.swift in Sources */,
+				E01DE8FF21C3E32600445F19 /* User.swift in Sources */,
 				E0BD970721AD830000EA899B /* RepositoryViewModel.swift in Sources */,
 				E0F49D4921A9AF8A00E72AC2 /* TrendingViewController.swift in Sources */,
 				E0F49D4D21A9AFC600E72AC2 /* ActivityIndicator.swift in Sources */,

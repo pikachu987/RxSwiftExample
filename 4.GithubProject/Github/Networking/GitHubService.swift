@@ -13,6 +13,7 @@ enum GitHub {
     case languages
     case login(id: String, password: String)
     case searchRepositories(query: String, page: Int)
+    case profile
 }
 
 extension GitHub: TargetType {
@@ -40,6 +41,8 @@ extension GitHub: TargetType {
             return ""
         case .login:
             return "/authorizations"
+        case .profile:
+            return "/user"
         }
     }
     
@@ -71,6 +74,8 @@ extension GitHub: TargetType {
         case .searchRepositories(let query, let page):
             let parameters = ["q": query.encoding, "page":page] as [String : Any]
             return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
+        default:
+            return .requestPlain
         }
     }
     

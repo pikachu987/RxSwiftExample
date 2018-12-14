@@ -57,7 +57,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelInputs, SearchRe
         self.searchText = PublishSubject<String?>()
         
         let loadRequest = self.searchText.asDriver(onErrorJustReturn: nil)
-            .debounce(0.3)
+            .debounce(0.7)
             .distinctUntilChanged()
             .filterNil()
             .filterEmpty()

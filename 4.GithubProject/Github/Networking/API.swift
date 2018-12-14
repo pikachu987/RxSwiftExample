@@ -10,9 +10,13 @@ import Moya
 import RxSwift
 import RxCocoa
 
+//var GithubProvider = MoyaProvider<GitHub> (
+//    endpointClosure: endpointClosure,
+//    plugins: [NetworkLoggerPlugin(verbose: true, responseDataFormatter: JSONResponseDataFormatter)]
+//)
+
 var GithubProvider = MoyaProvider<GitHub> (
-    endpointClosure: endpointClosure,
-    plugins: [NetworkLoggerPlugin(verbose: true, responseDataFormatter: JSONResponseDataFormatter)]
+    endpointClosure: endpointClosure
 )
 
 func JSONResponseDataFormatter(_ data: Data) -> Data {
@@ -89,6 +93,15 @@ final class API: GitHubAPI {
                     return Single.error(NSError(domain: error?.message ?? "An unknown error has occurred.", code: 400, userInfo: nil))
                 }
                 return Single.just(repositories.items)
+            })
+    }
+    
+    static func profile() -> Single<User> {
+        return GithubProvider.rx.request(GitHub.profile)
+            .map(User.self)
+            .observeOn(MainScheduler.instance)
+            .flatMap ({ user -> Single<User> in
+                return Single.just(user)
             })
     }
 }
