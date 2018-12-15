@@ -13,6 +13,7 @@ target 'Github' do
   pod 'Moya/RxSwift', '12.0.1'
   pod 'RxOptional', '3.6.2'
   pod 'RxKeyboard', '0.9.0'
+  pod 'RxWebKit', '0.3.7'
   pod 'SnapKit', '4.2.0'
   pod 'Kingfisher', '4.10.1'
 

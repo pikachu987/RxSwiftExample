@@ -53,12 +53,12 @@ final class TrendingViewController: BaseViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.title = "Trending"
         self.setupUI()
         self.setupBindings()
     }
     
     private func setupUI() {
+        self.title = "Trending"
         self.refreshControl.backgroundColor = .clear
         self.tableView.register(TrendingCell.self, forCellReuseIdentifier: TrendingCell.identifier)
         self.tableView.addSubview(self.refreshControl)

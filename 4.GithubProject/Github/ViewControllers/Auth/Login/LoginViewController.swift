@@ -91,6 +91,7 @@ final class LoginViewController: BaseViewController {
     }
     
     private func setupUI() {
+        self.title = "Login"
         self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem
         self.idTextFieldView.textField.returnKeyType = .next
         self.passwordTextFieldView.textField.returnKeyType = .done

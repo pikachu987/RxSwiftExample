@@ -14,14 +14,14 @@ enum GitHub {
     case login(id: String, password: String)
     case searchRepositories(query: String, page: Int)
     case profile
-    case myRepo(urlPath: String)
+    case myRepo(urlPath: String, page: Int)
 }
 
 extension GitHub: TargetType {
     var baseURL: URL {
         switch self {
-        case .myRepo(let urlPath):
-            return URL(string: urlPath) ?? URL(string: "https://api.github.com")!
+        case .myRepo(let urlPath, let page):
+            return URL(string: urlPath.appending("?page=\(page)&sort=updated")) ?? URL(string: "https://api.github.com")!
         default:
             return URL(string: "https://api.github.com")!
         }

@@ -24,16 +24,20 @@ PODS:
     - RxSwift (~> 4.0)
   - RxSwift (4.4.0):
     - RxAtomic (~> 4.4)
+  - RxWebKit (0.3.7):
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
   - SnapKit (4.2.0)
 
 DEPENDENCIES:
-  - Kingfisher
+  - Kingfisher (= 4.10.1)
   - Moya/RxSwift (= 12.0.1)
   - RxCocoa (= 4.4.0)
   - RxDataSources (= 3.1.0)
   - RxKeyboard (= 0.9.0)
   - RxOptional (= 3.6.2)
   - RxSwift (= 4.4.0)
+  - RxWebKit
   - SnapKit (= 4.2.0)
 
 SPEC REPOS:
@@ -49,6 +53,7 @@ SPEC REPOS:
     - RxKeyboard
     - RxOptional
     - RxSwift
+    - RxWebKit
     - SnapKit
 
 SPEC CHECKSUMS:
@@ -63,8 +68,9 @@ SPEC CHECKSUMS:
   RxKeyboard: 4f782303f499f41577b41c96c6a9a5d7acd51a47
   RxOptional: 80426a0ddbd092573e4c482d8cc13302078c4d5e
   RxSwift: 5976ecd04fc2fefd648827c23de5e11157faa973
+  RxWebKit: e39e220919e5e24546c837f5f60689036a1e5920
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
-PODFILE CHECKSUM: 7f9b569d92e86cb26622a67a6ffcec98cdc57837
+PODFILE CHECKSUM: 6d9f2961ef3b34efc973d62a9c8137c0e437def3
 
 COCOAPODS: 1.5.3

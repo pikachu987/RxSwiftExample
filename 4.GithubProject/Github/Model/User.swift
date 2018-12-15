@@ -18,6 +18,12 @@ struct User : Codable {
     let starredUrl: String?
     let followersUrl: String?
     let followingUrl: String?
+    let publicRepos: Int?
+    let totalPrivateRepos: Int?
+    
+    var repoCount: Int {
+        return (self.publicRepos ?? 0) + (self.totalPrivateRepos ?? 0)
+    }
     
     enum CodingKeys: String, CodingKey {
         case avatarUrl = "avatar_url"
@@ -29,5 +35,7 @@ struct User : Codable {
         case starredUrl = "starred_url"
         case followersUrl = "followers_url"
         case followingUrl = "following_url"
+        case publicRepos = "public_repos"
+        case totalPrivateRepos = "total_private_repos"
     }
 }

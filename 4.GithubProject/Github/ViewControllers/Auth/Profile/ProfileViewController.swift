@@ -67,6 +67,7 @@ final class ProfileViewController: BaseViewController {
     }
     
     private func setupUI() {
+        self.title = "Profile"
         self.navigationItem.rightBarButtonItem = self.logoutBarButtonItem
         self.profileImageView.contentMode = .scaleAspectFill
         self.profileImageView.clipsToBounds = true

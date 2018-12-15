@@ -26,6 +26,7 @@ class ProfileHelper: NSObject {
         super.init()
         
         self.isLoading.asObservable()
+            .debug()
             .sample(self.loadProfileTrigger)
             .flatMap { isLoading -> Observable<User> in
                 return API.profile()

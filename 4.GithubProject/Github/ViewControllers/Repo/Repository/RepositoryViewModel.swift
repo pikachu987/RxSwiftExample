@@ -14,7 +14,7 @@ protocol RepositoryViewModelInputs {
 }
 
 protocol RepositoryViewModelOutputs {
-    var repositoryName: String { get }
+    var repository: Repository { get }
 }
 
 protocol RepositoryViewModelType {
@@ -25,9 +25,7 @@ protocol RepositoryViewModelType {
 final class RepositoryViewModel: RepositoryViewModelInputs, RepositoryViewModelOutputs {
     private let disposeBag = DisposeBag()
     
-    private let repository: Repository
-    
-    var repositoryName: String { return self.repository.name }
+    let repository: Repository
     
     init(repository: Repository) {
         self.repository = repository

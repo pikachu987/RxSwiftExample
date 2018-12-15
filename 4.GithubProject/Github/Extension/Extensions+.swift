@@ -14,6 +14,7 @@ extension Reactive where Base: UIScrollView {
         let scrollView = self.base as UIScrollView
         return self.contentOffset.flatMap{ [weak scrollView] (contentOffset) -> Observable<Void> in
             guard let scrollView = scrollView else { return Observable.empty() }
+            if scrollView.contentSize.height < 10 { return Observable.empty() }
             let isLoadNext = (scrollView.contentSize.height - scrollView.frame.size.height) - contentOffset.y <= 0
             return isLoadNext ? Observable.just(()) : Observable.empty()
         }

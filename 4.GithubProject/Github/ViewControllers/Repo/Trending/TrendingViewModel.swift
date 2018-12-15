@@ -63,7 +63,6 @@ final class TrendingViewModel: TrendingViewModelInputs, TrendingViewModelOutputs
             .flatMap { isLoading -> Observable<[Repository]> in
                 if isLoading { return Observable.empty() }
                 self.page = 1
-                self.items.accept([])
                 return API.trendingRepositories(self.language, page: self.page)
                     .trackActivity(loading)
         }
@@ -89,6 +88,11 @@ final class TrendingViewModel: TrendingViewModelInputs, TrendingViewModelOutputs
         Observable.combineLatest(request, self.items.asObservable()) { request, items in
             return self.page == 1 ? request : items + request
             }.sample(request)
+            .do(onNext: { _ in
+                if self.page == 1 {
+                    self.items.accept([])
+                }
+            })
             .bind(to: self.items)
             .disposed(by: self.disposeBag)
         

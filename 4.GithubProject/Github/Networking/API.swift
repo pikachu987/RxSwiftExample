@@ -10,14 +10,14 @@ import Moya
 import RxSwift
 import RxCocoa
 
-//var GithubProvider = MoyaProvider<GitHub> (
-//    endpointClosure: endpointClosure,
-//    plugins: [NetworkLoggerPlugin(verbose: true, responseDataFormatter: JSONResponseDataFormatter)]
-//)
-
 var GithubProvider = MoyaProvider<GitHub> (
-    endpointClosure: endpointClosure
+    endpointClosure: endpointClosure,
+    plugins: [NetworkLoggerPlugin(verbose: true, responseDataFormatter: JSONResponseDataFormatter)]
 )
+
+//var GithubProvider = MoyaProvider<GitHub> (
+//    endpointClosure: endpointClosure
+//)
 
 func JSONResponseDataFormatter(_ data: Data) -> Data {
     do {
@@ -105,14 +105,14 @@ final class API: GitHubAPI {
             })
     }
     
-    static func myRepo(_ urlPath: String) -> Single<[Repository]> {
-        return GithubProvider.rx.request(GitHub.myRepo(urlPath: urlPath))
+    static func myRepo(_ urlPath: String, page: Int) -> Single<[Repository]> {
+        return GithubProvider.rx.request(GitHub.myRepo(urlPath: urlPath, page: page))
             .flatMap ({ response -> Single<[Repository]> in
-                guard let repositories = try? JSONDecoder().decode(Repositories.self, from: response.data) else {
+                guard let repositories = try? JSONDecoder().decode([Repository].self, from: response.data) else {
                     let error = try? JSONDecoder().decode(GitHubError.self, from: response.data)
                     return Single.error(NSError(domain: error?.message ?? "An unknown error has occurred.", code: 400, userInfo: nil))
                 }
-                return Single.just(repositories.items)
+                return Single.just(repositories)
             })
     }
 }
