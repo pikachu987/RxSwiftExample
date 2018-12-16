@@ -15,12 +15,25 @@ enum GitHub {
     case searchRepositories(query: String, page: Int)
     case profile
     case myRepo(urlPath: String, page: Int)
+    case star(urlPath: String, page: Int)
+    case follower(urlPath: String, page: Int)
+    case following(urlPath: String, page: Int)
+    case repo(urlPath: String, page: Int)
+    case user(id: String)
 }
 
 extension GitHub: TargetType {
     var baseURL: URL {
         switch self {
         case .myRepo(let urlPath, let page):
+            return URL(string: urlPath.appending("?page=\(page)&sort=updated")) ?? URL(string: "https://api.github.com")!
+        case .star(let urlPath, let page):
+            return URL(string: urlPath.appending("?page=\(page)")) ?? URL(string: "https://api.github.com")!
+        case .follower(let urlPath, let page):
+            return URL(string: urlPath.appending("?page=\(page)")) ?? URL(string: "https://api.github.com")!
+        case .following(let urlPath, let page):
+            return URL(string: urlPath.appending("?page=\(page)")) ?? URL(string: "https://api.github.com")!
+        case .repo(let urlPath, let page):
             return URL(string: urlPath.appending("?page=\(page)&sort=updated")) ?? URL(string: "https://api.github.com")!
         default:
             return URL(string: "https://api.github.com")!
@@ -51,6 +64,8 @@ extension GitHub: TargetType {
             return "/authorizations"
         case .profile:
             return "/user"
+        case .user(let id):
+            return "/users/\(id)"
         default:
             return ""
         }

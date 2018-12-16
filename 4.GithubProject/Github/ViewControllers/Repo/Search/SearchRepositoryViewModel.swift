@@ -33,6 +33,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelInputs, SearchRe
     private let disposeBag = DisposeBag()
     private var page = 1
     private var query = ""
+    private var isNext = true
     
     private let selectItem = BehaviorRelay<Repository?>(value: nil)
     
@@ -63,6 +64,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelInputs, SearchRe
             .filterEmpty()
             .flatMap { query -> Driver<[Repository]> in
                 self.query = query
+                self.isNext = true
                 return API.searchRepositories(query, page: self.page)
                     .trackActivity(loading)
                     .asDriver(onErrorJustReturn: [])
@@ -73,6 +75,9 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelInputs, SearchRe
             .filter({ [weak self] _ -> Bool in
                 guard let self = self else { return false }
                 return self.query != ""
+            })
+            .filter({ _ -> Bool in
+                return self.isNext
             })
             .flatMap { isLoading -> Observable<[Repository]>  in
                 if isLoading { return Observable.empty() }
@@ -91,6 +96,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelInputs, SearchRe
             .share(replay: 1)
         
         Observable.combineLatest(request, self.items.asObservable()) { request, items in
+            self.isNext = !request.isEmpty
             return self.page == 1 ? request : items + request
             }.sample(request)
             .bind(to: self.items)

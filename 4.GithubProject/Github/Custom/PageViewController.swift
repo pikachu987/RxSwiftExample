@@ -82,7 +82,9 @@ public class PageViewController: UIPageViewController {
             let currentIndex = orderedViewControllers.index(of: firstViewController) {
             let direction: UIPageViewController.NavigationDirection = index >= currentIndex ? .forward : .reverse
             let nextViewController = orderedViewControllers[index]
-            scrollToViewController(nextViewController, direction: direction, isNotify: isNotify)
+            DispatchQueue.main.async {
+                self.scrollToViewController(nextViewController, direction: direction, isNotify: isNotify)
+            }
         }
     }
     

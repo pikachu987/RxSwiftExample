@@ -25,6 +25,16 @@
 		E084132521C2A31600D9D761 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E084132421C2A31600D9D761 /* ProfileViewModel.swift */; };
 		E084132721C2A37700D9D761 /* RelationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E084132621C2A37700D9D761 /* RelationViewController.swift */; };
 		E084132921C2A37F00D9D761 /* RelationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E084132821C2A37F00D9D761 /* RelationViewModel.swift */; };
+		E08B6DF121C6481800FE8088 /* StarsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B6DF021C6481800FE8088 /* StarsViewController.swift */; };
+		E08B6DF321C6483200FE8088 /* StarsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B6DF221C6483200FE8088 /* StarsViewModel.swift */; };
+		E08B6DF521C64C6A00FE8088 /* FollowersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B6DF421C64C6A00FE8088 /* FollowersViewController.swift */; };
+		E08B6DF721C64C7600FE8088 /* FollowersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B6DF621C64C7600FE8088 /* FollowersViewModel.swift */; };
+		E08B6DF921C64C8500FE8088 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B6DF821C64C8500FE8088 /* FollowingViewController.swift */; };
+		E08B6DFB21C64C9100FE8088 /* FollowingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B6DFA21C64C9100FE8088 /* FollowingViewModel.swift */; };
+		E08B6DFD21C66C1300FE8088 /* FollowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B6DFC21C66C1300FE8088 /* FollowCell.swift */; };
+		E08B6E0021C6731400FE8088 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B6DFF21C6731400FE8088 /* UserViewController.swift */; };
+		E08B6E0221C6731B00FE8088 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B6E0121C6731B00FE8088 /* UserViewModel.swift */; };
+		E08B6E0421C678B200FE8088 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B6E0321C678B200FE8088 /* UserView.swift */; };
 		E0BD970521AD82F200EA899B /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BD970421AD82F200EA899B /* RepositoryViewController.swift */; };
 		E0BD970721AD830000EA899B /* RepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BD970621AD830000EA899B /* RepositoryViewModel.swift */; };
 		E0BD970921AD83F300EA899B /* GitHubError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BD970821AD83F300EA899B /* GitHubError.swift */; };
@@ -92,6 +102,16 @@
 		E084132421C2A31600D9D761 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		E084132621C2A37700D9D761 /* RelationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationViewController.swift; sourceTree = "<group>"; };
 		E084132821C2A37F00D9D761 /* RelationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationViewModel.swift; sourceTree = "<group>"; };
+		E08B6DF021C6481800FE8088 /* StarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarsViewController.swift; sourceTree = "<group>"; };
+		E08B6DF221C6483200FE8088 /* StarsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarsViewModel.swift; sourceTree = "<group>"; };
+		E08B6DF421C64C6A00FE8088 /* FollowersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersViewController.swift; sourceTree = "<group>"; };
+		E08B6DF621C64C7600FE8088 /* FollowersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersViewModel.swift; sourceTree = "<group>"; };
+		E08B6DF821C64C8500FE8088 /* FollowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
+		E08B6DFA21C64C9100FE8088 /* FollowingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewModel.swift; sourceTree = "<group>"; };
+		E08B6DFC21C66C1300FE8088 /* FollowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowCell.swift; sourceTree = "<group>"; };
+		E08B6DFF21C6731400FE8088 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		E08B6E0121C6731B00FE8088 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		E08B6E0321C678B200FE8088 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		E0BD970421AD82F200EA899B /* RepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
 		E0BD970621AD830000EA899B /* RepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewModel.swift; sourceTree = "<group>"; };
 		E0BD970821AD83F300EA899B /* GitHubError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubError.swift; sourceTree = "<group>"; };
@@ -232,13 +252,15 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
-		E084132021C2A2F200D9D761 /* Relation */ = {
+		E084132021C2A2F200D9D761 /* RelationGroup */ = {
 			isa = PBXGroup;
 			children = (
-				E084132621C2A37700D9D761 /* RelationViewController.swift */,
-				E084132821C2A37F00D9D761 /* RelationViewModel.swift */,
+				E08B6DEC21C647CF00FE8088 /* Relation */,
+				E08B6DED21C647E400FE8088 /* Stars */,
+				E08B6DEE21C647EA00FE8088 /* Followers */,
+				E08B6DEF21C6480100FE8088 /* Following */,
 			);
-			path = Relation;
+			path = RelationGroup;
 			sourceTree = "<group>";
 		};
 		E084132121C2A2FF00D9D761 /* Profile */ = {
@@ -248,6 +270,51 @@
 				E084132421C2A31600D9D761 /* ProfileViewModel.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		E08B6DEC21C647CF00FE8088 /* Relation */ = {
+			isa = PBXGroup;
+			children = (
+				E084132621C2A37700D9D761 /* RelationViewController.swift */,
+				E084132821C2A37F00D9D761 /* RelationViewModel.swift */,
+			);
+			path = Relation;
+			sourceTree = "<group>";
+		};
+		E08B6DED21C647E400FE8088 /* Stars */ = {
+			isa = PBXGroup;
+			children = (
+				E08B6DF021C6481800FE8088 /* StarsViewController.swift */,
+				E08B6DF221C6483200FE8088 /* StarsViewModel.swift */,
+			);
+			path = Stars;
+			sourceTree = "<group>";
+		};
+		E08B6DEE21C647EA00FE8088 /* Followers */ = {
+			isa = PBXGroup;
+			children = (
+				E08B6DF421C64C6A00FE8088 /* FollowersViewController.swift */,
+				E08B6DF621C64C7600FE8088 /* FollowersViewModel.swift */,
+			);
+			path = Followers;
+			sourceTree = "<group>";
+		};
+		E08B6DEF21C6480100FE8088 /* Following */ = {
+			isa = PBXGroup;
+			children = (
+				E08B6DF821C64C8500FE8088 /* FollowingViewController.swift */,
+				E08B6DFA21C64C9100FE8088 /* FollowingViewModel.swift */,
+			);
+			path = Following;
+			sourceTree = "<group>";
+		};
+		E08B6DFE21C6730500FE8088 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				E08B6DFF21C6731400FE8088 /* UserViewController.swift */,
+				E08B6E0121C6731B00FE8088 /* UserViewModel.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		E0BD970321AD82DF00EA899B /* Repository */ = {
@@ -282,6 +349,7 @@
 				E0D51D0B21BBF69B002DBACC /* TextFieldView.swift */,
 				E0D51D0D21BBFF08002DBACC /* TouchesScrollView.swift */,
 				E03B2C6F21C5453000BAD5D5 /* TitleView.swift */,
+				E08B6E0321C678B200FE8088 /* UserView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -357,7 +425,8 @@
 				E0BD971121AD889100EA899B /* Base */,
 				E03D0E8921C01A4E00A3FC0B /* TabBarController.swift */,
 				E084131521C2A0FD00D9D761 /* Repo */,
-				E084132021C2A2F200D9D761 /* Relation */,
+				E084132021C2A2F200D9D761 /* RelationGroup */,
+				E08B6DFE21C6730500FE8088 /* User */,
 				E084131421C2A0E600D9D761 /* Auth */,
 			);
 			path = ViewControllers;
@@ -416,6 +485,7 @@
 			isa = PBXGroup;
 			children = (
 				E0F49D3A21A9AF2F00E72AC2 /* TrendingCell.swift */,
+				E08B6DFC21C66C1300FE8088 /* FollowCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -663,27 +733,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				E084132721C2A37700D9D761 /* RelationViewController.swift in Sources */,
+				E08B6E0221C6731B00FE8088 /* UserViewModel.swift in Sources */,
 				E03B2C7321C54CFD00BAD5D5 /* PageViewController.swift in Sources */,
 				E0F49D4B21A9AF9900E72AC2 /* TrendingViewModel.swift in Sources */,
+				E08B6E0021C6731400FE8088 /* UserViewController.swift in Sources */,
 				E01DE90121C3FC3E00445F19 /* ProfileHelper.swift in Sources */,
 				E0BD971321AD889C00EA899B /* BaseViewController.swift in Sources */,
+				E08B6E0421C678B200FE8088 /* UserView.swift in Sources */,
 				E084132521C2A31600D9D761 /* ProfileViewModel.swift in Sources */,
 				E01DE8FF21C3E32600445F19 /* User.swift in Sources */,
 				E0BD970721AD830000EA899B /* RepositoryViewModel.swift in Sources */,
 				E0F49D4921A9AF8A00E72AC2 /* TrendingViewController.swift in Sources */,
 				E0F49D4D21A9AFC600E72AC2 /* ActivityIndicator.swift in Sources */,
+				E08B6DFD21C66C1300FE8088 /* FollowCell.swift in Sources */,
 				E0D51D0E21BBFF08002DBACC /* TouchesScrollView.swift in Sources */,
 				E084131C21C2A25600D9D761 /* SearchRepositoryViewController.swift in Sources */,
 				E032302221B6CB7100DEF337 /* LoginViewController.swift in Sources */,
 				E0F49CFF21A9AE1600E72AC2 /* AppDelegate.swift in Sources */,
+				E08B6DF321C6483200FE8088 /* StarsViewModel.swift in Sources */,
 				E084131F21C2A27700D9D761 /* SearchRepositoryViewModel.swift in Sources */,
+				E08B6DF921C64C8500FE8088 /* FollowingViewController.swift in Sources */,
 				E0F49D3B21A9AF2F00E72AC2 /* TrendingCell.swift in Sources */,
+				E08B6DF121C6481800FE8088 /* StarsViewController.swift in Sources */,
 				E084132921C2A37F00D9D761 /* RelationViewModel.swift in Sources */,
 				E0BD970921AD83F300EA899B /* GitHubError.swift in Sources */,
 				E084131A21C2A1CF00D9D761 /* MyRepositoriesViewModel.swift in Sources */,
 				E0BD970C21AD87E200EA899B /* LanguageListViewController.swift in Sources */,
+				E08B6DFB21C64C9100FE8088 /* FollowingViewModel.swift in Sources */,
 				E03D0E8A21C01A4E00A3FC0B /* TabBarController.swift in Sources */,
 				E0D5430521BD621E0067DDE2 /* ValidationService.swift in Sources */,
+				E08B6DF521C64C6A00FE8088 /* FollowersViewController.swift in Sources */,
+				E08B6DF721C64C7600FE8088 /* FollowersViewModel.swift in Sources */,
 				E0F49D3D21A9AF3B00E72AC2 /* Extensions+.swift in Sources */,
 				E0D51D0C21BBF69B002DBACC /* TextFieldView.swift in Sources */,
 				E084132321C2A30D00D9D761 /* ProfileViewController.swift in Sources */,

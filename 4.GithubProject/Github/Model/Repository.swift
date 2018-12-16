@@ -12,10 +12,24 @@ struct Repository: Codable {
     let id: Int
     let name: String
     let htmlUrl: String?
+    let star: Int?
+    let fork: Int?
+    let language: String?
+    
+    var starCount: Int {
+        return self.star ?? 0
+    }
+    var forkCount: Int {
+        return self.fork ?? 0
+    }
     
     enum CodingKeys: String, CodingKey {
         case id
         case name
         case htmlUrl = "html_url"
+        case star = "stargazers_count"
+        case fork = "forks"
+        case language
+        
     }
 }

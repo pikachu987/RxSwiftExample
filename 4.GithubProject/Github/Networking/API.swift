@@ -115,4 +115,57 @@ final class API: GitHubAPI {
                 return Single.just(repositories)
             })
     }
+    
+    static func star(_ urlPath: String, page: Int) -> Single<[Repository]> {
+        return GithubProvider.rx.request(GitHub.star(urlPath: urlPath, page: page))
+            .flatMap ({ response -> Single<[Repository]> in
+                guard let repositories = try? JSONDecoder().decode([Repository].self, from: response.data) else {
+                    let error = try? JSONDecoder().decode(GitHubError.self, from: response.data)
+                    return Single.error(NSError(domain: error?.message ?? "An unknown error has occurred.", code: 400, userInfo: nil))
+                }
+                return Single.just(repositories)
+            })
+    }
+    
+    static func follower(_ urlPath: String, page: Int) -> Single<[User]> {
+        return GithubProvider.rx.request(GitHub.follower(urlPath: urlPath, page: page))
+            .flatMap ({ response -> Single<[User]> in
+                guard let repositories = try? JSONDecoder().decode([User].self, from: response.data) else {
+                    let error = try? JSONDecoder().decode(GitHubError.self, from: response.data)
+                    return Single.error(NSError(domain: error?.message ?? "An unknown error has occurred.", code: 400, userInfo: nil))
+                }
+                return Single.just(repositories)
+            })
+    }
+    
+    static func following(_ urlPath: String, page: Int) -> Single<[User]> {
+        return GithubProvider.rx.request(GitHub.following(urlPath: urlPath, page: page))
+            .flatMap ({ response -> Single<[User]> in
+                guard let repositories = try? JSONDecoder().decode([User].self, from: response.data) else {
+                    let error = try? JSONDecoder().decode(GitHubError.self, from: response.data)
+                    return Single.error(NSError(domain: error?.message ?? "An unknown error has occurred.", code: 400, userInfo: nil))
+                }
+                return Single.just(repositories)
+            })
+    }
+    
+    static func user(_ id: String) -> Single<User> {
+        return GithubProvider.rx.request(GitHub.user(id: id))
+            .map(User.self)
+            .observeOn(MainScheduler.instance)
+            .flatMap ({ user -> Single<User> in
+                return Single.just(user)
+            })
+    }
+    
+    static func repo(_ urlPath: String, page: Int) -> Single<[Repository]> {
+        return GithubProvider.rx.request(GitHub.repo(urlPath: urlPath, page: page))
+            .flatMap ({ response -> Single<[Repository]> in
+                guard let repositories = try? JSONDecoder().decode([Repository].self, from: response.data) else {
+                    let error = try? JSONDecoder().decode(GitHubError.self, from: response.data)
+                    return Single.error(NSError(domain: error?.message ?? "An unknown error has occurred.", code: 400, userInfo: nil))
+                }
+                return Single.just(repositories)
+            })
+    }
 }

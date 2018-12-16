@@ -145,6 +145,10 @@ final class LoginViewController: BaseViewController {
             .filter{ [unowned self] in
                 !self.loginButton.isShowIndicator
             }
+            .do(onNext: { [weak self] in
+                self?.idTextFieldView.resignFirstResponder()
+                self?.passwordTextFieldView.resignFirstResponder()
+            })
             .bind(to: self.viewModel.inputs.loginTap)
             .disposed(by: self.disposeBag)
         

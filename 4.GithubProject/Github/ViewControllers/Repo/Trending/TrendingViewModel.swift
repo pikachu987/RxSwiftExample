@@ -35,6 +35,7 @@ final class TrendingViewModel: TrendingViewModelInputs, TrendingViewModelOutputs
     private let disposeBag = DisposeBag()
     private var language = ""
     private var page = 1
+    private var isNext = true
     
     private let selectItem = BehaviorRelay<Repository?>(value: nil)
     
@@ -63,12 +64,16 @@ final class TrendingViewModel: TrendingViewModelInputs, TrendingViewModelOutputs
             .flatMap { isLoading -> Observable<[Repository]> in
                 if isLoading { return Observable.empty() }
                 self.page = 1
+                self.isNext = true
                 return API.trendingRepositories(self.language, page: self.page)
                     .trackActivity(loading)
         }
         
         let loadNextRequest = self.isLoading.asObservable()
             .sample(self.loadNextPageTrigger)
+            .filter({ _ -> Bool in
+                return self.isNext
+            })
             .flatMap { isLoading -> Observable<[Repository]>  in
                 if isLoading { return Observable.empty() }
                 self.page += 1
@@ -86,6 +91,7 @@ final class TrendingViewModel: TrendingViewModelInputs, TrendingViewModelOutputs
             .share(replay: 1)
         
         Observable.combineLatest(request, self.items.asObservable()) { request, items in
+            self.isNext = !request.isEmpty
             return self.page == 1 ? request : items + request
             }.sample(request)
             .do(onNext: { _ in

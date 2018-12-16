@@ -33,7 +33,7 @@ class TitleView: UIView {
     }()
     
     init() {
-        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44.0))
+        super.init(frame: CGRect(x: 40, y: 0, width: UIScreen.main.bounds.width - 80, height: 44.0))
         self.titleLabel.font = UIFont.boldSystemFont(ofSize: 15)
         self.titleLabel.text = ""
         self.titleLabel.textColor = .black

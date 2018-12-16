@@ -13,11 +13,6 @@ import RxWebKit
 final class RepositoryViewController: BaseViewController {
     let viewModel: RepositoryViewModel
     
-    init(viewModel: RepositoryViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
     private lazy var webView: WKWebView = {
         let webView = WKWebView()
         self.view.addSubview(webView)
@@ -39,6 +34,11 @@ final class RepositoryViewController: BaseViewController {
     }()
     
     private var titleView = TitleView()
+    
+    init(viewModel: RepositoryViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

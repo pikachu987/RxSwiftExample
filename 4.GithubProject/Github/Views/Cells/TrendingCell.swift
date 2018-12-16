@@ -11,9 +11,28 @@ import UIKit
 final class TrendingCell: UITableViewCell {
     static let identifier = "TrendingCell"
     
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     var item: Repository? {
         willSet {
-            self.textLabel?.text = newValue?.name
+            guard let newValue = newValue else {
+                self.textLabel?.text = nil
+                self.detailTextLabel?.text = nil
+                return
+            }
+            self.textLabel?.text = newValue.name
+            let detail = "Star: \(newValue.starCount), Fork: \(newValue.forkCount)"
+            var languageText = ""
+            if let language = newValue.language {
+                languageText = "Language: " + language.appending(", ")
+            }
+            self.detailTextLabel?.text = languageText.appending(detail)
         }
     }
 }

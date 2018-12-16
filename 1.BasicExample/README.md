@@ -1,4 +1,27 @@
-# BasicExample
+![Swift](https://img.shields.io/badge/Swift-4.2-orange.svg)
+
+# RxSwiftExample
+RxSwift 😵
+
+### Download
+
+git clone https://github.com/pikachu987/RxSwiftExample.git
+<br>
+or
+<br>
+[Zip Download](https://github.com/pikachu987/RxSwiftExample/archive/master.zip)
+
+### 1.BasicExample
+
+RxSwift의 기본 문법 정리<br>
+(Basic syntax of RxSwift)
+
+<br><br>
+
+이 repository가 도움이 되었다면 Star를 눌러주세요.<br>
+(If this repository is helpful to you, please press Star.)
+
+# Index
 
 - [Observable 생성](#1observablecreate)
 
@@ -975,7 +998,7 @@ Observable<String>.create { observer in
     .subscribe {  (value) in
         print("subscribe: \(Thread.isMainThread)")
     }.disposed(by: self.disposeBag)
-    
+
 /*
     .asDriver(onErrorJustReturn: "-1")
     .asObservable()
@@ -1052,7 +1075,7 @@ multicast.delaySubscription(2, scheduler: MainScheduler.instance)
     .subscribe { event in
         print("second scription: \(event)")
     }.disposed(by: self.disposeBag)
-    
+
 // multicase + publish subject 합쳐서 publish로 할수 있다.
 let publish = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
     .take(4)
