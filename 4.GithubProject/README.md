@@ -17,10 +17,13 @@ Github API를 사용하여 Github 프로젝트 만들기<br>
 (Create a Github project using the Github API)<br>
 Trending, Search, Login, MyRepositories, Stars, Followers, Followings<br>
 
-![demo](./img/1.gif)
-![demo](./img/2.gif)
-![demo](./img/3.gif)
-![demo](./img/4.gif)
+|Trending|Login|
+|---|---|
+|<img src='../img/1.gif' width='200px'>|<img src='../img/2.gif' width='200px'>|
+
+|Search|PageViewController|
+|---|---|
+|<img src='../img/3.gif' width='200px'>|<img src='../img/4.gif' width='200px'>|
 
 이 repository가 도움이 되었다면 Star를 눌러주세요.<br>
 (If this repository is helpful to you, please press Star.)
