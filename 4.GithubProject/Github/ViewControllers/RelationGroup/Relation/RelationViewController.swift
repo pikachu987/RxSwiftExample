@@ -203,6 +203,14 @@ final class RelationViewController: BaseViewController {
                 guard let self = self else { return }
                 self.lineViewIndex = index
             }).disposed(by: self.disposeBag)
+        
+        self.pageViewController.rx_delegate.buttonEnabled
+            .subscribe(onNext: { [weak self] isEnabled in
+                self?.buttonGroupBGLineView
+                    .subviews
+                    .compactMap({ $0 as? UIButton })
+                    .forEach({ $0.isUserInteractionEnabled = isEnabled })
+            }).disposed(by: self.disposeBag)
     }
 }
 
@@ -210,6 +218,7 @@ final class RelationViewController: BaseViewController {
 // PageViewController Delegate Proxy
 class RxPageViewControllerDelegateProxy: DelegateProxy<PageViewController, PageViewControllerDelegate>, DelegateProxyType, PageViewControllerDelegate  {
     let pageIndex = PublishSubject<Int>()
+    let buttonEnabled = PublishSubject<Bool>()
     
     static func currentDelegate(for object: PageViewController) -> PageViewControllerDelegate? {
         return object.pageViewDelegate
@@ -225,6 +234,10 @@ class RxPageViewControllerDelegateProxy: DelegateProxy<PageViewController, PageV
     
     func pageViewController(_ pageViewController: UIPageViewController, index: Int) {
         self.pageIndex.onNext(index)
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, isEnabled: Bool) {
+        self.buttonEnabled.onNext(isEnabled)
     }
 }
 

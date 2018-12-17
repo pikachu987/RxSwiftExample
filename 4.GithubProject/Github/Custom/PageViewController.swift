@@ -1,10 +1,23 @@
+//Copyright (c) 2017 pikachu987 <pikachu987@naver.com>
 //
-//  PageViewController.swift
-//  Github
+//Permission is hereby granted, free of charge, to any person obtaining a copy
+//of this software and associated documentation files (the "Software"), to deal
+//in the Software without restriction, including without limitation the rights
+//to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//copies of the Software, and to permit persons to whom the Software is
+//furnished to do so, subject to the following conditions:
 //
-//  Created by Gwanho Kim on 15/12/2018.
-//  Copyright © 2018 Gwanho Kim. All rights reserved.
+//The above copyright notice and this permission notice shall be included in
+//all copies or substantial portions of the Software.
 //
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//THE SOFTWARE.
+
 
 import UIKit
 
@@ -14,20 +27,22 @@ public protocol PageViewControllerDelegate: class {
     func pageViewController(_ pageViewController: UIPageViewController, count: Int)
     /// pageViewController index
     func pageViewController(_ pageViewController: UIPageViewController, index: Int)
+    /// pageViewController index
+    func pageViewController(_ pageViewController: UIPageViewController, isEnabled: Bool)
 }
 
 public extension PageViewControllerDelegate {
-    func pageViewController(_ pageViewController: UIPageViewController, count: Int){ }
-    func pageViewController(_ pageViewController: UIPageViewController, index: Int){ }
+    func pageViewController(_ pageViewController: UIPageViewController, count: Int) { }
+    func pageViewController(_ pageViewController: UIPageViewController, index: Int) { }
+    func pageViewController(_ pageViewController: UIPageViewController, isEnabled: Bool) { }
 }
-
 
 // PageViewController
 public class PageViewController: UIPageViewController {
     // MARK: var
     
     /// delegate
-    public weak var pageViewDelegate: PageViewControllerDelegate?
+    weak public var pageViewDelegate: PageViewControllerDelegate?
     
     /// viewControllers
     public lazy var orderedViewControllers: [UIViewController] = [UIViewController]()
@@ -35,34 +50,27 @@ public class PageViewController: UIPageViewController {
     /// isReload Infinite PageViewController
     public var isReload = false
     
+    public var isEnabledScroll = true
+    
     // MARK: initialize
-    
-    public override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
-        super.init(transitionStyle: style, navigationOrientation: navigationOrientation, options: options)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
     }
     
-    
     // MARK: func
     
     /// Left Right Swipe
-    public func setDataSource(){
+    public func setDataSource() {
         self.dataSource = self
     }
     
     /// init View
-    public func initView(_ viewController: [UIViewController]){
+    public func initView(_ viewController: [UIViewController]) {
         self.orderedViewControllers = viewController
         if let initialViewController = self.orderedViewControllers.first {
-            scrollToViewController(initialViewController)
+            self.scrollToViewController(initialViewController)
         }
         self.pageViewDelegate?.pageViewController(self, count: orderedViewControllers.count)
     }
@@ -72,7 +80,10 @@ public class PageViewController: UIPageViewController {
     func scrollToNextViewController() {
         if let visibleViewController = viewControllers?.first,
             let nextViewController = pageViewController(self, viewControllerAfter: visibleViewController) {
-            scrollToViewController(nextViewController)
+            if !self.isEnabledScroll { return }
+            self.isEnabledScroll = false
+            self.pageViewDelegate?.pageViewController(self, isEnabled: self.isEnabledScroll)
+            self.scrollToViewController(nextViewController)
         }
     }
     
@@ -82,9 +93,10 @@ public class PageViewController: UIPageViewController {
             let currentIndex = orderedViewControllers.index(of: firstViewController) {
             let direction: UIPageViewController.NavigationDirection = index >= currentIndex ? .forward : .reverse
             let nextViewController = orderedViewControllers[index]
-            DispatchQueue.main.async {
-                self.scrollToViewController(nextViewController, direction: direction, isNotify: isNotify)
-            }
+            if !self.isEnabledScroll { return }
+            self.isEnabledScroll = false
+            self.pageViewDelegate?.pageViewController(self, isEnabled: self.isEnabledScroll)
+            self.scrollToViewController(nextViewController, direction: direction, isNotify: isNotify)
         }
     }
     
@@ -95,9 +107,20 @@ public class PageViewController: UIPageViewController {
     
     /// Scroll To ViewController
     private func scrollToViewController(_ viewController: UIViewController, direction: UIPageViewController.NavigationDirection = .forward, isNotify: Bool = true) {
-        setViewControllers([viewController],direction: direction,animated: true,completion: { (finished) -> Void in
+        let animated = (viewController != self.viewControllers?.first)
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                if !self.isEnabledScroll {
+                    self.isEnabledScroll = true
+                    self.pageViewDelegate?.pageViewController(self, isEnabled: self.isEnabledScroll)
+                }
+            }
+        }
+        self.setViewControllers([viewController], direction: direction, animated: animated) { _ in
             self.notifyDelegateOfNewIndex(isNotify)
-        })
+        }
+        CATransaction.commit()
     }
     
     /// Notify NewIndex
@@ -115,6 +138,12 @@ public class PageViewController: UIPageViewController {
 // MARK: UIPageViewControllerDelegate
 extension PageViewController: UIPageViewControllerDelegate {
     public func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            if !self.isEnabledScroll {
+                self.isEnabledScroll = true
+                self.pageViewDelegate?.pageViewController(self, isEnabled: self.isEnabledScroll)
+            }
+        }
         self.notifyDelegateOfNewIndex()
     }
 }
@@ -126,8 +155,8 @@ extension PageViewController: UIPageViewControllerDataSource {
             return nil
         }
         let previousIndex = viewControllerIndex - 1
-        if !self.isReload{
-            if previousIndex < 0{ return nil }
+        if !self.isReload {
+            if previousIndex < 0 { return nil }
         }
         guard previousIndex >= 0 else { return orderedViewControllers.last }
         guard orderedViewControllers.count > previousIndex else { return nil }
@@ -139,8 +168,8 @@ extension PageViewController: UIPageViewControllerDataSource {
             return nil
         }
         let nextIndex = viewControllerIndex + 1
-        if !self.isReload{
-            if nextIndex >= orderedViewControllers.count{ return nil }
+        if !self.isReload {
+            if nextIndex >= orderedViewControllers.count { return nil }
         }
         guard orderedViewControllers.count != nextIndex else { return orderedViewControllers.first }
         return orderedViewControllers[nextIndex]

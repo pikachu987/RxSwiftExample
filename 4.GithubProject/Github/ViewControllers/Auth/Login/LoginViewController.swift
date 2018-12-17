@@ -133,6 +133,11 @@ final class LoginViewController: BaseViewController {
             .bind(to: self.viewModel.inputs.loginTap)
             .disposed(by: self.disposeBag)
         
+        self.viewModel.outpust.enabledLogin.drive(onNext: { [weak self] isEnabled in
+            self?.loginButton.isEnabled = isEnabled
+            self?.loginButton.backgroundColor = isEnabled ? .black : UIColor(white: 188/255, alpha: 1)
+        }).disposed(by: self.disposeBag)
+        
         self.idTextFieldView.textField.rx.text
             .bind(to: self.viewModel.inputs.id)
             .disposed(by: self.disposeBag)
@@ -151,14 +156,6 @@ final class LoginViewController: BaseViewController {
             })
             .bind(to: self.viewModel.inputs.loginTap)
             .disposed(by: self.disposeBag)
-        
-        self.viewModel.outpust.enabledLogin.drive(onNext: { [weak self] isEnabled in
-            self?.loginButton.isEnabled = isEnabled
-            self?.loginButton.backgroundColor = isEnabled ? .black : UIColor(white: 188/255, alpha: 1)
-        }).disposed(by: self.disposeBag)
-        
-        self.viewModel.inputs.password.onNext(self.passwordTextFieldView.textField.text)
-        self.viewModel.inputs.id.onNext(self.idTextFieldView.textField.text)
         
         
         self.viewModel.outpust.validatedId

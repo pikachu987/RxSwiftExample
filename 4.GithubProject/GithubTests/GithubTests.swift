@@ -7,6 +7,10 @@
 //
 
 import XCTest
+
+import RxSwift
+import RxCocoa
+
 @testable import Github
 
 class GithubTests: XCTestCase {

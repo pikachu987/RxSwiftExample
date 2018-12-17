@@ -115,8 +115,8 @@ final class TrendingViewController: BaseViewController {
                 }
                 cell.item = item
                 return cell
-        }, titleForHeaderInSection: { (dataSource, section) -> String? in
-            return self.viewModel.outpust.languageRelay.value
+        }, titleForHeaderInSection: { [weak self] (dataSource, section) -> String? in
+            return self?.viewModel.outpust.languageRelay.value
         })
         
         self.viewModel.outpust.items
