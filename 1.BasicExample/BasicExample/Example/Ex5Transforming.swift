@@ -20,8 +20,8 @@ class Ex5Transforming: NSObject {
     // timeSpan: 버퍼에 저장되는 시간간격
     // count: 버퍼에 저장되는 최대 이벤트의 갯수
     func buffer() {
-        Observable<Int>.interval(1, scheduler: MainScheduler.instance).map{ "buffer: \($0)" }.take(7)
-            .buffer(timeSpan: 2.5, count: 3, scheduler: MainScheduler.instance)
+        Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance).map{ "buffer: \($0)" }.take(7)
+            .buffer(timeSpan: RxTimeInterval.milliseconds(500), count: 3, scheduler: MainScheduler.instance)
             .subscribe { event in print(event) }
             .disposed(by: self.disposeBag)
         /*
@@ -34,7 +34,7 @@ class Ex5Transforming: NSObject {
     
     // 원본 Observable의 이벤트를 받아 새로운 Observable로 변형한다.
     func flatMap() {
-        Observable<Int>.interval(1, scheduler: MainScheduler.instance).take(2)
+        Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance).take(2)
             .flatMap({ (num) -> Observable<String> in
                 return Observable<String>.create { observer in
                     observer.onNext("A\(num)")
@@ -55,11 +55,11 @@ class Ex5Transforming: NSObject {
     
     // scan은 값을 축적해서 가지고 있을 수 있으며, 이 값을 통해 이벤트를 변형할 수 있는 메서드이다.
     func scan() {
-        Observable<Int>.interval(1, scheduler: MainScheduler.instance).take(5)
+        Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance).take(5)
             .scan(10, accumulator: { (accumulator, num) -> Int in
                 return accumulator + num
             })
-            .delaySubscription(3, scheduler: MainScheduler.instance)
+            .delaySubscription(RxTimeInterval.seconds(3), scheduler: MainScheduler.instance)
             .subscribe { print($0) }
             .disposed(by: self.disposeBag)
         /*
@@ -75,7 +75,7 @@ class Ex5Transforming: NSObject {
     // buffer와 유사하지만 모여진 이벤트로 새로운 observable를 생성한다.
     func window() {
         Observable<Int>.of(1, 2, 3, 4, 5, 6, 7)
-            .window(timeSpan: 3, count: 3, scheduler: MainScheduler.instance)
+            .window(timeSpan: RxTimeInterval.seconds(3), count: 3, scheduler: MainScheduler.instance)
             .subscribe(onNext: { observable in
                 print(observable)
                 observable.subscribe(onNext: { event in

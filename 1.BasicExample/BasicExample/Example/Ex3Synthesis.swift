@@ -39,11 +39,11 @@ class Ex3Synthesis: NSObject {
     
     // withLatestFrom은 두개의 Observable 을 합성하지만, 한쪽 Observable의 이벤트가 발생할때에 합성해주는 메서드이다. 합성할 다른쪽 이벤트가 없다면 이벤트는 스킵된다.
     func withLatestFrom() {
-        let latestFromFirst = Observable<Int>.interval(2, scheduler: MainScheduler.instance).take(6)
+        let latestFromFirst = Observable<Int>.interval(RxTimeInterval.seconds(2), scheduler: MainScheduler.instance).take(6)
             .map{ ["A", "B", "C", "", "", "D"][$0] }
             .filter{ !$0.isEmpty }
         
-        Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+        Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
             .take(12)
             .map({ "\($0)" })
             .withLatestFrom(latestFromFirst, resultSelector: { (first, second) in
@@ -68,9 +68,9 @@ class Ex3Synthesis: NSObject {
     
     // merge는 같은 타입의 이벤트를 발생하는 Observable을 합성하는 함수이며, 각각의 이벤트를 모두 수신할 수 있다.
     func merge() {
-        let mergeFirst = Observable<Int>.interval(1, scheduler: MainScheduler.instance).take(3)
+        let mergeFirst = Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance).take(3)
             .map({ "mergeFirst: \($0)" })
-        let mergeSecond = Observable<Int>.interval(2, scheduler: MainScheduler.instance).take(2)
+        let mergeSecond = Observable<Int>.interval(RxTimeInterval.seconds(2), scheduler: MainScheduler.instance).take(2)
             .map({ "mergeSecond: \($0)" })
         Observable.of(mergeFirst, mergeSecond).merge().subscribe { event in
             print(event)
@@ -129,10 +129,10 @@ class Ex3Synthesis: NSObject {
     
     // concat은 두개 이상의 Observable를 직렬로 연결한다. 하나의 Observable가 이벤트를 전달 완료 후 그 다음 Observable의 이벤트를 전달한다.
     func concat() {
-        Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+        Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
             .map{ "first: \($0)" }
             .take(3)
-            .concat(Observable<Int>.interval(0.5, scheduler: MainScheduler.instance).map{ "second: \($0)" }.take(4))
+            .concat(Observable<Int>.interval(RxTimeInterval.milliseconds(500), scheduler: MainScheduler.instance).map{ "second: \($0)" }.take(4))
             .subscribe({ print($0) })
             .disposed(by: self.disposeBag)
         /*
@@ -149,13 +149,13 @@ class Ex3Synthesis: NSObject {
     
     // 맨 먼저발생한 Observable의 이벤트만을 사용한다.
     func amb() {
-        let first = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+        let first = Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
             .map{ "first: \($0)" }
             .take(3)
-        let second = Observable<Int>.interval(0.5, scheduler: MainScheduler.instance)
+        let second = Observable<Int>.interval(RxTimeInterval.milliseconds(500), scheduler: MainScheduler.instance)
             .map{ "second: \($0)" }
             .take(3)
-        let third = Observable<Int>.interval(1.1, scheduler: MainScheduler.instance)
+        let third = Observable<Int>.interval(RxTimeInterval.milliseconds(1100), scheduler: MainScheduler.instance)
             .map{ "third: \($0)" }
             .take(3)
         first.amb(second).amb(third)

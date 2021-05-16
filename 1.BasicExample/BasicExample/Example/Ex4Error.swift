@@ -25,7 +25,7 @@ class Ex4Error: NSObject {
             return Disposables.create {
                 print("dispose!")
             }
-        }.catchError { (error) -> Observable<String> in
+        }.catch { (error) -> Observable<String> in
             return Observable.of("close1", "close2")
         }.subscribe({ print($0) })
         .disposed(by: self.disposeBag)
@@ -48,7 +48,7 @@ class Ex4Error: NSObject {
             return Disposables.create {
                 print("dispose!")
             }
-        }.catchErrorJustReturn("End")
+        }.catchAndReturn("End")
         .subscribe({ print($0) })
         .disposed(by: self.disposeBag)
         /*
@@ -93,10 +93,10 @@ class Ex4Error: NSObject {
             observer.on(.next("2"))
             observer.onError(NSError(domain: "Error!", code: 404, userInfo: nil))
             return Disposables.create()
-            }.retryWhen { (_) -> Observable<Int> in
-                return Observable<Int>.timer(3, scheduler: MainScheduler.asyncInstance)
-            }.subscribe({ print($0) })
-            .disposed(by: self.disposeBag)
+        }.retry { (_) -> Observable<Int> in
+            return Observable<Int>.timer(RxTimeInterval.seconds(3), scheduler: MainScheduler.asyncInstance)
+        }.subscribe({ print($0) })
+        .disposed(by: self.disposeBag)
         /*
          next(1)
          next(2)
@@ -125,7 +125,7 @@ class Ex4Error: NSObject {
             })
             timer.resume()
             return cancel
-        }.timeout(2, scheduler: MainScheduler.instance)
+        }.timeout(RxTimeInterval.seconds(3), scheduler: MainScheduler.instance)
             .do(onNext: { value in
                 print("onNext: \(value)")
             }, onError: { (error) in

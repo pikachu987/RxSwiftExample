@@ -18,7 +18,7 @@ class Ex7Utility: NSObject {
     // Observable의 이벤트가 발생할때 이벤트 핸들러
     // subscribe시점이 아닌 이벤트 발생시점
     func doOn() {
-        Observable<Int>.interval(0.1, scheduler: MainScheduler.instance)
+        Observable<Int>.interval(RxTimeInterval.milliseconds(100), scheduler: MainScheduler.instance)
             .take(10)
             .do(onNext: {event in
                 print("do: \(event)")
@@ -29,11 +29,11 @@ class Ex7Utility: NSObject {
     
     // ObserveOn 이 호출된 다음 메서드가 수행될 스케쥴러를 지정할수 있다.
     func observeOn() {
-        Observable<Int>.interval(0.1, scheduler: MainScheduler.instance)
+        Observable<Int>.interval(RxTimeInterval.milliseconds(100), scheduler: MainScheduler.instance)
             .take(10)
-            .observeOn(MainScheduler.instance)
+            .observe(on: MainScheduler.instance)
             .do(onNext: { print("do: \(Thread.isMainThread), \($0)") })
-            .observeOn(ConcurrentDispatchQueueScheduler.init(qos: .background))
+            .observe(on: ConcurrentDispatchQueueScheduler.init(qos: .background))
             .subscribe { print("subscribe: \(Thread.isMainThread), \($0)") }
             .disposed(by: self.disposeBag)
     }
@@ -46,20 +46,20 @@ class Ex7Utility: NSObject {
             observer.onNext(eventText)
             return Disposables.create()
         }
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .map { value -> String in
-                let eventText = "map: \(Thread.isMainThread)"
-                print(eventText)
-                return eventText
-            }
-            .asDriver(onErrorJustReturn: "-1")
-            .asObservable()
-            .do(onNext: { value in
-                print("do: \(Thread.isMainThread)")
-            })
-            .subscribe {  (value) in
-                print("subscribe: \(Thread.isMainThread)")
-            }.disposed(by: self.disposeBag)
+        .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+        .map { value -> String in
+            let eventText = "map: \(Thread.isMainThread)"
+            print(eventText)
+            return eventText
+        }
+        .asDriver(onErrorJustReturn: "-1")
+        .asObservable()
+        .do(onNext: { value in
+            print("do: \(Thread.isMainThread)")
+        })
+        .subscribe {  (value) in
+            print("subscribe: \(Thread.isMainThread)")
+        }.disposed(by: self.disposeBag)
         
         /*
         .asDriver(onErrorJustReturn: "-1")
@@ -75,7 +75,7 @@ class Ex7Utility: NSObject {
     // materialize: 이벤트가 전달될때 어떤 이벤트인지도 같이 전달된다.
     // dematerialize: materialize된 이벤트를 다시 일반 이벤트발생형태로 변경한다.
     func materialize() {
-        Observable<Int>.interval(1, scheduler: MainScheduler.instance).take(4)
+        Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance).take(4)
             .materialize()
             .dematerialize()
             .subscribe { print($0) }
@@ -92,7 +92,7 @@ class Ex7Utility: NSObject {
         Observable.using({ () -> ResourceDisposable in
             return ResourceDisposable()
         }) { disposable in
-            return Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+            return Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
         }.take(3)
             .subscribe { print($0) }
             .disposed(by: self.disposeBag)
