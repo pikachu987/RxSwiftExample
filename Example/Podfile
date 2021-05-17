@@ -1,0 +1,26 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '11.0'
+
+target 'Example' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Example
+  pod 'RxSwift', '6.1.0'
+  pod 'RxCocoa', '6.1.0'
+  pod 'RxDataSources', '5.0.0'
+  pod 'RxOptional', '5.0.2'
+  pod 'RxKeyboard', '2.0.0'
+  pod 'RxKingfisher', '2.0.0'
+  pod 'RxAlamofire', '6.1.1'
+  pod 'Moya', '14.0.0'
+
+  target 'ExampleTests' do
+    inherit! :search_paths
+    # Pods for testing
+
+    pod 'RxBlocking', '6.1.0'
+    pod 'RxTest', '6.1.0'
+  end
+
+end

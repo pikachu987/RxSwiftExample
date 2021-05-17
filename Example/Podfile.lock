@@ -1,0 +1,88 @@
+PODS:
+  - Alamofire (5.4.3)
+  - Differentiator (5.0.0)
+  - Kingfisher (5.15.8):
+    - Kingfisher/Core (= 5.15.8)
+  - Kingfisher/Core (5.15.8)
+  - Moya (14.0.0):
+    - Moya/Core (= 14.0.0)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - RxAlamofire (6.1.1):
+    - RxAlamofire/Core (= 6.1.1)
+  - RxAlamofire/Core (6.1.1):
+    - Alamofire (~> 5.4)
+    - RxSwift (~> 6.0)
+  - RxBlocking (6.1.0):
+    - RxSwift (= 6.1.0)
+  - RxCocoa (6.1.0):
+    - RxRelay (= 6.1.0)
+    - RxSwift (= 6.1.0)
+  - RxDataSources (5.0.0):
+    - Differentiator (~> 5.0)
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxKeyboard (2.0.0):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxKingfisher (2.0.0):
+    - Kingfisher (~> 5)
+    - RxCocoa (~> 6)
+    - RxSwift (~> 6)
+  - RxOptional (5.0.2):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRelay (6.1.0):
+    - RxSwift (= 6.1.0)
+  - RxSwift (6.1.0)
+  - RxTest (6.1.0):
+    - RxSwift (= 6.1.0)
+
+DEPENDENCIES:
+  - Moya
+  - RxAlamofire (= 6.1.1)
+  - RxBlocking (= 6.1.0)
+  - RxCocoa (= 6.1.0)
+  - RxDataSources (= 5.0.0)
+  - RxKeyboard (= 2.0.0)
+  - RxKingfisher (= 2.0.0)
+  - RxOptional (= 5.0.2)
+  - RxSwift (= 6.1.0)
+  - RxTest (= 6.1.0)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Differentiator
+    - Kingfisher
+    - Moya
+    - RxAlamofire
+    - RxBlocking
+    - RxCocoa
+    - RxDataSources
+    - RxKeyboard
+    - RxKingfisher
+    - RxOptional
+    - RxRelay
+    - RxSwift
+    - RxTest
+
+SPEC CHECKSUMS:
+  Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
+  Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
+  RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
+  RxBlocking: 602095fba0bce7b16b56ccec89edf780c248b7d9
+  RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
+  RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
+  RxKeyboard: 4f5863f43b4ff0cbb2a20b94688d6b80c8a43c14
+  RxKingfisher: d13ea82bb44c6830acfb51c02c86f35dae009f79
+  RxOptional: 3664964c96b69dd20c9cf78bdfe546615e26eca8
+  RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
+  RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
+  RxTest: 9d26616eaff4a7e75f4ecae9b2c24840f2e8218d
+
+PODFILE CHECKSUM: 46efa2b2e93a03acd94d71bd47f6de004e541f2b
+
+COCOAPODS: 1.10.1
