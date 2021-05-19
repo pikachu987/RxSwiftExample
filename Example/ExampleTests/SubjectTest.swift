@@ -33,6 +33,10 @@ class SubjectTest: XCTestCase {
         subject.on(.next(5))
         subject.on(.next(6))
         subject.on(.completed)
+        /*
+         testAsync: 6
+         testAsync: onCompleted
+         */
     }
     
     func testAsyncError() throws {
@@ -54,6 +58,9 @@ class SubjectTest: XCTestCase {
         subject.on(.next(5))
         subject.on(.next(6))
         subject.on(.error(NSError(domain: "err", code: 404, userInfo: nil)))
+        /*
+         Error Domain=err Code=404 "(null)"
+         */
     }
     
     func testPublish() throws {
@@ -72,6 +79,13 @@ class SubjectTest: XCTestCase {
         subject.onNext(3)
         subject.onCompleted()
         subject.onNext(4)
+        /*
+         testPublish: next(2)
+         testPublish: next(3)
+         testPublish 2: next(3)
+         testPublish: completed
+         testPublish 2: completed
+         */
     }
     
     func testPublishError() throws {
@@ -90,6 +104,13 @@ class SubjectTest: XCTestCase {
         subject.onNext(3)
         subject.onError(NSError(domain: "err", code: -1, userInfo: nil))
         subject.onNext(4)
+        /*
+         testPublishError: next(2)
+         testPublishError: next(3)
+         testPublishError 2: next(3)
+         testPublishError: error(Error Domain=err Code=-1 "(null)")
+         testPublishError 2: error(Error Domain=err Code=-1 "(null)")
+         */
     }
     
     func testBehavior() throws {
@@ -107,6 +128,15 @@ class SubjectTest: XCTestCase {
         subject.onNext(3)
         subject.onCompleted()
         subject.onNext(4)
+        /*
+         testBehavior: next(1)
+         testBehavior: next(2)
+         testBehavior 2: next(2)
+         testBehavior: next(3)
+         testBehavior 2: next(3)
+         testBehavior: completed
+         testBehavior 2: completed
+         */
     }
     
     func testReplay() throws {
@@ -128,5 +158,16 @@ class SubjectTest: XCTestCase {
         subject.onNext(4)
         subject.onCompleted()
         subject.onNext(5)
+        /*
+         testReplay: next(1)
+         testReplay: next(2)
+         testReplay: next(3)
+         testReplay 2: next(2)
+         testReplay 2: next(3)
+         testReplay: next(4)
+         testReplay 2: next(4)
+         testReplay: completed
+         testReplay 2: completed
+         */
     }
 }

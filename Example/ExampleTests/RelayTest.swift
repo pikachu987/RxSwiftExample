@@ -26,6 +26,10 @@ class RelayTest: XCTestCase {
         }.disposed(by: self.disposeBag)
         relay.accept(4)
         relay.accept(5)
+        /*
+         next(4)
+         next(5)
+         */
     }
     
     func testBehaviorReply() throws {
@@ -38,5 +42,10 @@ class RelayTest: XCTestCase {
         }.disposed(by: self.disposeBag)
         relay.accept(4)
         relay.accept(5)
+        /*
+         next(3)
+         next(4)
+         next(5)
+         */
     }
 }

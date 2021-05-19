@@ -1,22 +1,26 @@
 [
     {
         "id": 1,
-        "name": "김관호"
+        "name": "김관호",
+        "gender": "m"
     }, {
         "id": 2,
-        "name": "홍길동"
+        "name": "홍길동",
+        "gender": "m"
     }, {
         "id": 3,
         "name": "보라돌이"
     }, {
         "id": 4,
-        "name": "흥부"
+        "name": "흥부",
+        "gender": "m"
     }, {
         "id": 5,
         "name": "둘리"
     }, {
         "id": 6,
-        "name": "제리"
+        "name": "하니",
+        "gender": "f"
     }, {
         "id": 7,
         "name": "미키마우스"
@@ -25,9 +29,11 @@
         "name": "은비까비"
     }, {
         "id": 9,
-        "name": "코난"
+        "name": "코난",
+        "gender": "m"
     }, {
         "id": 10,
-        "name": "팀쿡"
+        "name": "팀쿡",
+        "gender": "m"
     }
 ]

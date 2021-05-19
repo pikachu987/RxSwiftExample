@@ -27,6 +27,11 @@ class ObservableTests: XCTestCase {
             print("testCreate: \(event)")
         }.disposed(by: self.disposeBag)
         XCTAssertEqual(try! observable.toBlocking().toArray(), [10, 20])
+        /*
+         testCreate: next(10)
+         testCreate: next(20)
+         testCreate: completed
+         */
     }
 
     func testJust() throws {
@@ -35,6 +40,10 @@ class ObservableTests: XCTestCase {
             print("testJust: \(event)")
         }.disposed(by: self.disposeBag)
         XCTAssertEqual(try! observable.toBlocking().single(), "hello")
+        /*
+         testJust: next(hello)
+         testJust: completed
+         */
     }
 
     func testEmpty() throws {
@@ -43,6 +52,9 @@ class ObservableTests: XCTestCase {
             print("testEmpty: \(event)")
         }.disposed(by: self.disposeBag)
         XCTAssertNil(try? observable.toBlocking().first())
+        /*
+         testEmpty: completed
+         */
     }
     
     func testNever() throws {
@@ -59,6 +71,9 @@ class ObservableTests: XCTestCase {
             XCTAssertEqual(event.error! as NSError, NSError(domain: "error", code: -1, userInfo: nil))
         }.disposed(by: self.disposeBag)
         XCTAssertNil(try? observable.toBlocking().single())
+        /*
+         testError: error(Error Domain=error Code=-1 "(null)")
+         */
     }
     
     func testFrom() throws {
@@ -74,6 +89,16 @@ class ObservableTests: XCTestCase {
         }.disposed(by: self.disposeBag)
         XCTAssertEqual(try! observable1.toBlocking().last()!.key, "aa")
         XCTAssertEqual(try! observable1.toBlocking().last()!.value, 1)
+        /*
+         testFrom: observable next(1)
+         testFrom: observable next(3)
+         testFrom: observable next(4)
+         testFrom: observable next(5)
+         testFrom: observable next(7)
+         testFrom: observable completed
+         testFrom: observable1 next((key: "aa", value: 1))
+         testFrom: observable1 completed
+         */
     }
 
     func testOf() throws {
@@ -83,6 +108,13 @@ class ObservableTests: XCTestCase {
         }.disposed(by: self.disposeBag)
         
         XCTAssertEqual(try! observable.toBlocking().toArray(), ["aa", "bb", "cc", "dd"])
+        /*
+         testOf: next(aa)
+         testOf: next(bb)
+         testOf: next(cc)
+         testOf: next(dd)
+         testOf: completed
+         */
     }
     
     func testDeferred() throws {
@@ -108,6 +140,12 @@ class ObservableTests: XCTestCase {
         }.disposed(by: self.disposeBag)
         
         XCTAssertEqual(try! observable.toBlocking().single(), "after change")
+        /*
+         testDeferred: next(before change)
+         testDeferred: completed
+         testDeferred: next(after change)
+         testDeferred: completed
+         */
     }
     
     func testGenerate() throws {
@@ -117,5 +155,11 @@ class ObservableTests: XCTestCase {
         }.disposed(by: self.disposeBag)
         
         XCTAssertEqual(try! observable.toBlocking().toArray(), [1, 5, 9])
+        /*
+         testGenerate: next(1)
+         testGenerate: next(5)
+         testGenerate: next(9)
+         testGenerate: completed
+         */
     }
 }

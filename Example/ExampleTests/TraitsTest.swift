@@ -26,6 +26,9 @@ class TraitsTest: XCTestCase {
         }.disposed(by: self.disposeBag)
         
         XCTAssertEqual(try! observable.toBlocking().single(), true)
+        /*
+         singleExample: success(true)
+         */
     }
 
     func testCompletable() throws {
@@ -37,6 +40,9 @@ class TraitsTest: XCTestCase {
             print("testCompletable: \(event)")
             XCTAssertEqual(event, .completed)
         }.disposed(by: self.disposeBag)
+        /*
+         testCompletable: completed
+         */
     }
 
     func testMay() throws {
@@ -57,5 +63,9 @@ class TraitsTest: XCTestCase {
             print("testMay: \(event)")
             XCTAssertEqual(event, .success("hello"))
         }.disposed(by: self.disposeBag)
+        /*
+         testMay: completed
+         testMay: success("hello")
+         */
     }
 }
