@@ -16,34 +16,27 @@ import RxBlocking
 class RelayTest: XCTestCase {
     let disposeBag = DisposeBag()
 
-    func testExample() throws {
+    func testPublishRelay() throws {
+        let relay = PublishRelay<Int>()
+        relay.accept(1)
+        relay.accept(2)
+        relay.accept(3)
+        relay.subscribe { event in
+            print(event)
+        }.disposed(by: self.disposeBag)
+        relay.accept(4)
+        relay.accept(5)
+    }
+    
+    func testBehaviorReply() throws {
+        let relay = BehaviorRelay<Int>(value: 0)
+        relay.accept(1)
+        relay.accept(2)
+        relay.accept(3)
+        relay.subscribe { event in
+            print(event)
+        }.disposed(by: self.disposeBag)
+        relay.accept(4)
+        relay.accept(5)
     }
 }
-
-
-
-//    func testPublishRelay() throws {
-//        let disposeBag = DisposeBag()
-//        let relay = PublishRelay<Int>()
-//        relay.accept(1)
-//        relay.accept(2)
-//        relay.accept(3)
-//        relay.subscribe { event in
-//            print(event)
-//        }.disposed(by: disposeBag)
-//        relay.accept(4)
-//        relay.accept(5)
-//    }
-//
-//    func testBehaviorRelay() throws {
-//        let disposeBag = DisposeBag()
-//        let relay = BehaviorRelay<Int>(value: 5)
-//        relay.accept(1)
-//        relay.accept(2)
-//        relay.accept(3)
-//        relay.subscribe { event in
-//            print(event)
-//        }.disposed(by: disposeBag)
-//        relay.accept(4)
-//        relay.accept(5)
-//    }
