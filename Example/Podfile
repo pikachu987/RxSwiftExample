@@ -13,7 +13,6 @@ target 'Example' do
   pod 'RxKeyboard', '2.0.0'
   pod 'RxKingfisher', '2.0.0'
   pod 'RxAlamofire', '6.1.1'
-  pod 'Moya', '14.0.0'
 
   target 'ExampleTests' do
     inherit! :search_paths

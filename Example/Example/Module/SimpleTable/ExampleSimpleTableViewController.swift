@@ -47,8 +47,8 @@ class ExampleSimpleTableViewController: BaseViewController {
     override func setupBindings() {
         super.setupBindings()
         
-        rx.viewWillAppear.subscribe(onNext: { _ in
-            self.title = "ExampleSimpleTableView"
+        rx.viewWillAppear.subscribe(onNext: { [weak self] _ in
+            self?.title = "ExampleSimpleTableView"
         }).disposed(by: self.disposeBag)
         
         let refreshControl = UIRefreshControl()

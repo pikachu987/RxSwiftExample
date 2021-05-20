@@ -25,15 +25,15 @@ enum MainItemType {
 
     static var array: [MainItemType] {
         return [
-//            .githubTrending,
+            .githubTrending,
             .simpleTable
         ]
     }
 
     var title: String? {
         switch self {
-        case .githubTrending: return "Github 트렌딩 테이블"
-        case .simpleTable: return "심플 테이블"
+        case .githubTrending: return "Github 트렌딩 테이블 + Refresh + Search + LoadMore + Moya"
+        case .simpleTable: return "심플 테이블 + Refresh"
         }
     }
 }

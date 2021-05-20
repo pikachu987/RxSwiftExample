@@ -9,6 +9,10 @@ import UIKit
 import RxSwift
 
 class BaseViewController: UIViewController {
+    deinit {
+        print("deinit: \(self)")
+    }
+
     var disposeBag = DisposeBag()
 
     override func viewDidLoad() {

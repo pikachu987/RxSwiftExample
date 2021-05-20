@@ -48,8 +48,8 @@ class MainViewController: BaseViewController {
     override func setupBindings() {
         super.setupBindings()
 
-        rx.viewWillAppear.subscribe(onNext: { _ in
-            self.title = "Main"
+        rx.viewWillAppear.subscribe(onNext: { [weak self] _ in
+            self?.title = "Main"
         }).disposed(by: self.disposeBag)
         
         tableView.rx.setDelegate(self)
@@ -57,6 +57,7 @@ class MainViewController: BaseViewController {
 
         let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, MainItemType>>(configureCell: { dataSource, tableView, IndexPath, item in
             let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: IndexPath)
+            cell.textLabel?.numberOfLines = 0
             cell.textLabel?.text = item.title
             return cell
         })
@@ -72,7 +73,8 @@ class MainViewController: BaseViewController {
             .bind { [weak self] indexPath, item in
                 self?.tableView.deselectRow(at: indexPath, animated: true)
                 if item == .githubTrending {
-                    
+                    guard let viewController = GithubTrendingViewController.instance() else { return }
+                    self?.present(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
                 } else if item == .simpleTable {
                     guard let viewController = ExampleSimpleTableViewController.instance() else { return }
                     self?.navigationController?.pushViewController(viewController, animated: true)
