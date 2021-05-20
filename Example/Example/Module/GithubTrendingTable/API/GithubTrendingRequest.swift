@@ -13,7 +13,7 @@ class GithubTrendingRequest {
         return URL(string: "https://api.github.com") ?? URL(fileURLWithPath: "")
     }
 
-    var headers: [String: String]? {
+    var headers: HTTPHeaders? {
         return ["Content-type": "application/json"]
     }
 
@@ -31,5 +31,9 @@ class GithubTrendingRequest {
 
     var url: URLConvertible {
         return baseURL.appendingPathComponent(path)
+    }
+    
+    var responseType: GithubTrendingResponse.Type {
+        return GithubTrendingResponse.self
     }
 }

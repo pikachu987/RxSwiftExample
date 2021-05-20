@@ -28,7 +28,9 @@ class ExampleSimpleTableViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.fetchData()
+        DispatchQueue.global().asyncAfter(deadline: .now() + 3) {
+            self.viewModel.fetchData()
+        }
     }
     
     override func setupUI() {

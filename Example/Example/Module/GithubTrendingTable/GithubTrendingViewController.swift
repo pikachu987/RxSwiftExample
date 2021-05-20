@@ -69,15 +69,15 @@ class GithubTrendingViewController: BaseViewController {
             .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
         
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, ExampleSimpleTableMemberModel>>(configureCell: { dataSource, tableView, IndexPath, item in
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, GithubTrendingRepository>>(configureCell: { dataSource, tableView, IndexPath, item in
             let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: IndexPath)
-            cell.textLabel?.text = item.name.appending("(\(item.gender?.uppercased() ?? "?"))")
+            cell.textLabel?.text = item.name
             return cell
         })
 
         viewModel.items
             .asDriver()
-            .map({ [SectionModel(model: "ExampleSimpleTableMemberItem", items: $0)] })
+            .map({ [SectionModel(model: "GithubTrendingRepository", items: $0)] })
             .drive(tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
@@ -85,9 +85,6 @@ class GithubTrendingViewController: BaseViewController {
             .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(ExampleSimpleTableMemberModel.self))
             .bind { [weak self] indexPath, item in
                 self?.tableView.deselectRow(at: indexPath, animated: true)
-                let alertController = UIAlertController(title: nil, message: item.name, preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: nil))
-                self?.present(alertController, animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
     }

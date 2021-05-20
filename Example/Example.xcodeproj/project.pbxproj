@@ -12,8 +12,8 @@
 		16D331142656181B00809A55 /* GithubTrendingRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D331122656181B00809A55 /* GithubTrendingRepositories.swift */; };
 		16D331162656183700809A55 /* GithubTrendingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D331152656183700809A55 /* GithubTrendingRepository.swift */; };
 		16D331172656183700809A55 /* GithubTrendingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D331152656183700809A55 /* GithubTrendingRepository.swift */; };
-		16D3311A2656188B00809A55 /* GithubTrendingGitHubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D331192656188B00809A55 /* GithubTrendingGitHubService.swift */; };
-		16D3311B2656188B00809A55 /* GithubTrendingGitHubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D331192656188B00809A55 /* GithubTrendingGitHubService.swift */; };
+		16D3311A2656188B00809A55 /* GithubTrendingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D331192656188B00809A55 /* GithubTrendingRequest.swift */; };
+		16D3311B2656188B00809A55 /* GithubTrendingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D331192656188B00809A55 /* GithubTrendingRequest.swift */; };
 		16D3311D2656189700809A55 /* GithubTrendingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D3311C2656189700809A55 /* GithubTrendingAPI.swift */; };
 		16D3311E2656189700809A55 /* GithubTrendingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D3311C2656189700809A55 /* GithubTrendingAPI.swift */; };
 		16D3312426561D1A00809A55 /* GithubTrendingTrendingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D3312326561D1A00809A55 /* GithubTrendingTrendingRequest.swift */; };
@@ -56,6 +56,10 @@
 		E015546126553F3700C1ED6A /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015545F26553F3700C1ED6A /* BaseCoordinator.swift */; };
 		E01554672655451F00C1ED6A /* Reactive+LifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554662655451F00C1ED6A /* Reactive+LifeCycle.swift */; };
 		E01554682655451F00C1ED6A /* Reactive+LifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554662655451F00C1ED6A /* Reactive+LifeCycle.swift */; };
+		E015546F26568C2D00C1ED6A /* GithubTrendingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015546E26568C2D00C1ED6A /* GithubTrendingResponse.swift */; };
+		E015547026568C2D00C1ED6A /* GithubTrendingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015546E26568C2D00C1ED6A /* GithubTrendingResponse.swift */; };
+		E015547226568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015547126568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift */; };
+		E015547326568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015547126568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift */; };
 		F9170FC3259A2A2EF7FA0363 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D327074D5BB67B6BAF5C62A8 /* Pods_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,7 +76,7 @@
 /* Begin PBXFileReference section */
 		16D331122656181B00809A55 /* GithubTrendingRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingRepositories.swift; sourceTree = "<group>"; };
 		16D331152656183700809A55 /* GithubTrendingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingRepository.swift; sourceTree = "<group>"; };
-		16D331192656188B00809A55 /* GithubTrendingGitHubService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingGitHubService.swift; sourceTree = "<group>"; };
+		16D331192656188B00809A55 /* GithubTrendingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingRequest.swift; sourceTree = "<group>"; };
 		16D3311C2656189700809A55 /* GithubTrendingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingAPI.swift; sourceTree = "<group>"; };
 		16D3312326561D1A00809A55 /* GithubTrendingTrendingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingTrendingRequest.swift; sourceTree = "<group>"; };
 		46501DED87E65431BAA10055 /* Pods_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +115,8 @@
 		E015545C265532E700C1ED6A /* ExampleSimpleTableAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleSimpleTableAPI.swift; sourceTree = "<group>"; };
 		E015545F26553F3700C1ED6A /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		E01554662655451F00C1ED6A /* Reactive+LifeCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+LifeCycle.swift"; sourceTree = "<group>"; };
+		E015546E26568C2D00C1ED6A /* GithubTrendingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingResponse.swift; sourceTree = "<group>"; };
+		E015547126568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingTrendingResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,8 +143,10 @@
 			isa = PBXGroup;
 			children = (
 				16D33122265618D800809A55 /* Model */,
-				16D331192656188B00809A55 /* GithubTrendingGitHubService.swift */,
+				16D331192656188B00809A55 /* GithubTrendingRequest.swift */,
 				16D3312326561D1A00809A55 /* GithubTrendingTrendingRequest.swift */,
+				E015546E26568C2D00C1ED6A /* GithubTrendingResponse.swift */,
+				E015547126568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift */,
 				16D3311C2656189700809A55 /* GithubTrendingAPI.swift */,
 			);
 			path = API;
@@ -510,17 +518,19 @@
 				E015540426529BF400C1ED6A /* Example.xcdatamodeld in Sources */,
 				16D331162656183700809A55 /* GithubTrendingRepository.swift in Sources */,
 				E0155442265513C900C1ED6A /* BaseViewController.swift in Sources */,
+				E015546F26568C2D00C1ED6A /* GithubTrendingResponse.swift in Sources */,
 				E015545026552D9300C1ED6A /* ExampleSimpleTableMemberItem.swift in Sources */,
 				E015545A2655326000C1ED6A /* ExampleSimpleTableViewModel.swift in Sources */,
 				E015546026553F3700C1ED6A /* BaseCoordinator.swift in Sources */,
 				16D3312426561D1A00809A55 /* GithubTrendingTrendingRequest.swift in Sources */,
-				16D3311A2656188B00809A55 /* GithubTrendingGitHubService.swift in Sources */,
+				16D3311A2656188B00809A55 /* GithubTrendingRequest.swift in Sources */,
 				16D3311D2656189700809A55 /* GithubTrendingAPI.swift in Sources */,
 				E015545726552F3700C1ED6A /* GithubTrendingViewModel.swift in Sources */,
 				16D331132656181B00809A55 /* GithubTrendingRepositories.swift in Sources */,
 				E01553FE26529BF400C1ED6A /* MainViewController.swift in Sources */,
 				E015545D265532E700C1ED6A /* ExampleSimpleTableAPI.swift in Sources */,
 				E01553FA26529BF400C1ED6A /* AppDelegate.swift in Sources */,
+				E015547226568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,7 +546,8 @@
 				E0155443265513C900C1ED6A /* BaseViewController.swift in Sources */,
 				E01554392654BD6C00C1ED6A /* ErrorTests.swift in Sources */,
 				E015545126552D9300C1ED6A /* ExampleSimpleTableMemberItem.swift in Sources */,
-				16D3311B2656188B00809A55 /* GithubTrendingGitHubService.swift in Sources */,
+				E015547026568C2D00C1ED6A /* GithubTrendingResponse.swift in Sources */,
+				16D3311B2656188B00809A55 /* GithubTrendingRequest.swift in Sources */,
 				16D3312526561D1A00809A55 /* GithubTrendingTrendingRequest.swift in Sources */,
 				E01554332652BE5F00C1ED6A /* RelayTest.swift in Sources */,
 				E01554682655451F00C1ED6A /* Reactive+LifeCycle.swift in Sources */,
@@ -544,6 +555,7 @@
 				E015542D26529EC800C1ED6A /* ObservableTests.swift in Sources */,
 				E01554352652BE8700C1ED6A /* ShareTest.swift in Sources */,
 				E015541426529BF800C1ED6A /* ExampleTests.swift in Sources */,
+				E015547326568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift in Sources */,
 				E01554372652C00D00C1ED6A /* SynthesisTest.swift in Sources */,
 				E015542F2652B88000C1ED6A /* TraitsTest.swift in Sources */,
 				E015544B26551E7C00C1ED6A /* ExampleSimpleTableViewController.swift in Sources */,

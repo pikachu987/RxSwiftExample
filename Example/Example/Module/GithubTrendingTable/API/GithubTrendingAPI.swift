@@ -11,18 +11,15 @@ import Alamofire
 import RxAlamofire
 
 final class GithubTrendingAPI {
-//    static func request(_ request: GithubTrendingRequest) -> Single<[GithubTrendingRepository]> {
-//        return RxAlamofire.request(.get, request.url)
-//            .debug()
-//            .flatMap ({ dataRequest -> Single<[GithubTrendingRepository]> in
-//                repositories
-//                guard let items = repositories.items else { return Single.just([]) }
-//                return Single.just(items)
-//            })
-//            .subscribe(onNext: { request in
-//
-//            }, onError: { error in
-//
-//            })
-//    }
+    static func request(_ request: GithubTrendingRequest) -> Observable<GithubTrendingResponse> {
+        return RxAlamofire.request(request.method, request.url, parameters: request.parameters)
+            .debug()
+            //.observe(on: MainScheduler.instance)
+            .sample(<#T##sampler: ObservableType##ObservableType#>)
+            .flatMap { dataRequest -> Observable<GithubTrendingResponse> in
+                print("dataRequest.data: \(dataRequest.data)")
+                let response = request.responseType.init(data: dataRequest.data)
+                return Observable.just(response)
+            }//.subscribe(on: CurrentThreadScheduler.instance)
+    }
 }
