@@ -18,16 +18,6 @@ final class GithubTrendingViewModel {
     let refreshIndicator = BehaviorRelay<Bool>(value: false)
     
     init() {
-        GithubTrendingAPI.request(GithubTrendingTrendingRequest(language: self.language))
-//            .compactMap { response in
-//                return response as? GithubTrendingTrendingResponse
-//            }.compactMap { response in
-//                return response.repositories.items
-//            }
-            .subscribe (onNext: { aaaa in
-                print(aaaa)
-            }).disposed(by: disposeBag)
-        
         loadPageTrigger
             .flatMap { _ -> Observable<[GithubTrendingRepository]> in
                 return GithubTrendingAPI.request(GithubTrendingTrendingRequest(language: self.language))
@@ -38,9 +28,8 @@ final class GithubTrendingViewModel {
                     }
             }.do(onNext: { [weak self] _ in
                 self?.refreshIndicator.accept(false)
-            }).subscribe(onNext: { repository in
-                print(repository)
-            })//.bind(to: items)
+            })
+            .bind(to: items)
             .disposed(by: disposeBag)
     }
     

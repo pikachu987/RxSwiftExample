@@ -12,14 +12,11 @@ import RxAlamofire
 
 final class GithubTrendingAPI {
     static func request(_ request: GithubTrendingRequest) -> Observable<GithubTrendingResponse> {
-        return RxAlamofire.request(request.method, request.url, parameters: request.parameters)
-            .debug()
-            //.observe(on: MainScheduler.instance)
-            .sample(<#T##sampler: ObservableType##ObservableType#>)
+        return RxAlamofire.requestData(request.method, request.url, parameters: request.parameters)
+            .observe(on: MainScheduler.instance)
             .flatMap { dataRequest -> Observable<GithubTrendingResponse> in
-                print("dataRequest.data: \(dataRequest.data)")
-                let response = request.responseType.init(data: dataRequest.data)
+                let response = request.responseType.init(data: dataRequest.1)
                 return Observable.just(response)
-            }//.subscribe(on: CurrentThreadScheduler.instance)
+            }.subscribe(on: CurrentThreadScheduler.instance)
     }
 }

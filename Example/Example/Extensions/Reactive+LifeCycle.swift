@@ -11,18 +11,18 @@ import RxCocoa
 
 extension Reactive where Base: UIViewController {
     var viewWillAppear: Observable<[Any]> {
-        return self.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
+        return sentMessage(#selector(UIViewController.viewWillAppear(_:)))
     }
     
     var viewDidAppear: Observable<[Any]> {
-        return self.sentMessage(#selector(UIViewController.viewDidAppear(_:)))
+        return sentMessage(#selector(UIViewController.viewDidAppear(_:)))
     }
     
     var viewWillDisappear: Observable<[Any]> {
-        return self.sentMessage(#selector(UIViewController.viewWillDisappear(_:)))
+        return sentMessage(#selector(UIViewController.viewWillDisappear(_:)))
     }
     
     var viewDidDisappear: Observable<[Any]> {
-        return self.sentMessage(#selector(UIViewController.viewDidDisappear(_:)))
+        return sentMessage(#selector(UIViewController.viewDidDisappear(_:)))
     }
 }

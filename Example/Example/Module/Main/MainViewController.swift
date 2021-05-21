@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxDataSources
 
 class MainViewController: BaseViewController {
     static func instance() -> MainViewController? {
@@ -50,23 +49,16 @@ class MainViewController: BaseViewController {
 
         rx.viewWillAppear.subscribe(onNext: { [weak self] _ in
             self?.title = "Main"
-        }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
         
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
-
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, MainItemType>>(configureCell: { dataSource, tableView, IndexPath, item in
-            let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: IndexPath)
-            cell.textLabel?.numberOfLines = 0
-            cell.textLabel?.text = item.title
-            return cell
-        })
-
+        
         viewModel.items
-            .asDriver()
-            .map({ [SectionModel(model: "MainItemType", items: $0)] })
-            .drive(tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
+            .asDriver().drive(tableView.rx.items(cellIdentifier: "UITableViewCell", cellType: UITableViewCell.self)) { index, item, cell in
+                cell.textLabel?.numberOfLines = 0
+                cell.textLabel?.text = item.title
+            }.disposed(by: disposeBag)
         
         Observable
             .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(MainItemType.self))

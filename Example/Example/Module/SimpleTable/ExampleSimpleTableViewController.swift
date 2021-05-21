@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxDataSources
 
 class ExampleSimpleTableViewController: BaseViewController {
     static func instance() -> ExampleSimpleTableViewController? {
@@ -28,7 +27,7 @@ class ExampleSimpleTableViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DispatchQueue.global().asyncAfter(deadline: .now() + 3) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + 0.3) {
             self.viewModel.fetchData()
         }
     }
@@ -51,7 +50,7 @@ class ExampleSimpleTableViewController: BaseViewController {
         
         rx.viewWillAppear.subscribe(onNext: { [weak self] _ in
             self?.title = "ExampleSimpleTableView"
-        }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
         
         let refreshControl = UIRefreshControl()
         tableView.refreshControl = refreshControl
@@ -62,22 +61,15 @@ class ExampleSimpleTableViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
 
-        self.viewModel.refreshIndicator
+        viewModel.refreshIndicator
             .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
         
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, ExampleSimpleTableMemberModel>>(configureCell: { dataSource, tableView, IndexPath, item in
-            let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: IndexPath)
-            cell.textLabel?.text = item.name.appending("(\(item.gender?.uppercased() ?? "?"))")
-            return cell
-        })
+        viewModel.items.asDriver()
+            .drive(tableView.rx.items(cellIdentifier: "UITableViewCell", cellType: UITableViewCell.self)) { index, item, cell in
+                cell.textLabel?.text = item.name.appending("(\(item.gender?.uppercased() ?? "?"))")
+            }.disposed(by: disposeBag)
 
-        viewModel.items
-            .asDriver()
-            .map({ [SectionModel(model: "ExampleSimpleTableMemberItem", items: $0)] })
-            .drive(tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-        
         Observable
             .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(ExampleSimpleTableMemberModel.self))
             .bind { [weak self] indexPath, item in

@@ -27,7 +27,7 @@ class SubjectTest: XCTestCase {
             XCTAssertEqual(value, 6)
         }, onCompleted: {
             print("testAsync: onCompleted")
-        }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
 
         subject.on(.next(4))
         subject.on(.next(5))
@@ -52,7 +52,7 @@ class SubjectTest: XCTestCase {
             XCTAssertEqual(error as NSError, NSError(domain: "err", code: 404, userInfo: nil))
         }, onCompleted: {
             print("testAsync: onCompleted")
-        }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
 
         subject.on(.next(4))
         subject.on(.next(5))

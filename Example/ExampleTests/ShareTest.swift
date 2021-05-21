@@ -38,7 +38,7 @@ class ShareTest: XCTestCase {
         let share = observable.share()
         share.subscribe { event in
             print("1: \(event)")
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.3) {
             share.subscribe { event in
@@ -81,7 +81,7 @@ class ShareTest: XCTestCase {
         
         publish.subscribe { event in
             print("1: \(event)")
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.3) {
             publish.subscribe { event in
@@ -90,7 +90,7 @@ class ShareTest: XCTestCase {
         }
         
         publish.connect()
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
@@ -128,7 +128,7 @@ class ShareTest: XCTestCase {
         
         publish.subscribe { event in
             print("1: \(event)")
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.3) {
             publish.subscribe { event in
@@ -171,7 +171,7 @@ class ShareTest: XCTestCase {
         
         replay.subscribe { event in
             print("1: \(event)")
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.3) {
             replay.subscribe { event in
@@ -180,7 +180,7 @@ class ShareTest: XCTestCase {
         }
         
         replay.connect()
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
@@ -220,7 +220,7 @@ class ShareTest: XCTestCase {
         
         replay.subscribe { event in
             print("1: \(event)")
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.3) {
             replay.subscribe { event in
@@ -263,16 +263,16 @@ class ShareTest: XCTestCase {
         let subject = PublishSubject<Int>()
         let multicast = timer.multicast(subject)
         multicast.connect()
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         multicast.subscribe { event in
             print("first scription: \(event)")
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         
         multicast.delaySubscription(RxTimeInterval.milliseconds(20), scheduler: MainScheduler.instance)
             .subscribe { event in
                 print("second scription: \(event)")
-            }.disposed(by: self.disposeBag)
+            }.disposed(by: disposeBag)
         
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
@@ -301,12 +301,12 @@ class ShareTest: XCTestCase {
         
         multicast.subscribe { event in
             print("first scription: \(event)")
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         
         multicast.delaySubscription(RxTimeInterval.milliseconds(20), scheduler: MainScheduler.instance)
             .subscribe { event in
                 print("second scription: \(event)")
-            }.disposed(by: self.disposeBag)
+            }.disposed(by: disposeBag)
         
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 2) {

@@ -29,7 +29,7 @@ class ErrorTests: XCTestCase {
         }.catch { (error) -> Observable<String> in
             return Observable.of("close1", "close2")
         }.subscribe({ print($0) })
-        .disposed(by: self.disposeBag)
+        .disposed(by: disposeBag)
         /*
          next(1)
          next(2)
@@ -51,7 +51,7 @@ class ErrorTests: XCTestCase {
             }
         }.catchAndReturn("End")
         .subscribe({ print($0) })
-        .disposed(by: self.disposeBag)
+        .disposed(by: disposeBag)
         /*
          next(1)
          next(2)
@@ -79,7 +79,7 @@ class ErrorTests: XCTestCase {
             return Disposables.create()
         }.retry(2)
         .subscribe({ print($0) })
-        .disposed(by: self.disposeBag)
+        .disposed(by: disposeBag)
         /*
          next(1)
          next(2)
@@ -107,7 +107,7 @@ class ErrorTests: XCTestCase {
         }.retry(when: { _ -> Observable<Int> in
             return Observable<Int>.timer(RxTimeInterval.milliseconds(100), scheduler: MainScheduler.instance).take(1)
         }).subscribe({ print($0) })
-        .disposed(by: self.disposeBag)
+        .disposed(by: disposeBag)
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.01) {
             isFirst = false
         }
@@ -149,7 +149,7 @@ class ErrorTests: XCTestCase {
             return cancel
         }.timeout(RxTimeInterval.milliseconds(30), scheduler: MainScheduler.instance)
             .subscribe({ print($0) })
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {

@@ -23,7 +23,7 @@ class TraitsTest: XCTestCase {
         }
         observable.subscribe { event in
             print("singleExample: \(event)")
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         
         XCTAssertEqual(try! observable.toBlocking().single(), true)
         /*
@@ -39,7 +39,7 @@ class TraitsTest: XCTestCase {
         observable.subscribe { event in
             print("testCompletable: \(event)")
             XCTAssertEqual(event, .completed)
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         /*
          testCompletable: completed
          */
@@ -53,7 +53,7 @@ class TraitsTest: XCTestCase {
         observable.subscribe { event in
             print("testMay: \(event)")
             XCTAssertEqual(event, .completed)
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         
         let observable1 = Maybe<String>.create { observer in
             observer(.success("hello"))
@@ -62,7 +62,7 @@ class TraitsTest: XCTestCase {
         observable1.subscribe { event in
             print("testMay: \(event)")
             XCTAssertEqual(event, .success("hello"))
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         /*
          testMay: completed
          testMay: success("hello")

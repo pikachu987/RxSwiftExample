@@ -64,7 +64,7 @@ class SynthesisTest: XCTestCase {
                     }
                 }
             }).subscribe { print($0) }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         /*
          next(A1)
          next(B1)
@@ -176,7 +176,7 @@ class SynthesisTest: XCTestCase {
             return (first, second)
         }.subscribe { event in
             print(event)
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         /*
          next(("1", "a"))
          next(("2", "a"))
@@ -201,7 +201,7 @@ class SynthesisTest: XCTestCase {
                 return (first, second)
             }.subscribe { event in
                 print(event)
-            }.disposed(by: self.disposeBag)
+            }.disposed(by: disposeBag)
         
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
@@ -245,7 +245,7 @@ class SynthesisTest: XCTestCase {
             .merge()
             .subscribe { event in
                 print(event)
-            }.disposed(by: self.disposeBag)
+            }.disposed(by: disposeBag)
         
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.05) {
@@ -273,7 +273,7 @@ class SynthesisTest: XCTestCase {
         let subject = BehaviorSubject<Observable<String>>(value: first)
         subject.switchLatest().subscribe { (event) in
             print(event)
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         first.onNext("A1")
         second.onNext("B1")
         subject.onNext(second)
@@ -301,7 +301,7 @@ class SynthesisTest: XCTestCase {
             return data
         }.subscribe { (event) in
             print(event)
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         first.onNext("A1")
         second.onNext("B1")
         subject.onNext(second)
@@ -326,7 +326,7 @@ class SynthesisTest: XCTestCase {
         Observable.zip(Observable.from([1, 2, 3, 4]), Observable.of("A", "B", "C")) { (first, second) in
             return "\(first)\(second)"
         }.subscribe({ print($0) })
-        .disposed(by: self.disposeBag)
+        .disposed(by: disposeBag)
         /*
          next(1A)
          next(2B)
@@ -342,7 +342,7 @@ class SynthesisTest: XCTestCase {
             .take(3)
             .concat(Observable<Int>.interval(RxTimeInterval.milliseconds(50), scheduler: MainScheduler.instance).map { "second: \($0)" }.take(4))
             .subscribe({ print($0) })
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
@@ -377,7 +377,7 @@ class SynthesisTest: XCTestCase {
             .take(3)
         first.amb(second).amb(third)
             .subscribe({ print($0) })
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
@@ -400,7 +400,7 @@ class SynthesisTest: XCTestCase {
         Observable.from([1, 2, 3, 4, 5])
             .startWith(9, 8, 7)
             .subscribe({ print($0) })
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         /*
          next(9)
          next(8)
@@ -421,7 +421,7 @@ class SynthesisTest: XCTestCase {
         Observable<Int>.interval(RxTimeInterval.milliseconds(10), scheduler: MainScheduler.instance).map{ "buffer: \($0)" }.take(7)
             .buffer(timeSpan: RxTimeInterval.milliseconds(50), count: 3, scheduler: MainScheduler.instance)
             .subscribe { event in print(event) }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
             expectation.fulfill()
@@ -446,7 +446,7 @@ class SynthesisTest: XCTestCase {
                 return accumulator + num
             })
             .subscribe { print($0) }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         /*
          accumulator: 3, num: 1
          next(4)
@@ -479,7 +479,7 @@ class SynthesisTest: XCTestCase {
                 observable.subscribe(onNext: { event in
                     print(event)
                 }).disposed(by: self.disposeBag)
-            }).disposed(by: self.disposeBag)
+            }).disposed(by: disposeBag)
         /*
          RxSwift.AddRef<Swift.Int>
          1
@@ -507,7 +507,7 @@ class SynthesisTest: XCTestCase {
         Observable<Int>.range(start: 0, count: 10)
             .reduce(100, accumulator: +)
             .subscribe { print($0) }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         /*
          next(145)
          completed
@@ -526,7 +526,7 @@ class SynthesisTest: XCTestCase {
                     return grouped.map { "odd: \($0)" }
                 }
             }.subscribe { print($0) }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         /*
          next(odd: 1)
          next(even: 2)
@@ -549,12 +549,12 @@ class SynthesisTest: XCTestCase {
             .asObservable()
             .compactMap({ $0 })
             .bind(to: observable)
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         observable.debounce(RxTimeInterval.milliseconds(30), scheduler: MainScheduler.instance)
             .subscribe { event in
                 print("testDebounce: \(event)")
-            }.disposed(by: self.disposeBag)
+            }.disposed(by: disposeBag)
         
         textField.insertText("a")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
@@ -592,12 +592,12 @@ class SynthesisTest: XCTestCase {
             .asObservable()
             .compactMap({ $0 })
             .bind(to: observable)
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         observable.throttle(RxTimeInterval.milliseconds(30), scheduler: MainScheduler.instance)
             .subscribe { event in
                 print("testThrottle: \(event)")
-            }.disposed(by: self.disposeBag)
+            }.disposed(by: disposeBag)
         
         textField.insertText("a")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
@@ -637,7 +637,7 @@ class SynthesisTest: XCTestCase {
             .enumerated().map({ array[$0.index] })
             .distinctUntilChanged()
             .subscribe { print($0) }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
@@ -663,7 +663,7 @@ class SynthesisTest: XCTestCase {
     func testElementAt() throws {
         Observable.of(1, 2, 3, 3, 7, 10, 1).element(at: 4)
             .subscribe { print($0) }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         /*
          next(7)
          completed
@@ -674,7 +674,7 @@ class SynthesisTest: XCTestCase {
     func testSingle() throws {
         Observable.of(1, 2, 3, 3, 7, 10, 1).single()
             .subscribe { print($0) }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         /*
          next(1)
          error(Sequence contains more than one element.)
@@ -686,7 +686,7 @@ class SynthesisTest: XCTestCase {
         Observable<Int>.interval(RxTimeInterval.milliseconds(10), scheduler: MainScheduler.instance).take(10)
             .sample(Observable<Int>.interval(RxTimeInterval.milliseconds(50), scheduler: MainScheduler.instance))
             .subscribe { print($0) }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
             expectation.fulfill()
@@ -707,12 +707,12 @@ class SynthesisTest: XCTestCase {
         Observable.of(1, 2, 3, 4, 5, 6)
             .skip(5)
             .subscribe { print($0) }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         Observable.of(1, 2, 3, 4, 5, 6)
             .skip { $0 != 5 }
             .subscribe { print($0) }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         /*
          next(6)
@@ -728,6 +728,6 @@ class SynthesisTest: XCTestCase {
         Observable.of(1,2,3,4,5)
             .ignoreElements()
             .subscribe()
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
     }
 }

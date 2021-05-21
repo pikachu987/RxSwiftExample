@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxDataSources
 
 class GithubTrendingViewController: BaseViewController {
     static func instance() -> GithubTrendingViewController? {
@@ -47,6 +46,9 @@ class GithubTrendingViewController: BaseViewController {
     override func setupBindings() {
         super.setupBindings()
         
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
         rx.viewWillAppear.subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
             self.title = "Github Trending"
@@ -54,7 +56,7 @@ class GithubTrendingViewController: BaseViewController {
             self.navigationItem.leftBarButtonItem?.rx.tap.subscribe(onNext: { [weak self] _ in
                 self?.dismiss(animated: true, completion: nil)
             }).disposed(by: self.disposeBag)
-        }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
         
         let refreshControl = UIRefreshControl()
         tableView.refreshControl = refreshControl
@@ -65,24 +67,19 @@ class GithubTrendingViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
 
-        self.viewModel.refreshIndicator
+        viewModel.refreshIndicator
             .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
         
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, GithubTrendingRepository>>(configureCell: { dataSource, tableView, IndexPath, item in
-            let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: IndexPath)
-            cell.textLabel?.text = item.name
-            return cell
-        })
-
         viewModel.items
             .asDriver()
-            .map({ [SectionModel(model: "GithubTrendingRepository", items: $0)] })
-            .drive(tableView.rx.items(dataSource: dataSource))
+            .drive(tableView.rx.items(cellIdentifier: "UITableViewCell", cellType: UITableViewCell.self))({ index, item, cell in
+                cell.textLabel?.text = item.name
+            })
             .disposed(by: disposeBag)
         
         Observable
-            .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(ExampleSimpleTableMemberModel.self))
+            .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(GithubTrendingRepository.self))
             .bind { [weak self] indexPath, item in
                 self?.tableView.deselectRow(at: indexPath, animated: true)
             }
@@ -90,6 +87,16 @@ class GithubTrendingViewController: BaseViewController {
     }
 }
 
+// MARK: UITableViewDelegate
+extension GithubTrendingViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat.leastNonzeroMagnitude
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.leastNonzeroMagnitude
+    }
+}
 
 
 //final class ViewController: UIViewController {

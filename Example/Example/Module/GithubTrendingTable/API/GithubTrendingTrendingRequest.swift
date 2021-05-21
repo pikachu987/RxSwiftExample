@@ -30,6 +30,10 @@ final class GithubTrendingTrendingRequest: GithubTrendingRequest {
         return parameters
     }
 
+    override var responseType: GithubTrendingResponse.Type {
+        return GithubTrendingTrendingResponse.self
+    }
+
     private let language: String
 
     init(language: String) {

@@ -25,7 +25,7 @@ class UtilityTests: XCTestCase {
                 print("do: \(event)")
             })
             .subscribe({ print($0) })
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
@@ -71,7 +71,7 @@ class UtilityTests: XCTestCase {
         .do(onNext: { print("do: \(Thread.isMainThread), \($0)") })
         .observe(on: MainScheduler.instance)
         .subscribe { print("subscribe: \(Thread.isMainThread), \($0)") }
-        .disposed(by: self.disposeBag)
+        .disposed(by: disposeBag)
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
             expectation.fulfill()
@@ -111,7 +111,7 @@ class UtilityTests: XCTestCase {
         })
         .subscribe {  (value) in
             print("subscribe: \(Thread.isMainThread)")
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
@@ -144,7 +144,7 @@ class UtilityTests: XCTestCase {
                 print("do3: \(event)")
             })
             .subscribe { print("subscribe: \($0)") }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
             expectation.fulfill()
@@ -187,7 +187,7 @@ class UtilityTests: XCTestCase {
             return Observable<Int>.interval(RxTimeInterval.milliseconds(10), scheduler: MainScheduler.instance)
         }.take(3)
             .subscribe { print($0) }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         let expectation = expectation(description: "expectation")
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
             expectation.fulfill()

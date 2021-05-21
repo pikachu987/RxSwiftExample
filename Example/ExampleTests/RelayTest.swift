@@ -23,7 +23,7 @@ class RelayTest: XCTestCase {
         relay.accept(3)
         relay.subscribe { event in
             print(event)
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         relay.accept(4)
         relay.accept(5)
         /*
@@ -39,7 +39,7 @@ class RelayTest: XCTestCase {
         relay.accept(3)
         relay.subscribe { event in
             print(event)
-        }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
         relay.accept(4)
         relay.accept(5)
         /*
