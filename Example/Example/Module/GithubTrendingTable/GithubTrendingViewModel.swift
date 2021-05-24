@@ -25,11 +25,9 @@ final class GithubTrendingViewModel: BaseViewModel {
         super.init()
 
         let request = loadPageTrigger
-            .observe(on: MainScheduler.asyncInstance)
             .do(onNext: { [weak self] _ in
                 self?.isLoading.accept(true)
             })
-            .observe(on: CurrentThreadScheduler.instance)
             .flatMap { [weak self] isRefresh -> Observable<(isRefresh: Bool, response: GithubTrendingTrendingResponse)> in
                 return GithubTrendingAPI.request(GithubTrendingTrendingRequest(language: self?.language ?? "", page: self?.page ?? 1))
                     .compactMap { response in
@@ -38,7 +36,6 @@ final class GithubTrendingViewModel: BaseViewModel {
                         return (isRefresh, response)
                     }
             }
-            .observe(on: MainScheduler.instance)
             .do(onNext: { [weak self] element in
                 self?.isLoading.accept(false)
                 self?.indicator.accept(false)
