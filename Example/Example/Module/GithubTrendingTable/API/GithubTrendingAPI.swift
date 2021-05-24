@@ -15,7 +15,7 @@ final class GithubTrendingAPI {
         return RxAlamofire.requestData(request.method, request.url, parameters: request.parameters)
             .observe(on: MainScheduler.instance)
             .flatMap { dataRequest -> Observable<GithubTrendingResponse> in
-                let response = request.responseType.init(data: dataRequest.1)
+                let response = request.responseType.init(statusCode: dataRequest.0.statusCode, data: dataRequest.1)
                 return Observable.just(response)
             }.subscribe(on: CurrentThreadScheduler.instance)
     }

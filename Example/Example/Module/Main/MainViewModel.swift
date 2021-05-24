@@ -9,13 +9,11 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class MainViewModel {
-    private let disposeBag = DisposeBag()
-
-    var items: BehaviorRelay<[MainItemType]>
+final class MainViewModel: BaseViewModel {
+    var items = BehaviorRelay<[MainItemType]>(value: MainItemType.array)
     
-    init() {
-        items = BehaviorRelay<[MainItemType]>(value: MainItemType.array)
+    override init() {
+        super.init()
     }
 }
 

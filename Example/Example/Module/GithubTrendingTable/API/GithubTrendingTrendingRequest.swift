@@ -25,7 +25,7 @@ final class GithubTrendingTrendingRequest: GithubTrendingRequest {
             "q": "language:\(language) " + "created:>" + formatter.string(from: lastWeek),
             "sort": "stars",
             "order": "desc",
-            "page": 1
+            "page": page
         ]
         return parameters
     }
@@ -35,8 +35,10 @@ final class GithubTrendingTrendingRequest: GithubTrendingRequest {
     }
 
     private let language: String
+    private let page: Int
 
-    init(language: String) {
+    init(language: String, page: Int) {
         self.language = language
+        self.page = page
     }
 }

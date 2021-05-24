@@ -9,14 +9,14 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class ExampleSimpleTableViewModel {
-    private let disposeBag = DisposeBag()
-
+final class ExampleSimpleTableViewModel: BaseViewModel {
     let items = BehaviorRelay<[ExampleSimpleTableMemberModel]>(value: [])
     let loadPageTrigger = PublishSubject<Void>()
     let refreshIndicator = BehaviorRelay<Bool>(value: false)
     
-    init() {
+    override init() {
+        super.init()
+
         loadPageTrigger
             .flatMap { _ -> Observable<[ExampleSimpleTableMemberModel]> in
                 return ExampleSimpleTableAPI.simple().asObservable()

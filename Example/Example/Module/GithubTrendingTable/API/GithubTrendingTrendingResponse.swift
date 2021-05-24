@@ -8,14 +8,14 @@
 import Foundation
 
 class GithubTrendingTrendingResponse: GithubTrendingResponse {
-    var repositories: GithubTrendingRepositories
+    var repositories: GithubTrendingRepositories?
 
-    required init(data: Data?) {
+    required init(statusCode: Int, data: Data?) {
+        super.init(statusCode: statusCode, data: data)
         if let data = data, let repositories = try? JSONDecoder().decode(GithubTrendingRepositories.self, from: data) {
             self.repositories = repositories
         } else {
             repositories = GithubTrendingRepositories(totalCount: 0, incompleteResults: false, items: nil)
         }
-        super.init()
     }
 }

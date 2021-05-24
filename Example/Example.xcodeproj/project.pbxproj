@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		02A23B3A8BE308EB6CEFD2D7 /* Pods_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46501DED87E65431BAA10055 /* Pods_ExampleTests.framework */; };
+		1677AFC6265B326500E6B1CC /* UIScrollView+Scroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1677AFC5265B326500E6B1CC /* UIScrollView+Scroll.swift */; };
+		1677AFC7265B326500E6B1CC /* UIScrollView+Scroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1677AFC5265B326500E6B1CC /* UIScrollView+Scroll.swift */; };
+		1677AFCE265B6B9C00E6B1CC /* Window+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1677AFCD265B6B9C00E6B1CC /* Window+.swift */; };
+		1677AFCF265B6B9C00E6B1CC /* Window+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1677AFCD265B6B9C00E6B1CC /* Window+.swift */; };
+		1677AFD1265B6BA200E6B1CC /* SafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1677AFD0265B6BA200E6B1CC /* SafeArea.swift */; };
+		1677AFD2265B6BA200E6B1CC /* SafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1677AFD0265B6BA200E6B1CC /* SafeArea.swift */; };
+		1677AFD4265B707C00E6B1CC /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1677AFD3265B707C00E6B1CC /* BaseViewModel.swift */; };
+		1677AFD5265B707C00E6B1CC /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1677AFD3265B707C00E6B1CC /* BaseViewModel.swift */; };
+		1677AFD7265B814400E6B1CC /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1677AFD6265B814400E6B1CC /* UIColor+.swift */; };
+		1677AFD8265B814400E6B1CC /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1677AFD6265B814400E6B1CC /* UIColor+.swift */; };
 		1685FDCA26576B00006DBE17 /* UIView+indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1685FDC926576B00006DBE17 /* UIView+indicator.swift */; };
 		1685FDCB26576B00006DBE17 /* UIView+indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1685FDC926576B00006DBE17 /* UIView+indicator.swift */; };
 		16D331132656181B00809A55 /* GithubTrendingRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D331122656181B00809A55 /* GithubTrendingRepositories.swift */; };
@@ -54,8 +64,6 @@
 		E015545B2655326000C1ED6A /* ExampleSimpleTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554592655326000C1ED6A /* ExampleSimpleTableViewModel.swift */; };
 		E015545D265532E700C1ED6A /* ExampleSimpleTableAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015545C265532E700C1ED6A /* ExampleSimpleTableAPI.swift */; };
 		E015545E265532E700C1ED6A /* ExampleSimpleTableAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015545C265532E700C1ED6A /* ExampleSimpleTableAPI.swift */; };
-		E015546026553F3700C1ED6A /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015545F26553F3700C1ED6A /* BaseCoordinator.swift */; };
-		E015546126553F3700C1ED6A /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015545F26553F3700C1ED6A /* BaseCoordinator.swift */; };
 		E01554672655451F00C1ED6A /* Reactive+LifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554662655451F00C1ED6A /* Reactive+LifeCycle.swift */; };
 		E01554682655451F00C1ED6A /* Reactive+LifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554662655451F00C1ED6A /* Reactive+LifeCycle.swift */; };
 		E015546F26568C2D00C1ED6A /* GithubTrendingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015546E26568C2D00C1ED6A /* GithubTrendingResponse.swift */; };
@@ -76,6 +84,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1677AFC5265B326500E6B1CC /* UIScrollView+Scroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Scroll.swift"; sourceTree = "<group>"; };
+		1677AFCD265B6B9C00E6B1CC /* Window+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Window+.swift"; sourceTree = "<group>"; };
+		1677AFD0265B6BA200E6B1CC /* SafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeArea.swift; sourceTree = "<group>"; };
+		1677AFD3265B707C00E6B1CC /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		1677AFD6265B814400E6B1CC /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		1685FDC926576B00006DBE17 /* UIView+indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+indicator.swift"; sourceTree = "<group>"; };
 		16D331122656181B00809A55 /* GithubTrendingRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingRepositories.swift; sourceTree = "<group>"; };
 		16D331152656183700809A55 /* GithubTrendingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingRepository.swift; sourceTree = "<group>"; };
@@ -116,7 +129,6 @@
 		E015545626552F3700C1ED6A /* GithubTrendingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingViewModel.swift; sourceTree = "<group>"; };
 		E01554592655326000C1ED6A /* ExampleSimpleTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleSimpleTableViewModel.swift; sourceTree = "<group>"; };
 		E015545C265532E700C1ED6A /* ExampleSimpleTableAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleSimpleTableAPI.swift; sourceTree = "<group>"; };
-		E015545F26553F3700C1ED6A /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		E01554662655451F00C1ED6A /* Reactive+LifeCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+LifeCycle.swift"; sourceTree = "<group>"; };
 		E015546E26568C2D00C1ED6A /* GithubTrendingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingResponse.swift; sourceTree = "<group>"; };
 		E015547126568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingTrendingResponse.swift; sourceTree = "<group>"; };
@@ -276,7 +288,7 @@
 			isa = PBXGroup;
 			children = (
 				E0155441265513C900C1ED6A /* BaseViewController.swift */,
-				E015545F26553F3700C1ED6A /* BaseCoordinator.swift */,
+				1677AFD3265B707C00E6B1CC /* BaseViewModel.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -315,6 +327,10 @@
 			children = (
 				E01554662655451F00C1ED6A /* Reactive+LifeCycle.swift */,
 				1685FDC926576B00006DBE17 /* UIView+indicator.swift */,
+				1677AFC5265B326500E6B1CC /* UIScrollView+Scroll.swift */,
+				1677AFCD265B6B9C00E6B1CC /* Window+.swift */,
+				1677AFD0265B6BA200E6B1CC /* SafeArea.swift */,
+				1677AFD6265B814400E6B1CC /* UIColor+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -516,23 +532,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				E015544A26551E7C00C1ED6A /* ExampleSimpleTableViewController.swift in Sources */,
+				1677AFD1265B6BA200E6B1CC /* SafeArea.swift in Sources */,
 				E01554462655148800C1ED6A /* MainViewModel.swift in Sources */,
 				E015545426552F2C00C1ED6A /* GithubTrendingViewController.swift in Sources */,
 				E01554672655451F00C1ED6A /* Reactive+LifeCycle.swift in Sources */,
 				E015540426529BF400C1ED6A /* Example.xcdatamodeld in Sources */,
+				1677AFD4265B707C00E6B1CC /* BaseViewModel.swift in Sources */,
 				16D331162656183700809A55 /* GithubTrendingRepository.swift in Sources */,
 				E0155442265513C900C1ED6A /* BaseViewController.swift in Sources */,
 				E015546F26568C2D00C1ED6A /* GithubTrendingResponse.swift in Sources */,
 				1685FDCA26576B00006DBE17 /* UIView+indicator.swift in Sources */,
 				E015545026552D9300C1ED6A /* ExampleSimpleTableMemberItem.swift in Sources */,
 				E015545A2655326000C1ED6A /* ExampleSimpleTableViewModel.swift in Sources */,
-				E015546026553F3700C1ED6A /* BaseCoordinator.swift in Sources */,
 				16D3312426561D1A00809A55 /* GithubTrendingTrendingRequest.swift in Sources */,
+				1677AFD7265B814400E6B1CC /* UIColor+.swift in Sources */,
 				16D3311A2656188B00809A55 /* GithubTrendingRequest.swift in Sources */,
+				1677AFC6265B326500E6B1CC /* UIScrollView+Scroll.swift in Sources */,
 				16D3311D2656189700809A55 /* GithubTrendingAPI.swift in Sources */,
 				E015545726552F3700C1ED6A /* GithubTrendingViewModel.swift in Sources */,
 				16D331132656181B00809A55 /* GithubTrendingRepositories.swift in Sources */,
 				E01553FE26529BF400C1ED6A /* MainViewController.swift in Sources */,
+				1677AFCE265B6B9C00E6B1CC /* Window+.swift in Sources */,
 				E015545D265532E700C1ED6A /* ExampleSimpleTableAPI.swift in Sources */,
 				E01553FA26529BF400C1ED6A /* AppDelegate.swift in Sources */,
 				E015547226568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift in Sources */,
@@ -560,14 +580,18 @@
 				E015542D26529EC800C1ED6A /* ObservableTests.swift in Sources */,
 				E01554352652BE8700C1ED6A /* ShareTest.swift in Sources */,
 				E015541426529BF800C1ED6A /* ExampleTests.swift in Sources */,
+				1677AFD8265B814400E6B1CC /* UIColor+.swift in Sources */,
 				E015547326568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift in Sources */,
 				E01554372652C00D00C1ED6A /* SynthesisTest.swift in Sources */,
+				1677AFD2265B6BA200E6B1CC /* SafeArea.swift in Sources */,
 				E015542F2652B88000C1ED6A /* TraitsTest.swift in Sources */,
+				1677AFD5265B707C00E6B1CC /* BaseViewModel.swift in Sources */,
 				E015544B26551E7C00C1ED6A /* ExampleSimpleTableViewController.swift in Sources */,
 				16D3311E2656189700809A55 /* GithubTrendingAPI.swift in Sources */,
 				1685FDCB26576B00006DBE17 /* UIView+indicator.swift in Sources */,
 				E015545B2655326000C1ED6A /* ExampleSimpleTableViewModel.swift in Sources */,
-				E015546126553F3700C1ED6A /* BaseCoordinator.swift in Sources */,
+				1677AFCF265B6B9C00E6B1CC /* Window+.swift in Sources */,
+				1677AFC7265B326500E6B1CC /* UIScrollView+Scroll.swift in Sources */,
 				E015545826552F3700C1ED6A /* GithubTrendingViewModel.swift in Sources */,
 				E015545526552F2C00C1ED6A /* GithubTrendingViewController.swift in Sources */,
 				E01554472655148800C1ED6A /* MainViewModel.swift in Sources */,

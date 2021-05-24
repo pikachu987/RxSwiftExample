@@ -16,10 +16,14 @@ class GithubTrendingViewController: BaseViewController {
     }
 
     private let tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
+    }()
+
+    private let refreshControl: UIRefreshControl = {
+        return UIRefreshControl()
     }()
     
     private let viewModel = GithubTrendingViewModel()
@@ -27,13 +31,15 @@ class GithubTrendingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.fetchData()
+        viewModel.showIndicator()
+        viewModel.fetchRefreshData()
     }
     
     override func setupUI() {
         super.setupUI()
         
         view.addSubview(tableView)
+        tableView.refreshControl = refreshControl
         
         NSLayoutConstraint.activate([
             view.leadingAnchor.constraint(equalTo: tableView.leadingAnchor),
@@ -46,29 +52,53 @@ class GithubTrendingViewController: BaseViewController {
     override func setupBindings() {
         super.setupBindings()
         
-        tableView.rx.setDelegate(self)
+        rx
+            .viewWillAppear
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.title = "Github Trending"
+                self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "👈", style: .done, target: self, action: nil)
+                self.navigationItem.leftBarButtonItem?.rx.tap.subscribe(onNext: { [weak self] _ in
+                    self?.dismiss(animated: true, completion: nil)
+                }).disposed(by: self.disposeBag)
+            }).disposed(by: disposeBag)
+        
+        tableView.rx
+            .setDelegate(self)
             .disposed(by: disposeBag)
         
-        rx.viewWillAppear.subscribe(onNext: { [weak self] _ in
-            guard let self = self else { return }
-            self.title = "Github Trending"
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "👈", style: .done, target: self, action: nil)
-            self.navigationItem.leftBarButtonItem?.rx.tap.subscribe(onNext: { [weak self] _ in
-                self?.dismiss(animated: true, completion: nil)
-            }).disposed(by: self.disposeBag)
-        }).disposed(by: disposeBag)
+        tableView.rx.contentReverseOffset
+            .filter({ [weak self] point in
+                guard let self = self else { return false }
+                return point.y < (40 - self.view.safe.bottom)
+            })
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewModel.fetchLoadMoreData()
+            })
+            .disposed(by: disposeBag)
         
-        let refreshControl = UIRefreshControl()
-        tableView.refreshControl = refreshControl
         refreshControl.rx
             .controlEvent(.valueChanged)
             .subscribe(onNext: { [weak self] in
-                self?.viewModel.fetchData()
+                self?.viewModel.fetchRefreshData()
             })
             .disposed(by: disposeBag)
+        
+        viewModel.errorMessage
+            .compactMap({ $0 })
+            .filter({ !$0.isEmpty })
+            .subscribe(onNext: { [weak self] in
+                let alertController = UIAlertController(title: nil, message: $0, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+                self?.present(alertController, animated: true, completion: nil)
+            }).disposed(by: disposeBag)
 
         viewModel.refreshIndicator
             .bind(to: refreshControl.rx.isRefreshing)
+            .disposed(by: disposeBag)
+        
+        viewModel.indicator
+            .bind(to: view.rx.isIndicator(.init(light: .black, dark: .white)))
             .disposed(by: disposeBag)
         
         viewModel.items
@@ -95,6 +125,14 @@ extension GithubTrendingViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return CGFloat.leastNonzeroMagnitude
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.leastNonzeroMagnitude, height: CGFloat.leastNonzeroMagnitude))
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.leastNonzeroMagnitude, height: CGFloat.leastNonzeroMagnitude))
     }
 }
 
