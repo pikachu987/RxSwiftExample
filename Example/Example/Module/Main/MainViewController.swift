@@ -54,7 +54,8 @@ class MainViewController: BaseViewController {
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         
-        viewModel.items
+        viewModel.output
+            .items
             .asDriver().drive(tableView.rx.items(cellIdentifier: "UITableViewCell", cellType: UITableViewCell.self)) { index, item, cell in
                 cell.textLabel?.numberOfLines = 0
                 cell.textLabel?.text = item.title

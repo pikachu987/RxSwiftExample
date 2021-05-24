@@ -13,7 +13,8 @@ import RxAlamofire
 final class GithubTrendingAPI {
     static func request(_ request: GithubTrendingRequest) -> Observable<GithubTrendingResponse> {
         return RxAlamofire.requestData(request.method, request.url, parameters: request.parameters)
-            .observe(on: MainScheduler.instance)
+//            .observe(on: MainScheduler.instance)
+            .delay(RxTimeInterval.milliseconds(800), scheduler: MainScheduler.instance)
             .flatMap { dataRequest -> Observable<GithubTrendingResponse> in
                 let response = request.responseType.init(statusCode: dataRequest.0.statusCode, data: dataRequest.1)
                 return Observable.just(response)

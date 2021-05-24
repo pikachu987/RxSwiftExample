@@ -61,11 +61,13 @@ class ExampleSimpleTableViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
 
-        viewModel.refreshIndicator
+        viewModel.output
+            .refreshIndicator
             .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
         
-        viewModel.items.asDriver()
+        viewModel.output
+            .items.asDriver()
             .drive(tableView.rx.items(cellIdentifier: "UITableViewCell", cellType: UITableViewCell.self)) { index, item, cell in
                 cell.textLabel?.text = item.name.appending("(\(item.gender?.uppercased() ?? "?"))")
             }.disposed(by: disposeBag)

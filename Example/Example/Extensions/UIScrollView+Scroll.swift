@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 extension UIScrollView {
-    public var contentReverseOffset: CGPoint {
+    var contentReverseOffset: CGPoint {
         let maximumOffsetX = contentSize.width - frame.size.width
         let maximumOffsetY = contentSize.height - frame.size.height
         let offsetX = maximumOffsetX - contentOffset.x
@@ -20,7 +20,7 @@ extension UIScrollView {
 }
 
 extension Reactive where Base: UIScrollView {
-    public var contentReverseOffset: Observable<CGPoint> {
+    var contentReverseOffset: Observable<CGPoint> {
         return self.contentOffset.flatMap({_ in
             return Observable.just(base.contentReverseOffset)
         })

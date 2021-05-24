@@ -10,7 +10,11 @@ import RxSwift
 import RxCocoa
 
 extension Reactive where Base: UIView {
-    public func isIndicator(_ color: UIColor, size: CGFloat = 44) -> Binder<Bool> {
+    var isIndicator: Binder<Bool> {
+        return isIndicator()
+    }
+
+    func isIndicator(_ color: UIColor = UIColor(light: .black, dark: .white), size: CGFloat = 44) -> Binder<Bool> {
         return Binder(base) { view, isIndicator in
             if isIndicator {
                 view.addIndicator(color, size: size)
@@ -20,7 +24,6 @@ extension Reactive where Base: UIView {
         }
     }
 }
-
 
 // 뷰 + 인디게이터 뷰
 extension UIView {

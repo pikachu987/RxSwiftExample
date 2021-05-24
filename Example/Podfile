@@ -8,7 +8,6 @@ target 'Example' do
   # Pods for Example
   pod 'RxSwift', '6.1.0'
   pod 'RxCocoa', '6.1.0'
-  pod 'RxDataSources', '5.0.0'
   pod 'RxOptional', '5.0.2'
   pod 'RxKeyboard', '2.0.0'
   pod 'RxKingfisher', '2.0.0'

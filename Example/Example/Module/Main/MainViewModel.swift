@@ -9,11 +9,26 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class MainViewModel: BaseViewModel {
-    var items = BehaviorRelay<[MainItemType]>(value: MainItemType.array)
-    
-    override init() {
-        super.init()
+final class MainViewModel: ViewModelType {
+    struct Dependency {
+    }
+
+    struct Input {
+    }
+ 
+    struct Output {
+        var items = BehaviorRelay<[MainItemType]>(value: MainItemType.array)
+    }
+
+    var disposeBag: DisposeBag = DisposeBag()
+    var dependency: Dependency
+    var input: Input
+    var output: Output
+
+    init() {
+        dependency = Dependency()
+        input = Input()
+        output = Output()
     }
 }
 

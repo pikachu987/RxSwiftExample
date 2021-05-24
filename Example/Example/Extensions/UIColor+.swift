@@ -8,7 +8,6 @@
 import UIKit
 
 extension UIColor {
-
     convenience init(light: CGFloat, dark: CGFloat) {
         self.init(light: UIColor(white: light, alpha: 1), dark: UIColor(white: dark, alpha: 1))
     }

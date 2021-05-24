@@ -67,6 +67,7 @@ class GithubTrendingViewController: BaseViewController {
             .setDelegate(self)
             .disposed(by: disposeBag)
         
+        
         tableView.rx.contentReverseOffset
             .filter({ [weak self] point in
                 guard let self = self else { return false }
@@ -84,7 +85,15 @@ class GithubTrendingViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.errorMessage
+        Observable
+            .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(GithubTrendingRepository.self))
+            .bind { [weak self] indexPath, item in
+                self?.tableView.deselectRow(at: indexPath, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.output
+            .errorMessage
             .compactMap({ $0 })
             .filter({ !$0.isEmpty })
             .subscribe(onNext: { [weak self] in
@@ -93,26 +102,27 @@ class GithubTrendingViewController: BaseViewController {
                 self?.present(alertController, animated: true, completion: nil)
             }).disposed(by: disposeBag)
 
-        viewModel.refreshIndicator
+        viewModel.output
+            .refreshIndicator
             .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
         
-        viewModel.indicator
-            .bind(to: view.rx.isIndicator(.init(light: .black, dark: .white)))
+        viewModel.output
+            .indicator
+            .bind(to: view.rx.isIndicator)
             .disposed(by: disposeBag)
         
-        viewModel.items
+        viewModel.output
+            .bottomIndicator
+            .bind(to: tableView.rx.isBottomIndicator)
+            .disposed(by: disposeBag)
+        
+        viewModel.output
+            .items
             .asDriver()
             .drive(tableView.rx.items(cellIdentifier: "UITableViewCell", cellType: UITableViewCell.self))({ index, item, cell in
                 cell.textLabel?.text = item.name
             })
-            .disposed(by: disposeBag)
-        
-        Observable
-            .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(GithubTrendingRepository.self))
-            .bind { [weak self] indexPath, item in
-                self?.tableView.deselectRow(at: indexPath, animated: true)
-            }
             .disposed(by: disposeBag)
     }
 }

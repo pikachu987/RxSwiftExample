@@ -9,27 +9,43 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class GithubTrendingViewModel: BaseViewModel {
-    private var language = ""
-    private var page = 1
+final class GithubTrendingViewModel: ViewModelType {
+    struct Dependency {
+        var language = ""
+        var page = 1
+    }
 
-    let item = PublishRelay<GithubTrendingRepositories>()
-    let items = BehaviorRelay<[GithubTrendingRepository]>(value: [])
-    let loadPageTrigger = PublishSubject<Bool>()
-    let isLoading = BehaviorRelay<Bool>(value: false)
-    let indicator = BehaviorRelay<Bool>(value: false)
-    let refreshIndicator = BehaviorRelay<Bool>(value: false)
-    let errorMessage = BehaviorRelay<String?>(value: nil)
+    struct Input {
+        let loadPageTrigger = PublishSubject<Bool>()
+    }
+ 
+    struct Output {
+        let item = BehaviorRelay<GithubTrendingRepositories?>(value: nil)
+        let items = BehaviorRelay<[GithubTrendingRepository]>(value: [])
+        let isLoading = BehaviorRelay<Bool>(value: false)
+        let indicator = BehaviorRelay<Bool>(value: false)
+        let refreshIndicator = BehaviorRelay<Bool>(value: false)
+        let bottomIndicator = BehaviorRelay<Bool>(value: false)
+        let errorMessage = BehaviorRelay<String?>(value: nil)
+    }
+
+    var disposeBag: DisposeBag = DisposeBag()
+    var dependency: Dependency
+    var input: Input
+    var output: Output
     
-    override init() {
-        super.init()
+    init() {
+        dependency = Dependency()
+        input = Input()
+        output = Output()
 
-        let request = loadPageTrigger
+        let request = input
+            .loadPageTrigger
             .do(onNext: { [weak self] _ in
-                self?.isLoading.accept(true)
+                self?.output.isLoading.accept(true)
             })
             .flatMap { [weak self] isRefresh -> Observable<(isRefresh: Bool, response: GithubTrendingTrendingResponse)> in
-                return GithubTrendingAPI.request(GithubTrendingTrendingRequest(language: self?.language ?? "", page: self?.page ?? 1))
+                return GithubTrendingAPI.request(GithubTrendingTrendingRequest(language: self?.dependency.language ?? "", page: self?.dependency.page ?? 1))
                     .compactMap { response in
                         return response as? GithubTrendingTrendingResponse
                     }.compactMap { response in
@@ -37,13 +53,14 @@ final class GithubTrendingViewModel: BaseViewModel {
                     }
             }
             .do(onNext: { [weak self] element in
-                self?.isLoading.accept(false)
-                self?.indicator.accept(false)
-                self?.refreshIndicator.accept(false)
+                self?.output.isLoading.accept(false)
+                self?.output.indicator.accept(false)
+                self?.output.bottomIndicator.accept(false)
+                self?.output.refreshIndicator.accept(false)
                 if element.response.resultCode == .error {
-                    self?.errorMessage.accept(element.response.errorMessage)
+                    self?.output.errorMessage.accept(element.response.errorMessage)
                 } else {
-                    self?.errorMessage.accept(nil)
+                    self?.output.errorMessage.accept(nil)
                 }
             })
             .filter({ $0.1.resultCode == .success })
@@ -52,32 +69,34 @@ final class GithubTrendingViewModel: BaseViewModel {
         
         request
             .compactMap({ $0.repositories })
-            .bind(to: item)
+            .bind(to: output.item)
             .disposed(by: disposeBag)
         
-        Observable.zip(request, items) { request, items in
+        Observable.zip(request, output.items) { request, items in
             if request.isRefresh {
                 return request.repositories?.items ?? []
             } else {
                 return items + (request.repositories?.items ?? [])
             }
         }
-        .bind(to: items)
+        .bind(to: output.items)
         .disposed(by: disposeBag)
         
     }
     
     func fetchRefreshData() {
-        loadPageTrigger.onNext(true)
+        input.loadPageTrigger.onNext(true)
     }
 
     func fetchLoadMoreData() {
-        if errorMessage.value != nil { return }
-        if isLoading.value { return }
-        loadPageTrigger.onNext(false)
+        if output.errorMessage.value != nil { return }
+        if output.isLoading.value { return }
+        if output.items.value.count >= (output.item.value?.totalCount ?? 0) { return }
+        output.bottomIndicator.accept(true)
+        input.loadPageTrigger.onNext(false)
     }
 
     func showIndicator() {
-        indicator.accept(true)
+        output.indicator.accept(true)
     }
 }

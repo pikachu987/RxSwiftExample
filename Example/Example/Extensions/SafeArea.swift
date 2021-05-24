@@ -11,14 +11,14 @@ import UIKit
 
 // 세이프뷰
 public struct SafeArea: CustomStringConvertible {
-    public var header: CGFloat {
+    var header: CGFloat {
         return self.statusBarHeight + self.top
     }
-    public var statusBarHeight: CGFloat = 0
-    public var top: CGFloat = 0
-    public var left: CGFloat = 0
-    public var right: CGFloat = 0
-    public var bottom: CGFloat = 0
+    var statusBarHeight: CGFloat = 0
+    var top: CGFloat = 0
+    var left: CGFloat = 0
+    var right: CGFloat = 0
+    var bottom: CGFloat = 0
 
     public var description: String {
         return "{ header: \(self.header), statusBarHeight: \(self.statusBarHeight), top: \(self.top), right: \(self.right), bottom: \(self.bottom), left: \(self.left) }"

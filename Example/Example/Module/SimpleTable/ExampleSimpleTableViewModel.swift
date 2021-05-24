@@ -9,24 +9,40 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class ExampleSimpleTableViewModel: BaseViewModel {
-    let items = BehaviorRelay<[ExampleSimpleTableMemberModel]>(value: [])
-    let loadPageTrigger = PublishSubject<Void>()
-    let refreshIndicator = BehaviorRelay<Bool>(value: false)
-    
-    override init() {
-        super.init()
+final class ExampleSimpleTableViewModel: ViewModelType {
+    struct Dependency {
+    }
 
-        loadPageTrigger
+    struct Input {
+        let loadPageTrigger = PublishSubject<Void>()
+    }
+ 
+    struct Output {
+        let items = BehaviorRelay<[ExampleSimpleTableMemberModel]>(value: [])
+        let refreshIndicator = BehaviorRelay<Bool>(value: false)
+    }
+
+    var disposeBag: DisposeBag = DisposeBag()
+    var dependency: Dependency
+    var input: Input
+    var output: Output
+    
+    init() {
+        dependency = Dependency()
+        input = Input()
+        output = Output()
+
+
+        input.loadPageTrigger
             .flatMap { _ -> Observable<[ExampleSimpleTableMemberModel]> in
                 return ExampleSimpleTableAPI.simple().asObservable()
             }.do(onNext: { [weak self] _ in
-                self?.refreshIndicator.accept(false)
-            }).bind(to: items)
+                self?.output.refreshIndicator.accept(false)
+            }).bind(to: output.items)
             .disposed(by: disposeBag)
     }
     
     func fetchData() {
-        loadPageTrigger.onNext(())
+        input.loadPageTrigger.onNext(())
     }
 }
