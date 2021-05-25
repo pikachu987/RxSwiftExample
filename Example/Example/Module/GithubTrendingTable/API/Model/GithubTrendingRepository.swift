@@ -33,10 +33,21 @@ struct GithubTrendingRepository: Codable {
 }
 
 extension GithubTrendingRepository {
-    var updatedDate: Date? {
+    var updatedRegDate: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        let date = dateFormatter.date(from: self.updatedAt ?? "")
-        return date
+        guard let date = dateFormatter.date(from: self.updatedAt ?? "") else { return "" }
+        let calendar = Calendar.current
+        guard let year = (calendar as NSCalendar).components(.year, from: date).year,
+              let month = (calendar as NSCalendar).components(.month, from: date).month,
+              let day = (calendar as NSCalendar).components(.day, from: date).day,
+              let hour = (calendar as NSCalendar).components(.hour, from: date).hour,
+              let minute = (calendar as NSCalendar).components(.minute, from: date).minute else { return "" }
+        let yearString = "\(year)"
+        let monthString = month < 10 ? "0\(month)" : "\(month)"
+        let dayString = day < 10 ? "0\(day)" : "\(day)"
+        let hourString = hour < 10 ? "0\(hour)" : "\(hour)"
+        let minuteString = minute < 10 ? "0\(minute)" : "\(minute)"
+        return "\(yearString)-\(monthString)-\(dayString) \(hourString):\(minuteString)"
     }
 }

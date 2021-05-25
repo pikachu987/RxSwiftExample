@@ -64,8 +64,6 @@
 		E015545B2655326000C1ED6A /* ExampleSimpleTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554592655326000C1ED6A /* ExampleSimpleTableViewModel.swift */; };
 		E015545D265532E700C1ED6A /* ExampleSimpleTableAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015545C265532E700C1ED6A /* ExampleSimpleTableAPI.swift */; };
 		E015545E265532E700C1ED6A /* ExampleSimpleTableAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015545C265532E700C1ED6A /* ExampleSimpleTableAPI.swift */; };
-		E01554672655451F00C1ED6A /* Reactive+LifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554662655451F00C1ED6A /* Reactive+LifeCycle.swift */; };
-		E01554682655451F00C1ED6A /* Reactive+LifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554662655451F00C1ED6A /* Reactive+LifeCycle.swift */; };
 		E015546F26568C2D00C1ED6A /* GithubTrendingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015546E26568C2D00C1ED6A /* GithubTrendingResponse.swift */; };
 		E015547026568C2D00C1ED6A /* GithubTrendingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015546E26568C2D00C1ED6A /* GithubTrendingResponse.swift */; };
 		E015547226568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E015547126568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift */; };
@@ -74,6 +72,10 @@
 		E01554F4265BEC8D00C1ED6A /* UITableView+IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554F2265BEC8D00C1ED6A /* UITableView+IndicatorView.swift */; };
 		E01554F6265BF85D00C1ED6A /* GithubTrendingRepositoryOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554F5265BF85D00C1ED6A /* GithubTrendingRepositoryOwner.swift */; };
 		E01554F7265BF85D00C1ED6A /* GithubTrendingRepositoryOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554F5265BF85D00C1ED6A /* GithubTrendingRepositoryOwner.swift */; };
+		E01554F9265D349700C1ED6A /* GithubTrendingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554F8265D349700C1ED6A /* GithubTrendingCell.swift */; };
+		E01554FA265D349700C1ED6A /* GithubTrendingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554F8265D349700C1ED6A /* GithubTrendingCell.swift */; };
+		E01554FC265D434900C1ED6A /* NSLayoutConstraint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554FB265D434900C1ED6A /* NSLayoutConstraint+.swift */; };
+		E01554FD265D434900C1ED6A /* NSLayoutConstraint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554FB265D434900C1ED6A /* NSLayoutConstraint+.swift */; };
 		F9170FC3259A2A2EF7FA0363 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D327074D5BB67B6BAF5C62A8 /* Pods_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -133,11 +135,12 @@
 		E015545626552F3700C1ED6A /* GithubTrendingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingViewModel.swift; sourceTree = "<group>"; };
 		E01554592655326000C1ED6A /* ExampleSimpleTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleSimpleTableViewModel.swift; sourceTree = "<group>"; };
 		E015545C265532E700C1ED6A /* ExampleSimpleTableAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleSimpleTableAPI.swift; sourceTree = "<group>"; };
-		E01554662655451F00C1ED6A /* Reactive+LifeCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+LifeCycle.swift"; sourceTree = "<group>"; };
 		E015546E26568C2D00C1ED6A /* GithubTrendingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingResponse.swift; sourceTree = "<group>"; };
 		E015547126568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingTrendingResponse.swift; sourceTree = "<group>"; };
 		E01554F2265BEC8D00C1ED6A /* UITableView+IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+IndicatorView.swift"; sourceTree = "<group>"; };
 		E01554F5265BF85D00C1ED6A /* GithubTrendingRepositoryOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingRepositoryOwner.swift; sourceTree = "<group>"; };
+		E01554F8265D349700C1ED6A /* GithubTrendingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingCell.swift; sourceTree = "<group>"; };
+		E01554FB265D434900C1ED6A /* NSLayoutConstraint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -325,6 +328,7 @@
 				16D331182656187A00809A55 /* API */,
 				E015545326552F2C00C1ED6A /* GithubTrendingViewController.swift */,
 				E015545626552F3700C1ED6A /* GithubTrendingViewModel.swift */,
+				E01554F8265D349700C1ED6A /* GithubTrendingCell.swift */,
 			);
 			path = GithubTrendingTable;
 			sourceTree = "<group>";
@@ -332,13 +336,13 @@
 		E0155465265544FA00C1ED6A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				E01554662655451F00C1ED6A /* Reactive+LifeCycle.swift */,
 				1685FDC926576B00006DBE17 /* UIView+indicator.swift */,
 				1677AFC5265B326500E6B1CC /* UIScrollView+Scroll.swift */,
 				E01554F2265BEC8D00C1ED6A /* UITableView+IndicatorView.swift */,
 				1677AFCD265B6B9C00E6B1CC /* Window+.swift */,
 				1677AFD0265B6BA200E6B1CC /* SafeArea.swift */,
 				1677AFD6265B814400E6B1CC /* UIColor+.swift */,
+				E01554FB265D434900C1ED6A /* NSLayoutConstraint+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -543,12 +547,13 @@
 				1677AFD1265B6BA200E6B1CC /* SafeArea.swift in Sources */,
 				E01554462655148800C1ED6A /* MainViewModel.swift in Sources */,
 				E015545426552F2C00C1ED6A /* GithubTrendingViewController.swift in Sources */,
-				E01554672655451F00C1ED6A /* Reactive+LifeCycle.swift in Sources */,
 				E015540426529BF400C1ED6A /* Example.xcdatamodeld in Sources */,
 				1677AFD4265B707C00E6B1CC /* ViewModelType.swift in Sources */,
 				E01554F6265BF85D00C1ED6A /* GithubTrendingRepositoryOwner.swift in Sources */,
 				16D331162656183700809A55 /* GithubTrendingRepository.swift in Sources */,
+				E01554F9265D349700C1ED6A /* GithubTrendingCell.swift in Sources */,
 				E0155442265513C900C1ED6A /* BaseViewController.swift in Sources */,
+				E01554FC265D434900C1ED6A /* NSLayoutConstraint+.swift in Sources */,
 				E015546F26568C2D00C1ED6A /* GithubTrendingResponse.swift in Sources */,
 				1685FDCA26576B00006DBE17 /* UIView+indicator.swift in Sources */,
 				E015545026552D9300C1ED6A /* ExampleSimpleTableMemberItem.swift in Sources */,
@@ -575,18 +580,19 @@
 			files = (
 				E015545E265532E700C1ED6A /* ExampleSimpleTableAPI.swift in Sources */,
 				E0155440265513B300C1ED6A /* MainViewController.swift in Sources */,
+				E01554FA265D349700C1ED6A /* GithubTrendingCell.swift in Sources */,
 				E015543B2654BDD200C1ED6A /* UtilityTests.swift in Sources */,
 				E01554F7265BF85D00C1ED6A /* GithubTrendingRepositoryOwner.swift in Sources */,
 				16D331172656183700809A55 /* GithubTrendingRepository.swift in Sources */,
 				16D331142656181B00809A55 /* GithubTrendingRepositories.swift in Sources */,
 				E0155443265513C900C1ED6A /* BaseViewController.swift in Sources */,
 				E01554392654BD6C00C1ED6A /* ErrorTests.swift in Sources */,
+				E01554FD265D434900C1ED6A /* NSLayoutConstraint+.swift in Sources */,
 				E015545126552D9300C1ED6A /* ExampleSimpleTableMemberItem.swift in Sources */,
 				E015547026568C2D00C1ED6A /* GithubTrendingResponse.swift in Sources */,
 				16D3311B2656188B00809A55 /* GithubTrendingRequest.swift in Sources */,
 				16D3312526561D1A00809A55 /* GithubTrendingTrendingRequest.swift in Sources */,
 				E01554332652BE5F00C1ED6A /* RelayTest.swift in Sources */,
-				E01554682655451F00C1ED6A /* Reactive+LifeCycle.swift in Sources */,
 				E01554312652BA6700C1ED6A /* SubjectTest.swift in Sources */,
 				E015542D26529EC800C1ED6A /* ObservableTests.swift in Sources */,
 				E01554352652BE8700C1ED6A /* ShareTest.swift in Sources */,

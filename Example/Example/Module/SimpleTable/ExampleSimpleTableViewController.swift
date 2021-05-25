@@ -22,13 +22,19 @@ class ExampleSimpleTableViewController: BaseViewController {
         return tableView
     }()
     
+    private let refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.translatesAutoresizingMaskIntoConstraints = false
+        return refreshControl
+    }()
+    
     private let viewModel = ExampleSimpleTableViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.3) {
-            self.viewModel.fetchData()
+            self.viewModel.input.loadPageTrigger.onNext(())
         }
     }
     
@@ -36,6 +42,11 @@ class ExampleSimpleTableViewController: BaseViewController {
         super.setupUI()
         
         view.addSubview(tableView)
+        tableView.refreshControl = refreshControl
+    }
+    
+    override func setupLayout() {
+        super.setupLayout()
         
         NSLayoutConstraint.activate([
             view.leadingAnchor.constraint(equalTo: tableView.leadingAnchor),
@@ -45,22 +56,35 @@ class ExampleSimpleTableViewController: BaseViewController {
         ])
     }
     
-    override func setupBindings() {
-        super.setupBindings()
+    override func bindingView() {
+        super.bindingView()
         
-        rx.viewWillAppear.subscribe(onNext: { [weak self] _ in
-            self?.title = "ExampleSimpleTableView"
-        }).disposed(by: disposeBag)
+        rx.viewWillAppear
+            .subscribe(onNext: { [weak self] _ in
+                self?.title = "ExampleSimpleTableView"
+            }).disposed(by: disposeBag)
         
-        let refreshControl = UIRefreshControl()
-        tableView.refreshControl = refreshControl
         refreshControl.rx
             .controlEvent(.valueChanged)
             .subscribe(onNext: { [weak self] in
-                self?.viewModel.fetchData()
+                self?.viewModel.input.loadPageTrigger.onNext(())
             })
             .disposed(by: disposeBag)
-
+        
+        Observable
+            .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(ExampleSimpleTableMemberModel.self))
+            .bind { [weak self] indexPath, item in
+                self?.tableView.deselectRow(at: indexPath, animated: true)
+                let alertController = UIAlertController(title: nil, message: item.name, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: nil))
+                self?.present(alertController, animated: true, completion: nil)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    override func bindingViewModel() {
+        super.bindingViewModel()
+        
         viewModel.output
             .refreshIndicator
             .bind(to: refreshControl.rx.isRefreshing)
@@ -71,15 +95,5 @@ class ExampleSimpleTableViewController: BaseViewController {
             .drive(tableView.rx.items(cellIdentifier: "UITableViewCell", cellType: UITableViewCell.self)) { index, item, cell in
                 cell.textLabel?.text = item.name.appending("(\(item.gender?.uppercased() ?? "?"))")
             }.disposed(by: disposeBag)
-
-        Observable
-            .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(ExampleSimpleTableMemberModel.self))
-            .bind { [weak self] indexPath, item in
-                self?.tableView.deselectRow(at: indexPath, animated: true)
-                let alertController = UIAlertController(title: nil, message: item.name, preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: nil))
-                self?.present(alertController, animated: true, completion: nil)
-            }
-            .disposed(by: disposeBag)
     }
 }

@@ -17,8 +17,10 @@ class GithubTrendingViewController: BaseViewController {
 
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
+        tableView.register(GithubTrendingCell.self, forCellReuseIdentifier: GithubTrendingCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 56
         return tableView
     }()
 
@@ -31,8 +33,7 @@ class GithubTrendingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.showIndicator()
-        viewModel.fetchRefreshData()
+        viewModel.input.loadPageTrigger.onNext(())
     }
     
     override func setupUI() {
@@ -40,7 +41,11 @@ class GithubTrendingViewController: BaseViewController {
         
         view.addSubview(tableView)
         tableView.refreshControl = refreshControl
-        
+    }
+    
+    override func setupLayout() {
+        super.setupLayout()
+
         NSLayoutConstraint.activate([
             view.leadingAnchor.constraint(equalTo: tableView.leadingAnchor),
             view.trailingAnchor.constraint(equalTo: tableView.trailingAnchor),
@@ -49,8 +54,8 @@ class GithubTrendingViewController: BaseViewController {
         ])
     }
     
-    override func setupBindings() {
-        super.setupBindings()
+    override func bindingView() {
+        super.bindingView()
         
         rx
             .viewWillAppear
@@ -74,14 +79,14 @@ class GithubTrendingViewController: BaseViewController {
                 return point.y < (40 - self.view.safe.bottom)
             })
             .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.fetchLoadMoreData()
+                self?.viewModel.input.loadMorePageTrigger.onNext(())
             })
             .disposed(by: disposeBag)
         
         refreshControl.rx
             .controlEvent(.valueChanged)
             .subscribe(onNext: { [weak self] in
-                self?.viewModel.fetchRefreshData()
+                self?.viewModel.input.refreshPageTrigger.onNext(())
             })
             .disposed(by: disposeBag)
         
@@ -91,6 +96,10 @@ class GithubTrendingViewController: BaseViewController {
                 self?.tableView.deselectRow(at: indexPath, animated: true)
             }
             .disposed(by: disposeBag)
+    }
+    
+    override func bindingViewModel() {
+        super.bindingViewModel()
         
         viewModel.output
             .errorMessage
@@ -120,8 +129,14 @@ class GithubTrendingViewController: BaseViewController {
         viewModel.output
             .items
             .asDriver()
-            .drive(tableView.rx.items(cellIdentifier: "UITableViewCell", cellType: UITableViewCell.self))({ index, item, cell in
-                cell.textLabel?.text = item.name
+            .drive(tableView.rx.items(cellIdentifier: GithubTrendingCell.identifier, cellType: GithubTrendingCell.self))({ index, item, cell in
+                cell.rx
+                    .githubTrendingOwnerTap
+                    .subscribe(onNext: { [weak self] cell in
+                        guard let indexPath = self?.tableView.indexPath(for: cell) else { return }
+                        print("dsfasfasd: \(indexPath)")
+                    }).disposed(by: self.disposeBag)
+                cell.repository = item
             })
             .disposed(by: disposeBag)
     }
@@ -145,157 +160,3 @@ extension GithubTrendingViewController: UITableViewDelegate {
         return UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.leastNonzeroMagnitude, height: CGFloat.leastNonzeroMagnitude))
     }
 }
-
-
-//final class ViewController: UIViewController {
-//    // button Example
-//    @IBOutlet private weak var button: UIButton!
-//
-//    var trackedSectionViewModel = BehaviorRelay(value: [TrackedModelType]())
-//    var sectionViewModels: Driver<[TrackedModelType]> {
-//        get {
-//            return trackedSectionViewModel.asDriver().map { $0 }
-//        }
-//    }
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        // Do any additional setup after loading the view, typically from a nib.
-//
-//        let customView: CustomView = CustomView(frame: CGRect(x: 0, y: 500, width: 300, height: 60))
-//        customView.rx.customTest.subscribe { event in
-//            print("customTest delegate: \(event)")
-//        }.disposed(by: self.disposeBag)
-//
-//        customView.test()
-//        customView.test()
-//        customView.test()
-//
-//        let customSecondView: CustomSecondView = CustomSecondView(frame: CGRect(x: 0, y: 500, width: 300, height: 60))
-//        customSecondView.rx.customTest.subscribe { event in
-//            print("customSecondView delegate: \(event)")
-//        }.disposed(by: self.disposeBag)
-//
-//        customSecondView.test()
-//        customSecondView.test()
-//        customSecondView.test()
-//
-//        self.rx.viewWillAppear
-//            .subscribe({ event in
-//                print("viewWillAppear!!")
-//            })
-//            .disposed(by: self.disposeBag)
-//
-//        let textField = UITextField(frame: CGRect(x: 0, y: 400, width: 300, height: 60))
-//        textField.borderStyle = .roundedRect
-//        self.view.addSubview(textField)
-//
-//        textField.rx.text
-//            .distinctUntilChanged()
-//            .subscribe { event in
-//                print(event)
-//            }.disposed(by: self.disposeBag)
-//    }
-//}
-//
-
-//
-//// objc optional
-//
-//@objc protocol CustomDelegate: AnyObject {
-//    @objc optional func customTest(_ view: CustomView, value: String)
-//}
-//
-//class CustomView: UIView {
-//    deinit {
-//        print("deinit: \(self)")
-//    }
-//    weak var delegate: CustomDelegate?
-//
-//    func test() {
-//        self.delegate?.customTest?(self, value: "value")
-//    }
-//}
-//
-//class CustomDelegateProxy: DelegateProxy<CustomView, CustomDelegate>, DelegateProxyType, CustomDelegate {
-//    deinit {
-//        print("deinit: \(self)")
-//    }
-//
-//    static func registerKnownImplementations() {
-//        self.register(make: { CustomDelegateProxy(parentObject: $0, delegateProxy: self) })
-//    }
-//
-//    static func currentDelegate(for object: CustomView) -> CustomDelegate? {
-//        return object.delegate
-//    }
-//
-//    static func setCurrentDelegate(_ delegate: CustomDelegate?, to object: CustomView) {
-//        object.delegate = delegate
-//    }
-//}
-//
-//extension Reactive where Base: CustomView {
-//    var delegate: DelegateProxy<CustomView, CustomDelegate> {
-//        return CustomDelegateProxy.proxy(for: self.base)
-//    }
-//
-//    var customTest: Observable<String> {
-//        return delegate.methodInvoked(#selector(CustomDelegate.customTest(_:value:)))
-//            .map { parameter in
-//                return parameter[1] as? String ?? ""
-//            }
-//    }
-//}
-//
-//// objc optional X
-//
-//protocol CustomSecondDelegate: AnyObject {
-//    func customTest(_ view: CustomSecondView, value: String)
-//}
-//
-//class CustomSecondView: UIView {
-//    deinit {
-//        print("deinit: \(self)")
-//    }
-//    weak var delegate: CustomSecondDelegate?
-//
-//    func test() {
-//        self.delegate?.customTest(self, value: "value")
-//    }
-//}
-//
-//class CustomSecondDelegateProxy: DelegateProxy<CustomSecondView, CustomSecondDelegate>, DelegateProxyType, CustomSecondDelegate {
-//    deinit {
-//        print("deinit: \(self)")
-//        self.customTestSubject.onCompleted()
-//    }
-//
-//    lazy var customTestSubject = PublishSubject<String>()
-//
-//    func customTest(_ view: CustomSecondView, value: String) {
-//        self.customTestSubject.onNext(value)
-//    }
-//
-//    static func registerKnownImplementations() {
-//        self.register(make: { CustomSecondDelegateProxy(parentObject: $0, delegateProxy: self) })
-//    }
-//
-//    static func currentDelegate(for object: CustomSecondView) -> CustomSecondDelegate? {
-//        return object.delegate
-//    }
-//
-//    static func setCurrentDelegate(_ delegate: CustomSecondDelegate?, to object: CustomSecondView) {
-//        object.delegate = delegate
-//    }
-//}
-//
-//extension Reactive where Base: CustomSecondView {
-//    var delegate: CustomSecondDelegateProxy {
-//        return CustomSecondDelegateProxy.proxy(for: self.base)
-//    }
-//
-//    var customTest: Observable<String> {
-//        return self.delegate.customTestSubject.asObserver()
-//    }
-//}

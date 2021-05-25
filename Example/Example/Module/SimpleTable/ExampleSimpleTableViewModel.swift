@@ -32,7 +32,6 @@ final class ExampleSimpleTableViewModel: ViewModelType {
         input = Input()
         output = Output()
 
-
         input.loadPageTrigger
             .flatMap { _ -> Observable<[ExampleSimpleTableMemberModel]> in
                 return ExampleSimpleTableAPI.simple().asObservable()
@@ -40,9 +39,5 @@ final class ExampleSimpleTableViewModel: ViewModelType {
                 self?.output.refreshIndicator.accept(false)
             }).bind(to: output.items)
             .disposed(by: disposeBag)
-    }
-    
-    func fetchData() {
-        input.loadPageTrigger.onNext(())
     }
 }

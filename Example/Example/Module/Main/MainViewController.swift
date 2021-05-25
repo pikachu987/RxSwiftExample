@@ -35,6 +35,10 @@ class MainViewController: BaseViewController {
         super.setupUI()
 
         view.addSubview(tableView)
+    }
+    
+    override func setupLayout() {
+        super.setupLayout()
         
         NSLayoutConstraint.activate([
             view.leadingAnchor.constraint(equalTo: tableView.leadingAnchor),
@@ -43,23 +47,18 @@ class MainViewController: BaseViewController {
             view.bottomAnchor.constraint(equalTo: tableView.bottomAnchor)
         ])
     }
-
-    override func setupBindings() {
-        super.setupBindings()
-
-        rx.viewWillAppear.subscribe(onNext: { [weak self] _ in
-            self?.title = "Main"
-        }).disposed(by: disposeBag)
+    
+    override func bindingView() {
+        super.bindingView()
         
-        tableView.rx.setDelegate(self)
+        rx.viewWillAppear
+            .subscribe(onNext: { [weak self] _ in
+                self?.title = "Main"
+            }).disposed(by: disposeBag)
+        
+        tableView.rx
+            .setDelegate(self)
             .disposed(by: disposeBag)
-        
-        viewModel.output
-            .items
-            .asDriver().drive(tableView.rx.items(cellIdentifier: "UITableViewCell", cellType: UITableViewCell.self)) { index, item, cell in
-                cell.textLabel?.numberOfLines = 0
-                cell.textLabel?.text = item.title
-            }.disposed(by: disposeBag)
         
         Observable
             .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(MainItemType.self))
@@ -75,7 +74,17 @@ class MainViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
     }
-
+    
+    override func bindingViewModel() {
+        super.bindingViewModel()
+        
+        viewModel.output
+            .items
+            .asDriver().drive(tableView.rx.items(cellIdentifier: "UITableViewCell", cellType: UITableViewCell.self)) { index, item, cell in
+                cell.textLabel?.numberOfLines = 0
+                cell.textLabel?.text = item.title
+            }.disposed(by: disposeBag)
+    }
 }
 
 // MARK: UITableViewDelegate

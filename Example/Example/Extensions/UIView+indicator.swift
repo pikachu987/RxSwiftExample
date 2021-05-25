@@ -91,7 +91,7 @@ private class IndicatorActivityView: UIView {
         label.font = .systemFont(ofSize: 9)
         backgroundColor = UIColor(white: 255/255, alpha: 0.01)
         addSubview(label)
-        constraints.filter({ $0.identifier == "bottom" }).first?.priority = UILayoutPriority(700)
+        constraints.filter({ $0.identifier == "bottom" }).first?.priority(700)
         let top = activityView.bottomAnchor.constraint(equalTo: label.topAnchor)
         top.constant = 4
         NSLayoutConstraint.activate([
@@ -113,14 +113,11 @@ private class IndicatorActivityView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         activityView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(activityView)
-        let bottom = bottomAnchor.constraint(equalTo: activityView.bottomAnchor)
-        bottom.priority = UILayoutPriority(999)
-        bottom.identifier = "bottom"
         NSLayoutConstraint.activate([
             leadingAnchor.constraint(equalTo: activityView.leadingAnchor),
             trailingAnchor.constraint(equalTo: activityView.trailingAnchor),
             topAnchor.constraint(equalTo: activityView.topAnchor),
-            bottom
+            bottomAnchor.constraint(equalTo: activityView.bottomAnchor).priority(999).identifier("bottom")
         ])
     }
 

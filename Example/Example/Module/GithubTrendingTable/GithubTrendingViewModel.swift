@@ -16,7 +16,9 @@ final class GithubTrendingViewModel: ViewModelType {
     }
 
     struct Input {
-        let loadPageTrigger = PublishSubject<Bool>()
+        let loadPageTrigger = PublishSubject<Void>()
+        let refreshPageTrigger = PublishSubject<Void>()
+        let loadMorePageTrigger = PublishSubject<Void>()
     }
  
     struct Output {
@@ -38,10 +40,35 @@ final class GithubTrendingViewModel: ViewModelType {
         dependency = Dependency()
         input = Input()
         output = Output()
-
-        let request = input
-            .loadPageTrigger
-            .do(onNext: { [weak self] _ in
+        
+        let loadRequest = input.loadPageTrigger
+            .do(onNext: { [weak self] in
+                self?.output.indicator.accept(true)
+            })
+            .map({ return true })
+        
+        let refreshRequest = input.refreshPageTrigger
+            .do(onNext: { [weak self] in
+                self?.dependency.page = 1
+            })
+            .map({ return true })
+        
+        let loadMoreRequest = input.loadMorePageTrigger
+            .filter({ [weak self] in
+                guard let self = self else { return false }
+                if self.output.errorMessage.value != nil { return false }
+                if self.output.isLoading.value { return false }
+                if self.output.items.value.count >= (self.output.item.value?.totalCount ?? 0) { return false }
+                return true
+            })
+            .do(onNext: { [weak self] in
+                self?.output.bottomIndicator.accept(true)
+            })
+            .map({ return false })
+        
+        let request = Observable.of(loadRequest, refreshRequest, loadMoreRequest)
+            .merge()
+            .do(onNext: { [weak self] isRefresh in
                 self?.output.isLoading.accept(true)
             })
             .flatMap { [weak self] isRefresh -> Observable<(isRefresh: Bool, response: GithubTrendingTrendingResponse)> in
@@ -60,18 +87,19 @@ final class GithubTrendingViewModel: ViewModelType {
                 if element.response.resultCode == .error {
                     self?.output.errorMessage.accept(element.response.errorMessage)
                 } else {
+                    self?.dependency.page += 1
                     self?.output.errorMessage.accept(nil)
                 }
             })
             .filter({ $0.1.resultCode == .success })
             .compactMap({ (isRefresh: $0.isRefresh, repositories: $0.response.repositories) })
             .share()
-        
+
         request
             .compactMap({ $0.repositories })
             .bind(to: output.item)
             .disposed(by: disposeBag)
-        
+
         Observable.zip(request, output.items) { request, items in
             if request.isRefresh {
                 return request.repositories?.items ?? []
@@ -81,22 +109,5 @@ final class GithubTrendingViewModel: ViewModelType {
         }
         .bind(to: output.items)
         .disposed(by: disposeBag)
-        
-    }
-    
-    func fetchRefreshData() {
-        input.loadPageTrigger.onNext(true)
-    }
-
-    func fetchLoadMoreData() {
-        if output.errorMessage.value != nil { return }
-        if output.isLoading.value { return }
-        if output.items.value.count >= (output.item.value?.totalCount ?? 0) { return }
-        output.bottomIndicator.accept(true)
-        input.loadPageTrigger.onNext(false)
-    }
-
-    func showIndicator() {
-        output.indicator.accept(true)
     }
 }
