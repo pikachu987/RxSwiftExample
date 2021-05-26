@@ -9,14 +9,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-@objc protocol GithubTrendingCellDelegate: AnyObject {
-    @objc optional func githubTrendingOwnerTap(_ cell: GithubTrendingCell)
-}
-
 class GithubTrendingCell: UITableViewCell {
-    weak var delegate: GithubTrendingCellDelegate?
-
     static let identifier = "GithubTrendingCell"
+    var disposeBag = DisposeBag()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -27,8 +22,9 @@ class GithubTrendingCell: UITableViewCell {
         return label
     }()
     
-    private let ownerButton: UIButton = {
-        let button = UIButton()
+    fileprivate let ownerButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.isUserInteractionEnabled = true
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor(light: 99/255, dark: 224/255), for: .normal)
         return button
@@ -52,13 +48,13 @@ class GithubTrendingCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        addSubview(titleLabel)
-        addSubview(ownerButton)
-        addSubview(updateDateLabel)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(ownerButton)
+        contentView.addSubview(updateDateLabel)
         
         NSLayoutConstraint.activate([
-            leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -16),
-            topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -10)
+            contentView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -16),
+            contentView.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -10)
         ])
         
         NSLayoutConstraint.activate([
@@ -67,7 +63,7 @@ class GithubTrendingCell: UITableViewCell {
         ])
             
         NSLayoutConstraint.activate([
-            trailingAnchor.constraint(equalTo: ownerButton.trailingAnchor, constant: 16)
+            contentView.trailingAnchor.constraint(equalTo: ownerButton.trailingAnchor, constant: 16)
         ])
         
         NSLayoutConstraint.activate([
@@ -75,11 +71,9 @@ class GithubTrendingCell: UITableViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            trailingAnchor.constraint(equalTo: updateDateLabel.trailingAnchor, constant: 16),
-            bottomAnchor.constraint(equalTo: updateDateLabel.bottomAnchor, constant: 10)
+            contentView.trailingAnchor.constraint(equalTo: updateDateLabel.trailingAnchor, constant: 16),
+            contentView.bottomAnchor.constraint(equalTo: updateDateLabel.bottomAnchor, constant: 10)
         ])
-        
-        ownerButton.addTarget(self, action: #selector(ownerTap(_:)), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -92,38 +86,12 @@ class GithubTrendingCell: UITableViewCell {
         titleLabel.text = nil
         ownerButton.setTitle(nil, for: .normal)
         updateDateLabel.text = nil
-    }
-    
-    @objc private func ownerTap(_ sender: UIButton) {
-        delegate?.githubTrendingOwnerTap?(self)
-    }
-}
-
-class GithubTrendingCellDelegateProxy: DelegateProxy<GithubTrendingCell, GithubTrendingCellDelegate>, DelegateProxyType, GithubTrendingCellDelegate {
-    deinit {
-        print("deinit: \(self)")
-    }
-
-    static func registerKnownImplementations() {
-        self.register(make: { GithubTrendingCellDelegateProxy(parentObject: $0, delegateProxy: self) })
-    }
-
-    static func currentDelegate(for object: GithubTrendingCell) -> GithubTrendingCellDelegate? {
-        return object.delegate
-    }
-
-    static func setCurrentDelegate(_ delegate: GithubTrendingCellDelegate?, to object: GithubTrendingCell) {
-        object.delegate = delegate
+        disposeBag = DisposeBag()
     }
 }
 
 extension Reactive where Base: GithubTrendingCell {
-    var delegate: DelegateProxy<GithubTrendingCell, GithubTrendingCellDelegate> {
-        return GithubTrendingCellDelegateProxy.proxy(for: self.base)
-    }
-    
-    var githubTrendingOwnerTap: ControlEvent<GithubTrendingCell> {
-        let events = methodInvoked(#selector(GithubTrendingCellDelegate.githubTrendingOwnerTap(_:))).compactMap({ $0.first as? GithubTrendingCell })
-        return ControlEvent(events: events)
+    var githubTrendingOwnerTap: ControlEvent<Void> {
+        return base.ownerButton.rx.tap
     }
 }

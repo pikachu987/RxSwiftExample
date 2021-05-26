@@ -19,11 +19,14 @@ final class GithubTrendingViewModel: ViewModelType {
         let loadPageTrigger = PublishSubject<Void>()
         let refreshPageTrigger = PublishSubject<Void>()
         let loadMorePageTrigger = PublishSubject<Void>()
+        let highlightTextTrigger = PublishSubject<String?>()
+        let searchTextTrigger = PublishSubject<String?>()
     }
  
     struct Output {
         let item = BehaviorRelay<GithubTrendingRepositories?>(value: nil)
         let items = BehaviorRelay<[GithubTrendingRepository]>(value: [])
+        let originItems = BehaviorSubject<[GithubTrendingRepository]>(value: [])
         let isLoading = BehaviorRelay<Bool>(value: false)
         let indicator = BehaviorRelay<Bool>(value: false)
         let refreshIndicator = BehaviorRelay<Bool>(value: false)
@@ -109,5 +112,30 @@ final class GithubTrendingViewModel: ViewModelType {
         }
         .bind(to: output.items)
         .disposed(by: disposeBag)
+        
+        input
+            .highlightTextTrigger
+            .compactMap({ $0 })
+            .throttle(RxTimeInterval.milliseconds(300), scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .subscribe(onNext: { text in
+                print(text)
+            })
+            .disposed(by: disposeBag)
+        
+//        output
+//            .originItems
+//            .subscribe { [weak self] list in
+//                self?.input.highlightTextTrigger
+//                list.element?.filter({ $0.name.contains(<#T##element: Character##Character#>) })
+//            }
+        
+        input
+            .searchTextTrigger
+            .subscribe(onNext: { text in
+                print(text)
+            })
+            .disposed(by: disposeBag)
+        
     }
 }
