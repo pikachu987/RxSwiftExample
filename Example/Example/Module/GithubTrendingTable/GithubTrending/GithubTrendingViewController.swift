@@ -38,6 +38,7 @@ class GithubTrendingViewController: BaseViewController {
     }()
     
     private let leftBarButtonItem = UIBarButtonItem(title: "👈", style: .done, target: self, action: nil)
+    private let rightBarButtonItem = UIBarButtonItem(title: "👨🏻‍💻", style: .done, target: self, action: nil)
     
     private let viewModel = GithubTrendingViewModel()
     
@@ -74,6 +75,7 @@ class GithubTrendingViewController: BaseViewController {
                 guard let self = self else { return }
                 self.navigationItem.titleView = self.searchBar
                 self.navigationItem.leftBarButtonItem = self.leftBarButtonItem
+                self.navigationItem.rightBarButtonItem = self.rightBarButtonItem
             }).disposed(by: disposeBag)
         
         searchBar.rx
@@ -81,13 +83,31 @@ class GithubTrendingViewController: BaseViewController {
             .bind(to: viewModel.input.filterTextTrigger)
             .disposed(by: disposeBag)
         
-        leftBarButtonItem.rx.tap.asDriver().withLatestFrom(RxKeyboard.instance.isHidden)
+        leftBarButtonItem.rx
+            .tap
+            .asDriver()
+            .withLatestFrom(RxKeyboard.instance.isHidden)
             .drive(onNext: { [weak self] isHidden in
                 if isHidden {
                     self?.dismiss(animated: true, completion: nil)
                 } else {
                     self?.searchBar.resignFirstResponder()
                 }
+            })
+            .disposed(by: disposeBag)
+        
+        rightBarButtonItem.rx
+            .tap
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                guard let viewController = GithubTrendingLanguageViewController.instance() else { return }
+                viewController.language
+                    .subscribe(onNext: { [weak self, weak viewController] language in
+                        self?.viewModel.input.languageTrigger.onNext(language)
+                        viewController?.navigationController?.popViewController(animated: true)
+                    })
+                    .disposed(by: self.disposeBag)
+                self.navigationController?.pushViewController(viewController, animated: true)
             })
             .disposed(by: disposeBag)
         
@@ -136,19 +156,17 @@ class GithubTrendingViewController: BaseViewController {
         Observable
             .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(GithubTrendingRepository.self))
             .bind { [weak self] indexPath, item in
+                self?.searchBar.resignFirstResponder()
                 self?.tableView.deselectRow(at: indexPath, animated: true)
+                guard let url = URL(string: item.htmlURL) else { return }
+                let viewController = SFSafariViewController(url: url)
+                self?.present(viewController, animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
         
-        RxKeyboard.instance
-            .visibleHeight
-            .drive(onNext: { [weak self] keyboardVisibleHeight in
-                if keyboardVisibleHeight == 0 {
-                    self?.tableView.contentInset.bottom = 0
-                } else {
-                    self?.tableView.contentInset.bottom = keyboardVisibleHeight - (self?.view.safe.bottom ?? 0)
-                }
-            })
+        Driver.combineLatest(RxKeyboard.instance.visibleHeight, Driver.just(view.safe.bottom))
+            .map({ $0.0 == 0 ? 0 : $0.0 - $0.1 })
+            .drive(tableView.rx.contentInsetBottom)
             .disposed(by: disposeBag)
     }
     
@@ -214,5 +232,13 @@ extension GithubTrendingViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.leastNonzeroMagnitude, height: CGFloat.leastNonzeroMagnitude))
+    }
+}
+extension Reactive where Base: UIScrollView {
+    var contentInsetBottom: Binder<CGFloat> {
+        return Binder(base) { view, bottom in
+            let contentInset = view.contentInset
+            view.contentInset = UIEdgeInsets(top: contentInset.top, left: contentInset.left, bottom: bottom, right: contentInset.right)
+        }
     }
 }

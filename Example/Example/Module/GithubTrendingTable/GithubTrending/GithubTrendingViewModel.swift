@@ -13,6 +13,7 @@ final class GithubTrendingViewModel: ViewModelType {
     struct Dependency {
         var page = 1
         var searchText = ""
+        var language = ""
     }
 
     struct Input {
@@ -21,6 +22,7 @@ final class GithubTrendingViewModel: ViewModelType {
         let loadMorePageTrigger = PublishSubject<Void>()
         let filterTextTrigger = BehaviorRelay<String?>(value: nil)
         let searchTextTrigger = BehaviorRelay<String?>(value: nil)
+        let languageTrigger = PublishSubject<String>()
     }
  
     struct Output {
@@ -75,7 +77,7 @@ final class GithubTrendingViewModel: ViewModelType {
                 self?.output.isLoading.accept(true)
             })
             .flatMap { [weak self] isRefresh -> Observable<(isRefresh: Bool, response: GithubTrendingTrendingResponse)> in
-                return GithubTrendingAPI.request(GithubTrendingTrendingRequest(user: self?.dependency.searchText ?? "", page: self?.dependency.page ?? 1))
+                return GithubTrendingAPI.request(GithubTrendingTrendingRequest(user: self?.dependency.searchText ?? "", language: self?.dependency.language ?? "", page: self?.dependency.page ?? 1))
                     .compactMap { response in
                         return response as? GithubTrendingTrendingResponse
                     }.compactMap { response in
@@ -136,5 +138,12 @@ final class GithubTrendingViewModel: ViewModelType {
             })
             .disposed(by: disposeBag)
         
+        input.languageTrigger
+            .subscribe(onNext: { [weak self] language in
+                self?.dependency.language = language
+                self?.output.indicator.accept(true)
+                self?.input.refreshPageTrigger.onNext(())
+            })
+            .disposed(by: disposeBag)
     }
 }

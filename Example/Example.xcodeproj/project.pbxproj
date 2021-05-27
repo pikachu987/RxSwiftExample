@@ -76,6 +76,9 @@
 		E01554FA265D349700C1ED6A /* GithubTrendingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554F8265D349700C1ED6A /* GithubTrendingCell.swift */; };
 		E01554FC265D434900C1ED6A /* NSLayoutConstraint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554FB265D434900C1ED6A /* NSLayoutConstraint+.swift */; };
 		E01554FD265D434900C1ED6A /* NSLayoutConstraint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01554FB265D434900C1ED6A /* NSLayoutConstraint+.swift */; };
+		E0155501265FDA7900C1ED6A /* GithubTrendingLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0155500265FDA7900C1ED6A /* GithubTrendingLanguageViewController.swift */; };
+		E0155503265FDA8500C1ED6A /* GithubTrendingLanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0155502265FDA8500C1ED6A /* GithubTrendingLanguageViewModel.swift */; };
+		E0155506265FDDE200C1ED6A /* GithubTrendingLanguageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0155505265FDDE200C1ED6A /* GithubTrendingLanguageItem.swift */; };
 		F9170FC3259A2A2EF7FA0363 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D327074D5BB67B6BAF5C62A8 /* Pods_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +144,9 @@
 		E01554F5265BF85D00C1ED6A /* GithubTrendingRepositoryOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingRepositoryOwner.swift; sourceTree = "<group>"; };
 		E01554F8265D349700C1ED6A /* GithubTrendingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingCell.swift; sourceTree = "<group>"; };
 		E01554FB265D434900C1ED6A /* NSLayoutConstraint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+.swift"; sourceTree = "<group>"; };
+		E0155500265FDA7900C1ED6A /* GithubTrendingLanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingLanguageViewController.swift; sourceTree = "<group>"; };
+		E0155502265FDA8500C1ED6A /* GithubTrendingLanguageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingLanguageViewModel.swift; sourceTree = "<group>"; };
+		E0155505265FDDE200C1ED6A /* GithubTrendingLanguageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubTrendingLanguageItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,9 +332,8 @@
 			isa = PBXGroup;
 			children = (
 				16D331182656187A00809A55 /* API */,
-				E015545326552F2C00C1ED6A /* GithubTrendingViewController.swift */,
-				E015545626552F3700C1ED6A /* GithubTrendingViewModel.swift */,
-				E01554F8265D349700C1ED6A /* GithubTrendingCell.swift */,
+				E01554FE265FDA4C00C1ED6A /* GithubTrending */,
+				E01554FF265FDA5700C1ED6A /* GithubTrendingLanguage */,
 			);
 			path = GithubTrendingTable;
 			sourceTree = "<group>";
@@ -345,6 +350,34 @@
 				E01554FB265D434900C1ED6A /* NSLayoutConstraint+.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E01554FE265FDA4C00C1ED6A /* GithubTrending */ = {
+			isa = PBXGroup;
+			children = (
+				E015545326552F2C00C1ED6A /* GithubTrendingViewController.swift */,
+				E015545626552F3700C1ED6A /* GithubTrendingViewModel.swift */,
+				E01554F8265D349700C1ED6A /* GithubTrendingCell.swift */,
+			);
+			path = GithubTrending;
+			sourceTree = "<group>";
+		};
+		E01554FF265FDA5700C1ED6A /* GithubTrendingLanguage */ = {
+			isa = PBXGroup;
+			children = (
+				E0155504265FDDD300C1ED6A /* Model */,
+				E0155500265FDA7900C1ED6A /* GithubTrendingLanguageViewController.swift */,
+				E0155502265FDA8500C1ED6A /* GithubTrendingLanguageViewModel.swift */,
+			);
+			path = GithubTrendingLanguage;
+			sourceTree = "<group>";
+		};
+		E0155504265FDDD300C1ED6A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E0155505265FDDE200C1ED6A /* GithubTrendingLanguageItem.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		EDAD1C52B1E93E7FD2FD47D6 /* Frameworks */ = {
@@ -567,10 +600,13 @@
 				E015545726552F3700C1ED6A /* GithubTrendingViewModel.swift in Sources */,
 				16D331132656181B00809A55 /* GithubTrendingRepositories.swift in Sources */,
 				E01553FE26529BF400C1ED6A /* MainViewController.swift in Sources */,
+				E0155503265FDA8500C1ED6A /* GithubTrendingLanguageViewModel.swift in Sources */,
 				1677AFCE265B6B9C00E6B1CC /* Window+.swift in Sources */,
 				E015545D265532E700C1ED6A /* ExampleSimpleTableAPI.swift in Sources */,
 				E01553FA26529BF400C1ED6A /* AppDelegate.swift in Sources */,
+				E0155506265FDDE200C1ED6A /* GithubTrendingLanguageItem.swift in Sources */,
 				E015547226568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift in Sources */,
+				E0155501265FDA7900C1ED6A /* GithubTrendingLanguageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

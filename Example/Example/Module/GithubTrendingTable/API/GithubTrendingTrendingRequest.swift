@@ -19,7 +19,7 @@ final class GithubTrendingTrendingRequest: GithubTrendingRequest {
 
     override var parameters: Parameters {
         let parameters: Parameters = [
-            "q": "user:\(user)",
+            "q": "user:\(user) language:\(language)",
             "sort": "stars",
             "order": "desc",
             "page": page
@@ -32,10 +32,12 @@ final class GithubTrendingTrendingRequest: GithubTrendingRequest {
     }
 
     private let user: String
+    private let language: String
     private let page: Int
 
-    init(user: String, page: Int) {
+    init(user: String, language: String, page: Int) {
         self.user = user
+        self.language = language
         self.page = page
     }
 }
