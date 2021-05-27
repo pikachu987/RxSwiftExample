@@ -11,22 +11,22 @@ import RxCocoa
 
 final class GithubTrendingViewModel: ViewModelType {
     struct Dependency {
-        var language = ""
         var page = 1
+        var searchText = ""
     }
 
     struct Input {
         let loadPageTrigger = PublishSubject<Void>()
         let refreshPageTrigger = PublishSubject<Void>()
         let loadMorePageTrigger = PublishSubject<Void>()
-        let highlightTextTrigger = PublishSubject<String?>()
-        let searchTextTrigger = PublishSubject<String?>()
+        let filterTextTrigger = BehaviorRelay<String?>(value: nil)
+        let searchTextTrigger = BehaviorRelay<String?>(value: nil)
     }
  
     struct Output {
-        let item = BehaviorRelay<GithubTrendingRepositories?>(value: nil)
-        let items = BehaviorRelay<[GithubTrendingRepository]>(value: [])
-        let originItems = BehaviorSubject<[GithubTrendingRepository]>(value: [])
+        let repositoryItem = BehaviorRelay<GithubTrendingRepositories?>(value: nil)
+        let repositories = BehaviorRelay<[GithubTrendingRepository]>(value: [])
+        let originRepositories = BehaviorSubject<[GithubTrendingRepository]>(value: [])
         let isLoading = BehaviorRelay<Bool>(value: false)
         let indicator = BehaviorRelay<Bool>(value: false)
         let refreshIndicator = BehaviorRelay<Bool>(value: false)
@@ -61,7 +61,7 @@ final class GithubTrendingViewModel: ViewModelType {
                 guard let self = self else { return false }
                 if self.output.errorMessage.value != nil { return false }
                 if self.output.isLoading.value { return false }
-                if self.output.items.value.count >= (self.output.item.value?.totalCount ?? 0) { return false }
+                if ((try? self.output.originRepositories.value())?.count ?? 0) >= (self.output.repositoryItem.value?.totalCount ?? 0) { return false }
                 return true
             })
             .do(onNext: { [weak self] in
@@ -75,7 +75,7 @@ final class GithubTrendingViewModel: ViewModelType {
                 self?.output.isLoading.accept(true)
             })
             .flatMap { [weak self] isRefresh -> Observable<(isRefresh: Bool, response: GithubTrendingTrendingResponse)> in
-                return GithubTrendingAPI.request(GithubTrendingTrendingRequest(language: self?.dependency.language ?? "", page: self?.dependency.page ?? 1))
+                return GithubTrendingAPI.request(GithubTrendingTrendingRequest(user: self?.dependency.searchText ?? "", page: self?.dependency.page ?? 1))
                     .compactMap { response in
                         return response as? GithubTrendingTrendingResponse
                     }.compactMap { response in
@@ -100,40 +100,39 @@ final class GithubTrendingViewModel: ViewModelType {
 
         request
             .compactMap({ $0.repositories })
-            .bind(to: output.item)
+            .bind(to: output.repositoryItem)
             .disposed(by: disposeBag)
 
-        Observable.zip(request, output.items) { request, items in
+        Observable.zip(request, output.originRepositories) { request, items in
             if request.isRefresh {
                 return request.repositories?.items ?? []
             } else {
                 return items + (request.repositories?.items ?? [])
             }
         }
-        .bind(to: output.items)
+        .bind(to: output.originRepositories)
         .disposed(by: disposeBag)
         
-        input
-            .highlightTextTrigger
-            .compactMap({ $0 })
+        let fiilterText = input
+            .filterTextTrigger
+            .compactMap({ $0?.lowercased() })
             .throttle(RxTimeInterval.milliseconds(300), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
-            .subscribe(onNext: { text in
-                print(text)
-            })
-            .disposed(by: disposeBag)
         
-//        output
-//            .originItems
-//            .subscribe { [weak self] list in
-//                self?.input.highlightTextTrigger
-//                list.element?.filter({ $0.name.contains(<#T##element: Character##Character#>) })
-//            }
+        Observable.combineLatest(output.originRepositories, fiilterText)
+            .map { (list, text) in
+                return text == "" ? list : list.filter({ $0.name.lowercased().contains(text) || $0.owner?.login.lowercased().contains(text) == true })
+            }
+            .bind(to: output.repositories)
+            .disposed(by: disposeBag)
         
         input
             .searchTextTrigger
-            .subscribe(onNext: { text in
-                print(text)
+            .compactMap({ $0 })
+            .subscribe(onNext: { [weak self] text in
+                self?.output.indicator.accept(true)
+                self?.dependency.searchText = text
+                self?.input.refreshPageTrigger.onNext(())
             })
             .disposed(by: disposeBag)
         

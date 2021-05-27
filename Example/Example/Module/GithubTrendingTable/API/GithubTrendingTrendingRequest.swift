@@ -18,11 +18,8 @@ final class GithubTrendingTrendingRequest: GithubTrendingRequest {
     }
 
     override var parameters: Parameters {
-        guard let lastWeek = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date()) else { return [:] }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
         let parameters: Parameters = [
-            "q": "language:\(language) " + "created:>" + formatter.string(from: lastWeek),
+            "q": "user:\(user)",
             "sort": "stars",
             "order": "desc",
             "page": page
@@ -34,11 +31,11 @@ final class GithubTrendingTrendingRequest: GithubTrendingRequest {
         return GithubTrendingTrendingResponse.self
     }
 
-    private let language: String
+    private let user: String
     private let page: Int
 
-    init(language: String, page: Int) {
-        self.language = language
+    init(user: String, page: Int) {
+        self.user = user
         self.page = page
     }
 }

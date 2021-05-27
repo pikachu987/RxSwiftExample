@@ -8,7 +8,7 @@
 import Foundation
 
 struct GithubTrendingRepositories: Codable {
-    let totalCount: Int?
+    var totalCount: Int?
     let incompleteResults: Bool?
     let items: [GithubTrendingRepository]?
     
