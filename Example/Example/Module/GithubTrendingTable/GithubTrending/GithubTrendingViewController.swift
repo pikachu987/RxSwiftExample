@@ -10,6 +10,8 @@ import RxSwift
 import RxCocoa
 import RxKeyboard
 import SafariServices
+import RxKingfisher
+import Kingfisher
 
 class GithubTrendingViewController: BaseViewController {
     static func instance() -> GithubTrendingViewController? {
@@ -202,15 +204,33 @@ class GithubTrendingViewController: BaseViewController {
             .repositories
             .asDriver()
             .drive(tableView.rx.items(cellIdentifier: GithubTrendingCell.identifier, cellType: GithubTrendingCell.self))({ [weak self] index, item, cell in
+                guard let self = self else { return }
                 cell.rx
                     .githubTrendingOwnerTap
                     .compactMap({ item.owner?.htmlURL })
                     .compactMap({ URL(string: $0) })
                     .subscribe(onNext: { url in
                         let viewController = SFSafariViewController(url: url)
-                        self?.present(viewController, animated: true, completion: nil)
+                        self.present(viewController, animated: true, completion: nil)
                     }).disposed(by: cell.disposeBag)
                 cell.repository = item
+                
+                if let avatarURLPath = item.owner?.avatarURL, let url = URL(string: avatarURLPath) {
+                    cell.ownerImage = .loading
+                    KingfisherManager.shared.rx
+                        .retrieveImage(with: url)
+                        .subscribe(on: ConcurrentMainScheduler.instance)
+                        .observe(on: MainScheduler.asyncInstance)
+                        .filter({ [weak cell] _ in
+                            return avatarURLPath == cell?.repository?.owner?.avatarURL
+                        })
+                        .subscribe(onSuccess: { [weak cell] image in
+                            cell?.ownerImage = .image(image)
+                        })
+                        .disposed(by: self.disposeBag)
+                } else {
+                    cell.ownerImage = .empty
+                }
             })
             .disposed(by: disposeBag)
     }

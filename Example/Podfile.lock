@@ -34,7 +34,7 @@ DEPENDENCIES:
   - RxBlocking (= 6.1.0)
   - RxCocoa (= 6.1.0)
   - RxKeyboard (= 2.0.0)
-  - RxKingfisher (= 2.0.0)
+  - RxKingfisher
   - RxOptional (= 5.0.2)
   - RxSwift (= 6.1.0)
   - RxTest (= 6.1.0)
@@ -66,6 +66,6 @@ SPEC CHECKSUMS:
   RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
   RxTest: 9d26616eaff4a7e75f4ecae9b2c24840f2e8218d
 
-PODFILE CHECKSUM: e65e5b4c8666d8fc284d7e6fa4071d04b8009835
+PODFILE CHECKSUM: 35783bd030825df9ea0058b2a6de9e5a52176fc8
 
 COCOAPODS: 1.10.1

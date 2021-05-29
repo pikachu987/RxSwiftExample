@@ -10,8 +10,8 @@ target 'Example' do
   pod 'RxCocoa', '6.1.0'
   pod 'RxOptional', '5.0.2'
   pod 'RxKeyboard', '2.0.0'
-  pod 'RxKingfisher', '2.0.0'
   pod 'RxAlamofire', '6.1.1'
+  pod 'RxKingfisher', '2.0.0'
 
   target 'ExampleTests' do
     inherit! :search_paths
