@@ -26,6 +26,7 @@ final class GithubTrendingViewModel: ViewModelType {
     }
  
     struct Output {
+        let scrollToTop = PublishRelay<Void>()
         let repositoryItem = BehaviorRelay<GithubTrendingRepositories?>(value: nil)
         let repositories = BehaviorRelay<[GithubTrendingRepository]>(value: [])
         let originRepositories = BehaviorSubject<[GithubTrendingRepository]>(value: [])
@@ -94,6 +95,9 @@ final class GithubTrendingViewModel: ViewModelType {
                 } else {
                     self?.dependency.page += 1
                     self?.output.errorMessage.accept(nil)
+                    if element.isRefresh {
+                        self?.output.scrollToTop.accept(())
+                    }
                 }
             })
             .filter({ $0.1.resultCode == .success })

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		02A23B3A8BE308EB6CEFD2D7 /* Pods_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46501DED87E65431BAA10055 /* Pods_ExampleTests.framework */; };
+		1627328126646A3200F7B0C1 /* KingFisher+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627328026646A3200F7B0C1 /* KingFisher+Rx.swift */; };
+		1627328226646AB900F7B0C1 /* KingFisher+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627328026646A3200F7B0C1 /* KingFisher+Rx.swift */; };
 		1677AFC6265B326500E6B1CC /* UIScrollView+Scroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1677AFC5265B326500E6B1CC /* UIScrollView+Scroll.swift */; };
 		1677AFC7265B326500E6B1CC /* UIScrollView+Scroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1677AFC5265B326500E6B1CC /* UIScrollView+Scroll.swift */; };
 		1677AFCE265B6B9C00E6B1CC /* Window+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1677AFCD265B6B9C00E6B1CC /* Window+.swift */; };
@@ -94,6 +96,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1627328026646A3200F7B0C1 /* KingFisher+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KingFisher+Rx.swift"; sourceTree = "<group>"; };
 		1677AFC5265B326500E6B1CC /* UIScrollView+Scroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Scroll.swift"; sourceTree = "<group>"; };
 		1677AFCD265B6B9C00E6B1CC /* Window+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Window+.swift"; sourceTree = "<group>"; };
 		1677AFD0265B6BA200E6B1CC /* SafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeArea.swift; sourceTree = "<group>"; };
@@ -351,6 +354,7 @@
 				1677AFD0265B6BA200E6B1CC /* SafeArea.swift */,
 				1677AFD6265B814400E6B1CC /* UIColor+.swift */,
 				E01554FB265D434900C1ED6A /* NSLayoutConstraint+.swift */,
+				1627328026646A3200F7B0C1 /* KingFisher+Rx.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -615,6 +619,7 @@
 				1677AFCE265B6B9C00E6B1CC /* Window+.swift in Sources */,
 				E015545D265532E700C1ED6A /* ExampleSimpleTableAPI.swift in Sources */,
 				E03A91D6266297BB00D1E297 /* GithubTrendingImageType.swift in Sources */,
+				1627328126646A3200F7B0C1 /* KingFisher+Rx.swift in Sources */,
 				E01553FA26529BF400C1ED6A /* AppDelegate.swift in Sources */,
 				E0155506265FDDE200C1ED6A /* GithubTrendingLanguageItem.swift in Sources */,
 				E015547226568C4C00C1ED6A /* GithubTrendingTrendingResponse.swift in Sources */,
@@ -627,6 +632,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E015545E265532E700C1ED6A /* ExampleSimpleTableAPI.swift in Sources */,
+				1627328226646AB900F7B0C1 /* KingFisher+Rx.swift in Sources */,
 				E0155440265513B300C1ED6A /* MainViewController.swift in Sources */,
 				E01554FA265D349700C1ED6A /* GithubTrendingCell.swift in Sources */,
 				E015543B2654BDD200C1ED6A /* UtilityTests.swift in Sources */,

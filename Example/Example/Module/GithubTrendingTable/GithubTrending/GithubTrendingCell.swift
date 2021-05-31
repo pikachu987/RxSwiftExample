@@ -208,7 +208,7 @@ extension GithubTrendingCell {
         }
         
         func stopAnimating(_ image: UIImage? = nil) {
-            ownerImageView.backgroundColor = UIColor(light: 218/255, dark: 99/255)
+            ownerImageView.backgroundColor = image == nil ? UIColor(light: 218/255, dark: 99/255) : .clear
             activityIndicatorView.stopAnimating()
             self.image = image
         }

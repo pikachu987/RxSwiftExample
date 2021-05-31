@@ -1,8 +1,6 @@
 PODS:
   - Alamofire (5.4.3)
-  - Kingfisher (5.15.8):
-    - Kingfisher/Core (= 5.15.8)
-  - Kingfisher/Core (5.15.8)
+  - Kingfisher (6.3.0)
   - RxAlamofire (6.1.1):
     - RxAlamofire/Core (= 6.1.1)
   - RxAlamofire/Core (6.1.1):
@@ -16,10 +14,6 @@ PODS:
   - RxKeyboard (2.0.0):
     - RxCocoa (~> 6.0)
     - RxSwift (~> 6.0)
-  - RxKingfisher (2.0.0):
-    - Kingfisher (~> 5)
-    - RxCocoa (~> 6)
-    - RxSwift (~> 6)
   - RxOptional (5.0.2):
     - RxCocoa (~> 6.0)
     - RxSwift (~> 6.0)
@@ -30,11 +24,11 @@ PODS:
     - RxSwift (= 6.1.0)
 
 DEPENDENCIES:
+  - Kingfisher (= 6.3.0)
   - RxAlamofire (= 6.1.1)
   - RxBlocking (= 6.1.0)
   - RxCocoa (= 6.1.0)
   - RxKeyboard (= 2.0.0)
-  - RxKingfisher
   - RxOptional (= 5.0.2)
   - RxSwift (= 6.1.0)
   - RxTest (= 6.1.0)
@@ -47,7 +41,6 @@ SPEC REPOS:
     - RxBlocking
     - RxCocoa
     - RxKeyboard
-    - RxKingfisher
     - RxOptional
     - RxRelay
     - RxSwift
@@ -55,17 +48,16 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
-  Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
+  Kingfisher: 6c3df386db71d82c0817a429d2c9421a77396529
   RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
   RxBlocking: 602095fba0bce7b16b56ccec89edf780c248b7d9
   RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
   RxKeyboard: 4f5863f43b4ff0cbb2a20b94688d6b80c8a43c14
-  RxKingfisher: d13ea82bb44c6830acfb51c02c86f35dae009f79
   RxOptional: 3664964c96b69dd20c9cf78bdfe546615e26eca8
   RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
   RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
   RxTest: 9d26616eaff4a7e75f4ecae9b2c24840f2e8218d
 
-PODFILE CHECKSUM: 35783bd030825df9ea0058b2a6de9e5a52176fc8
+PODFILE CHECKSUM: d0217317feaa8542d399487b962602f5102a2dc8
 
 COCOAPODS: 1.10.1

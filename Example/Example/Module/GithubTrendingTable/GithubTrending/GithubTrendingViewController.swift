@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 import RxKeyboard
 import SafariServices
-import RxKingfisher
 import Kingfisher
 
 class GithubTrendingViewController: BaseViewController {
@@ -176,6 +175,16 @@ class GithubTrendingViewController: BaseViewController {
         super.bindingViewModel()
         
         viewModel.output
+            .scrollToTop
+            .filter({ [weak self] in
+                return self?.viewModel.output.repositories.value.isEmpty == false
+            })
+            .subscribe(onNext: { [weak self] in
+                self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.output
             .errorMessage
             .compactMap({ $0 })
             .filter({ !$0.isEmpty })
@@ -218,7 +227,7 @@ class GithubTrendingViewController: BaseViewController {
                 if let avatarURLPath = item.owner?.avatarURL, let url = URL(string: avatarURLPath) {
                     cell.ownerImage = .loading
                     KingfisherManager.shared.rx
-                        .retrieveImage(with: url)
+                        .image(with: url)
                         .subscribe(on: ConcurrentMainScheduler.instance)
                         .observe(on: MainScheduler.asyncInstance)
                         .filter({ [weak cell] _ in
@@ -227,7 +236,7 @@ class GithubTrendingViewController: BaseViewController {
                         .subscribe(onSuccess: { [weak cell] image in
                             cell?.ownerImage = .image(image)
                         })
-                        .disposed(by: self.disposeBag)
+                        .disposed(by: cell.disposeBag)
                 } else {
                     cell.ownerImage = .empty
                 }

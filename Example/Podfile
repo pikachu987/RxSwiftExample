@@ -11,7 +11,7 @@ target 'Example' do
   pod 'RxOptional', '5.0.2'
   pod 'RxKeyboard', '2.0.0'
   pod 'RxAlamofire', '6.1.1'
-  pod 'RxKingfisher', '2.0.0'
+  pod 'Kingfisher', '6.3.0'
 
   target 'ExampleTests' do
     inherit! :search_paths
